@@ -193,6 +193,7 @@ footer {
   margin: 4rem 0 0 0;
   border-top: 1px solid #f1e42a;
   border-bottom: 2px solid #f49a18;
+  color:rgba(255,255,255,0.6);
 }
 
 nav {
@@ -329,3 +330,5 @@ header, footer {
 footer a {
   color: #fff;
 }
+
+
