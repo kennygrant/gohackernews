@@ -1,0 +1,3 @@
+<article>
+{{ template "comments/views/comment.html.got" .}}
+</article>

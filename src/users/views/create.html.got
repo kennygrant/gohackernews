@@ -1,0 +1,15 @@
+<section class="narrow">
+<form method="post">
+    <h1>Register</h1>
+
+    {{ field "Name" "name" .user.Name }}
+    {{ field "Email" "email" .user.Email }}
+    {{ field "Password" "password" "" "password" "type=password" }}
+  
+    <div class="clear field">
+
+    <input type="submit" class="button " value="Register">
+    </div>
+    
+</form>
+</section>

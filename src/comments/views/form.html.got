@@ -1,0 +1,18 @@
+<div class="row comments_form">
+<form method="post" class="resource-update-form">
+  
+    <p>Comment {{.comment.Id}} by {{ .comment.UserId }}</p>
+    
+    <div class="wide-fields">
+    {{ textarea "Text" "text" .comment.Text }}
+    </div>
+    
+    
+    <div class="actions clear">
+        <input type="submit" class="button" value="Save">
+        <a class="button grey" href="javascript:history.back()">Cancel</a>
+    </div>
+
+    <input name="authenticity-token" type="hidden" value="{{.csrf}}">
+</form>
+</div>

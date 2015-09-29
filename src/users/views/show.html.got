@@ -1,0 +1,25 @@
+<section class="padded">
+
+  
+  <div class="row">
+    <h1>{{.user.Name}}</h1>
+    <p>Signed up {{timeago .user.CreatedAt}}</p>
+  </div>
+
+  <div class="profile row">
+    {{ sanitize .user.Summary }}
+  </div>
+  
+  <div class="row clear">
+  <br>
+  {{ if .current_user.Admin }}
+   <a href="/users/{{.current_user.Id}}/update" class="button grey">edit</a>
+  {{end }}
+  {{ if eq .current_user.Id .user.Id }}
+    <a class="button grey" href="/users/logout" method="post">Logout</a>
+  {{ end }}
+
+  </div>
+  
+  
+</section>

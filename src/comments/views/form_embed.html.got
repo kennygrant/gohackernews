@@ -1,0 +1,8 @@
+<form class="add-comment {{if not .comment.Id}}add-comment-root{{end}}" action="/comments/create" method="post">
+    <textarea name="text" placeholder="Add your comment here" ></textarea>
+    <input type="hidden" name="story_id" value="{{.story.Id}}">
+    {{ if .comment.Id }}
+    <input type="hidden" name="parent_id" value="{{.comment.Id}}">
+    {{ end }}
+    <input type=submit value="Add Comment" class="button right">
+</form>

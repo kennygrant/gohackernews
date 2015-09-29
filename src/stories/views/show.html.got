@@ -1,0 +1,36 @@
+<article class="narrow">
+  <div class="story">
+         {{ if .current_user.Admin }}
+           <a href="/stories/{{.story.Id}}/update" class="button  grey right">edit</a>
+         {{end }}
+         <h1>
+             <a href="/stories/{{.story.Id}}/upvote" method="post" class="vote">▲</a>
+             <a href="/stories/{{.story.Id}}" class="points">{{.story.Points}}</a>
+             <a href="/stories/{{.story.Id}}/downvote" method="post" class="vote">▼</a>
+             <a href="{{.story.Url}}" class="name">{{.story.Name}}</a>
+         </h1>
+    
+         <div class="metadata">
+             at {{ .story.Domain }}
+             <a href="/users/{{.user.Id}}">posted by {{.user.Name}}</a> {{timeago .story.CreatedAt }} &nbsp; {{ if not .current_user.CanComment }}<a href="/users/create" class="">Register</a> to comment or vote on this story.{{ end }}
+         </div>
+         
+         <div class="summary">
+           {{ markup .story.Summary }}
+         </div>
+         
+         {{ if .current_user.CanComment }}
+          {{ template "comments/views/form_embed.html.got" . }}
+         {{ end }}
+     
+         <ul class="comments">
+           {{ $0 := . }}
+           {{ range .comments }}
+              {{ set $0 "comment" . }}
+              {{ template "comments/views/comment.html.got" $0 }}
+           {{ end }}
+         </ul>
+         
+         </div>
+     
+</article>

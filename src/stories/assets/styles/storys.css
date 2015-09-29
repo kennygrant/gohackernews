@@ -1,0 +1,159 @@
+/* CSS Styles for stories */
+
+.stories {
+  list-style: none;
+}
+
+li.story {
+  line-height: 1.5em;
+  padding: 0.5rem 1rem;
+  margin: 0;
+  border-top: 1px solid #fff;
+}
+
+li.story:hover {
+  background-color: #eeeee6;
+}
+
+li.story h3 {
+  font-size: 0.85em;
+  margin: 0;
+  height: 1.2em;
+  overflow: hidden;
+}
+
+li.story .vote {
+  font-size: 0.75em;
+}
+
+li.story h3 .name {
+  display: inline;
+  margin: 0.5rem 0.5rem;
+}
+
+li.story .domain {}
+
+li.story .voting {
+  display: inline-block;
+}
+
+.story .vote {
+  font-size: 0.65em;
+}
+
+.story .metadata {
+  color: #ea8c06;
+}
+
+li.story .metadata {
+  font-size: 0.7em;
+  margin: 0;
+  overflow: hidden;
+  height: 2em;
+}
+
+.story form .field {
+  clear: both;
+  display: block;
+  height: 3rem;
+  margin: 0;
+}
+
+.story .comments {
+  margin-top: 2rem;
+}
+
+li.story .button {
+  opacity: 0.2;
+  top: 0rem;
+  padding: 0 0.5rem;
+  margin: 0 0 0 0.5rem;
+  height: 2rem;
+  line-height: 2rem;
+}
+
+li.story .button:hover {
+  opacity: 1.0;
+}
+
+.points {
+  color: #ea8c06;
+  text-align: center;
+  display: inline-block;
+  min-width: 1em;
+}
+
+.points:hover {
+  color: #ff6600;
+}
+
+.name {
+  color: #05afe7;
+}
+
+.name:hover {
+  color: #0c99c8;
+}
+
+.story .add-comment-root {
+  margin-bottom: 4em;
+}
+
+.story.minus1 {
+  opacity: 0.9;
+}
+
+.story.minus2 {
+  opacity: 0.7;
+}
+
+.story.minus3 {
+  opacity: 0.5;
+}
+
+.story.minus4 {
+  opacity: 0.3;
+}
+
+.story.minus5 {
+  opacity: 0.1;
+}
+
+.story.minus6 {
+  opacity: 0.1;
+}
+
+.story h1 .name {
+  display: block;
+  font-size: 0.9em;
+}
+
+li.story .button {
+  display: none;
+}
+
+@media (min-width: 750px) {
+  .story h1 .name {
+    display: inline;
+    font-size: 1em;
+  }
+  li.story {
+    height: 1.5em;
+    overflow: hidden;
+    overflow-x: scroll;
+  }
+  li.story h3 {
+    display: inline;
+    font-size: 1.1em;
+  }
+  li.story .button {
+    display: block;
+  }
+  li.story .metadata {
+    display: inline;
+    font-size: 1em;
+  }
+  li.story .button {
+    top: 0.2rem;
+  }
+}

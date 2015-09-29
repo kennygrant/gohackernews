@@ -1,0 +1,24 @@
+
+<form method="post" class="resource-update-form">
+  
+    <div class="inline-fields">
+    {{ if .current_user.Admin }}
+    {{ select "Status" "status" .user.Status .user.StatusOptions }}
+    {{ select "Role" "role" .user.Role .user.RoleOptions }}
+    {{ end }}
+    {{ field "Email" "email" .user.Email }}
+    {{ field "Password" "password" "" "password" "type=password" }}
+    {{ field "Name" "name" .user.Name }}
+    </div>
+
+    <div class="page-content clear">
+        <label>Profile</label>
+        {{ template "lib/editable/views/editable-toolbar.html.got"}}
+        <textarea name="summary" class="content-textarea" id="profile-content-textarea">{{.user.Summary}}</textarea>
+        <div contenteditable class="content-editable padded-content-editable" id="profile-content-editable">{{html .user.Summary}}</div>
+    </div>
+   
+    <div class="actions clear">
+        <input type="submit" class="button" value="Save">
+    </div>
+</form>

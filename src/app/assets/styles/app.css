@@ -1,0 +1,331 @@
+@font-face {
+  font-family: Lato src: url(/assets/fonts/lato.ttf);
+}
+
+body {
+  font: 1.6em/1.6em "Lato", "Roboto", "Helvetica Neue", Arial, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: normal;
+  color: #666;
+  font-weight: 300;
+  font-style: normal;
+  margin: 0.8rem 0 0.5rem 0;
+}
+
+h1, h2, h3 {
+  font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+  font-style: normal;
+  text-align: center;
+}
+
+h1 {
+  text-transform: uppercase;
+  color: #05afe7;
+}
+
+h2 {
+  color: #555;
+}
+
+h2 b {
+  color: #888;
+}
+
+h3 {}
+
+h4 {}
+
+h5 {
+  font-size: 1.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+}
+
+a {
+  text-decoration: none;
+  color: #ea8c06;
+}
+
+a:hover {
+  color: #ff9804;
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+code {
+  white-space: normal;
+  font-size: 0.8em;
+}
+
+.hidden {
+  display: none;
+}
+
+.clear {
+  clear: both;
+}
+
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+  float: right;
+}
+
+.center {
+  text-align: center;
+}
+
+.button, button, input[type="submit"], input[type="reset"], input[type="button"] {
+  color: #fff;
+  background-color: #05afe7;
+  border: none;
+  font-size: 1em;
+  font-weight: 300;
+  height: 3rem;
+  line-height: 3rem;
+  padding: 0rem 1rem;
+}
+
+.button:hover, button:hover, input[type="submit"]:hover, input[type="reset"]:hover, input[type="button"]:hover {
+  color: #fff;
+  text-shadow: 0 0 0.4rem rgba(0, 0, 0, 0.2)
+}
+
+.button.grey {
+  background-color: #aaa;
+}
+
+.button.orange {
+  background-color: #f49a18;
+}
+
+.button.small {
+  font-size: 0.9em;
+  margin: 0;
+  position: relative;
+  top: 0.3rem;
+  float: right;
+  height: 2.2rem;
+  line-height: 2.4rem;
+  font-weight: 400;
+  padding: 0 0.6rem;
+}
+
+nav .button.small {
+  top: 0.7rem;
+  background-color: #fff;
+  color: #ff6600;
+  opacity: 0.8;
+  height: 2.6rem;
+  line-height: 2.6rem;
+}
+
+nav .button.small:hover {
+  text-shadow: none;
+  opacity: 1.0;
+}
+
+.inline-buttons {
+  text-align: center;
+}
+
+.inline-buttons .button {
+  margin: 1rem 1rem 2rem 1rem;
+}
+
+ul.list {
+  list-style: disc;
+  padding: 0 0 0 2rem;
+  color: #444;
+}
+
+ul.inline, nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: inline;
+}
+
+ul.inline li, nav ul li {
+  display: inline-block;
+  white-space: nowrap;
+  padding: 0 2rem;
+  margin: 0 0 0.2rem 0;
+}
+
+nav ul li {
+  padding: 0 0.8rem;
+  margin: 0;
+}
+
+header a {
+  line-height: 4rem;
+  color: #fff;
+}
+
+header a:hover {
+  color: #fff;
+}
+
+header {
+  margin: 0 0 0 0;
+  color: #fff;
+  border-bottom: 2px solid #f1e42a;
+  background-color: #f49a18;
+}
+
+header nav {
+  width: 60em;
+}
+
+footer {
+  clear: both;
+  font-size: 0.9em;
+  text-align: center;
+  padding: 2rem 0 1rem 0;
+  margin: 4rem 0 0 0;
+  border-top: 1px solid #f1e42a;
+  border-bottom: 2px solid #f49a18;
+}
+
+nav {
+  clear: both;
+  font-weight: 300;
+}
+
+nav.admin {
+  background-color: #000;
+}
+
+article {
+  clear: both;
+  padding: 0;
+  min-height: 50rem;
+  max-width: 110em;
+  margin: 0 auto;
+}
+
+article.narrow {
+  max-width: 80em;
+  margin: 0 auto;
+}
+
+section {
+  clear: both;
+  display: block;
+  padding: 1rem 2rem;
+  margin: 1rem auto;
+}
+
+section.padded {
+  padding: 0 2rem;
+  max-width: 80em;
+}
+
+section.narrow {
+  padding: 0 2rem;
+  max-width: 50em;
+}
+
+header {
+  height: 4rem;
+  overflow: scroll;
+}
+
+
+/*  FORMS */
+
+article form {
+  padding: 1rem 0;
+}
+
+article form.nopadding {
+  padding: 0;
+}
+
+label {
+  color: #555;
+  font-weight: normal;
+}
+
+.inline-fields .field {
+  float: left;
+  margin-right: 3rem;
+}
+
+.wide-fields .field {
+  clear: both;
+}
+
+.wide-fields input {
+  width: 100%;
+}
+
+section.actions {
+  clear: both;
+  padding: 0;
+  text-align: center;
+}
+
+section.actions .button {
+  margin-left: 2rem;
+}
+
+@media(min-width:750px) {
+  section.actions {
+    text-align: right;
+    margin-top: -4.5rem;
+  }
+  section.actions .button {
+    float: right;
+  }
+  header nav {
+    width: 100%;
+  }
+}
+
+article .story {
+  background-color: #f6f6ef;
+  padding: 2rem;
+}
+
+textarea {
+  width: 100%;
+  min-height: 10em;
+}
+
+a {
+  color: #ff6600;
+}
+
+h1, h2, h3 {
+  font-size: 2em;
+  margin: 0;
+  text-align: left;
+  font-family: "Helvetica";
+  text-transform: none;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
+  font-size: 1.1em;
+}
+
+header, footer {
+  background-color: #ff6600;
+  border: none;
+}
+
+footer a {
+  color: #fff;
+}

@@ -1,0 +1,6 @@
+<article>
+<section class="padded">
+<h1>Update {{.story.Name}}</h1>
+{{ template "stories/views/form.html.got" . }}
+</section>
+</article>

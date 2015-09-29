@@ -1,0 +1,36 @@
+<li id="comment{{.comment.Id}}" class="comment level{{ .comment.Level }} minus{{ .comment.NegativePoints }}">
+    <div class="metadata">
+    {{ if .current_user.CanComment }}
+    {{ if ne .comment.UserId .current_user.Id }}
+      <a href="#" class="show button small grey reply" data-show="#comment{{.comment.Id}} .reply-form">reply</a>
+    {{ end }}
+    
+    {{ if (.current_user.Admin) or (eq .comment.UserId .current_user.Id) }}
+      <a href="/comments/{{.comment.Id}}/update"  class="button small grey reply">edit</a>
+    {{ end }}
+    {{ end }}
+    
+    <a href="/comments/{{.comment.Id}}/upvote" method="post" class="vote">▲</a>
+    {{ if not .story }}
+    comment posted on <a href="/stories/{{.comment.StoryId}}">{{.comment.StoryName}}</a> by 
+    {{ end}}
+    <a href="/users/{{.comment.UserId}}">{{.comment.UserName}}</a> 
+    <a href="/comments/{{.comment.Id}}">{{timeago .comment.CreatedAt}}</a>
+    
+    <a href="/comments/{{.comment.Id}}/downvote" method="post" class="vote">▼</a>
+    </div>
+    <div class="content">
+    {{ markup .comment.Text }}
+    </div>
+    {{ if ne .comment.UserId .current_user.Id  }}
+      <div class="reply-form hidden">
+      {{ template "comments/views/form_embed.html.got" . }}
+       </div>
+    {{ end }}
+    {{ $0 := . }}
+    {{ range .comment.Children }}
+       {{ set $0 "comment" . }}
+       {{ template "comments/views/comment.html.got" $0 }}
+    {{ end }}
+    
+ </li>

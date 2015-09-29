@@ -1,0 +1,12 @@
+<article>
+<div class="row">
+<ul class="comments">
+  {{ $0 := . }}
+  {{ range $i,$m := .comments }}
+     {{ set $0 "i" $i }}
+     {{ set $0 "comment" $m }}
+     {{ template "comments/views/comment.html.got" $0 }}
+  {{ end }}
+</ul>
+</div>
+</article>

@@ -1,0 +1,23 @@
+<li class="story minus{{.story.NegativePoints}}">
+  {{ if .current_user.Admin }}
+    <a href="/stories/{{.story.Id}}/update" class="button small grey flag">edit</a>
+    <a href="/stories/{{.story.Id}}/flag" class="button small grey flag" method="post">Flag</a>
+  {{end }}
+    <h3>
+       <div class="voting">
+       <a href="/stories/{{.story.Id}}/upvote" method="post" class="vote">▲</a>
+       <a href="/stories/{{.story.Id}}" class="points">{{.story.Points}}</a>
+       <a href="/stories/{{.story.Id}}/downvote" method="post" class="vote">▼</a>
+       </div>
+       {{ if .story.Url }}
+         <a href="{{.story.Url}}" class="name">{{.story.Name}}</a>
+       {{ else }}
+         <a href="{{.story.URLShow}}" class="name">{{.story.Name}}</a>
+       {{ end }}
+    </h3>
+    <div class="metadata">
+        <span class="domain">at {{ .story.Domain }}</span>
+        posted by <a href="/users/{{.story.UserId}}">{{.story.UserName}}</a> {{timeago .story.CreatedAt}}
+         <a href="/stories/{{.story.Id}}">{{.story.CommentCount}} comments</a> 
+    </div>
+</li>

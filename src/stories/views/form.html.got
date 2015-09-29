@@ -1,0 +1,25 @@
+<div class="row stories_form">
+<form method="post" class="resource-update-form">
+    <section class="actions">
+        <input type="submit" class="button" value="Save">
+        <a class="button grey" href="javascript:history.back()">Cancel</a>
+    </section>
+  
+    <div class="wide-fields">
+    {{ field "Url" "url" .story.Url }}
+    {{ field "Name" "name" .story.Name }}
+    {{ field "Summary" "summary" .story.Summary }}
+    </div>
+  
+    {{ if .current_user.Admin }}
+    <div class="inline-fields">
+    {{ select "Status" "status" .story.Status .story.StatusOptions }}
+    {{ field "UserId" "user_id" .story.UserId }}
+    {{ field "Points" "points" .story.Points }}
+    </div>
+    {{ end }}
+    
+
+    <input name="authenticity-token" type="hidden" value="{{.csrf}}">
+</form>
+</div>

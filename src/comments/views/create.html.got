@@ -1,0 +1,4 @@
+<article>
+<h1>Create Comment</h1>
+{{ template "comments/views/form.html.got" . }}
+</article>

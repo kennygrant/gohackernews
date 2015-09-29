@@ -1,0 +1,6 @@
+<article>
+<section class="padded">
+<h1>Update Comment</h1>
+{{ template "comments/views/form.html.got" . }}
+</section>
+</article>

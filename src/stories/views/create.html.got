@@ -1,0 +1,19 @@
+<article>
+<section class="padded">
+<h1>Submit Story</h1>
+<form method="post" class="">
+    <section class="actions">
+      <input type="submit" class="button" value="Submit">
+    </section>
+  
+    <section class="wide-fields">
+    {{ field "Url" "url" .story.Url "class=active_url_field"}}
+    {{ field "Name" "name" .story.Name "class=active_name_field" }}
+    {{ textarea "Summary" "summary" .story.Summary }}
+    </section>
+    
+
+    <input name="authenticity-token" type="hidden" value="{{.csrf}}">
+</form>
+</section>
+</article>

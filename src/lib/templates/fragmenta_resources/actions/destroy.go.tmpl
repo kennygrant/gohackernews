@@ -1,0 +1,34 @@
+package [[ .fragmenta_resource ]]actions
+
+import (
+	
+	"github.com/fragmenta/router"
+
+	"[[ .fragmenta_app_path ]]/[[ .fragmenta_resources ]]"
+    "[[ .fragmenta_app_path ]]/lib/authorise"
+)
+
+// HandleDestroy handles a DESTROY request for [[ .fragmenta_resources ]]
+func HandleDestroy(context router.Context) error {
+
+  
+
+	// Find the [[ .fragmenta_resource ]]
+	[[ .fragmenta_resource ]], err := [[ .fragmenta_resources ]].Find(context.ParamInt("id"))
+	if err != nil {
+		return router.NotFoundError(err)	
+    }
+
+	// Authorise destroy [[ .fragmenta_resource ]]
+	err = authorise.Resource(context,[[ .fragmenta_resource ]]) 
+    if err != nil {
+		return router.NotAuthorizedError(err)	
+    }
+    
+
+	// Destroy the [[ .fragmenta_resource ]]
+	[[ .fragmenta_resource ]].Destroy()
+
+	// Redirect to [[ .fragmenta_resources ]] root
+	return router.Redirect(context, [[ .fragmenta_resource ]].URLIndex())
+}
