@@ -31,11 +31,6 @@ func HandleFlag(context router.Context) error {
 		return router.NotAuthorizedError(err, "Flag Failed", "Sorry, you can't flag yet")
 	}
 
-	err = authorise.Resource(context, comment)
-	if err != nil {
-		return router.NotAuthorizedError(err, "Flag Failed", "Sorry you are not allowed to flag")
-	}
-
 	err = adjustUserPoints(user, -1)
 	if err != nil {
 		return err
@@ -58,19 +53,16 @@ func HandleDownvote(context router.Context) error {
 	user := authorise.CurrentUser(context)
 	ip := getUserIP(context)
 
-	// Check we have no votes already from this user, if we do fail
-	if commentHasUserVote(comment, user) {
-		return router.NotAuthorizedError(err, "Vote Failed", "Sorry you are not allowed to vote twice, nice try!")
+	if !user.Admin() {
+		// Check we have no votes already from this user, if we do fail
+		if commentHasUserVote(comment, user) {
+			return router.NotAuthorizedError(err, "Vote Failed", "Sorry you are not allowed to vote twice, nice try!")
+		}
 	}
 
 	// Authorise upvote on comment for this user - our rules are:
 	if !user.CanDownvote() {
 		return router.NotAuthorizedError(err, "Vote Failed", "Sorry, you can't downvote yet")
-	}
-
-	err = authorise.Resource(context, comment)
-	if err != nil {
-		return router.NotAuthorizedError(err, "Vote Failed", "Sorry you are not allowed to vote")
 	}
 
 	err = adjustUserPoints(user, -1)
@@ -99,19 +91,16 @@ func HandleUpvote(context router.Context) error {
 	user := authorise.CurrentUser(context)
 	ip := getUserIP(context)
 
-	// Check we have no votes already from this user, if we do fail
-	if commentHasUserVote(comment, user) {
-		return router.NotAuthorizedError(err, "Vote Failed", "Sorry you are not allowed to vote twice, nice try!")
+	if !user.Admin() {
+		// Check we have no votes already from this user, if we do fail
+		if commentHasUserVote(comment, user) {
+			return router.NotAuthorizedError(err, "Vote Failed", "Sorry you are not allowed to vote twice, nice try!")
+		}
 	}
 
 	// Authorise upvote on comment for this user - our rules are:
 	if !user.CanUpvote() {
 		return router.NotAuthorizedError(err, "Vote Failed", "Sorry, you can't upvote yet")
-	}
-
-	err = authorise.Resource(context, comment)
-	if err != nil {
-		return router.NotAuthorizedError(err, "Vote Failed", "Sorry you are not allowed to vote")
 	}
 
 	// Adjust points on comment and add to the vote table
@@ -134,6 +123,13 @@ func addCommentVote(comment *comments.Comment, user *users.User, ip string, delt
 	err := comment.Update(map[string]string{"points": fmt.Sprintf("%d", comment.Points+delta)})
 	if err != nil {
 		return router.InternalError(err, "Vote Failed", "Sorry your adjust vote points")
+	}
+
+	// Update the *comment* user points by delta
+	commentUser, err := users.Find(comment.UserId)
+	err = adjustUserPoints(commentUser, +1)
+	if err != nil {
+		return err
 	}
 
 	return recordCommentVote(comment, user, ip, delta)

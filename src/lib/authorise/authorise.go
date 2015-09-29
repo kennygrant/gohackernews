@@ -48,36 +48,44 @@ func Path(c router.Context) error {
 // Resource authorises the path and resource for the current user
 // if model is nil it is ignored and permission granted
 func Resource(c router.Context, r ResourceModel) error {
-	p := c.Path()
 
 	// Short circuit evaluation if this is a public path
-	if publicPath(p) {
+	if publicPath(c.Path()) {
 		return nil
 	}
 
+	// If not public path, check based on user role
 	user := c.Get("current_user").(*users.User)
-	if p == "/stories/create" && user.CanSubmit() {
+	switch user.Role {
+	case users.RoleAdmin:
+		return authoriseAdmin(c, r)
+	default:
+		return authoriseReader(c, r)
+	}
+
+}
+
+// Admins can see all screens
+func authoriseAdmin(c router.Context, r ResourceModel) error {
+	return nil
+}
+
+// authoriseReader returns error if the path/resource is not authorised
+func authoriseReader(c router.Context, r ResourceModel) error {
+	user := c.Get("current_user").(*users.User)
+
+	if c.Path() == "/stories/create" && user.CanSubmit() {
 		return nil
 	}
-	if p == "/comments/create" && user.CanComment() {
+
+	if c.Path() == "/comments/create" && user.CanComment() {
 		return nil
 	}
 
 	if r != nil {
-
-		// We should also check CSRF token on POST requests here?
-		// or should we do that separately in the action?
-		// I'm inclined to do it transparently here
-
-		switch user.Role {
-		case users.RoleAdmin:
+		if r.OwnedBy(user.Id) {
 			return nil
-		case users.RoleReader:
-			if r.OwnedBy(user.Id) {
-				return nil
-			}
 		}
-
 	}
 
 	return fmt.Errorf("Path and Resource not authorized:%s %v", c.Path(), r)

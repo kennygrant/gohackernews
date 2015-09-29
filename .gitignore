@@ -3,3 +3,6 @@ db/backup/*
 db/migrate/2015-09-26-001524-Create-Database.sql
 secrets/*
 log/*
+
+# Ignore new assets in public assets dir (generated files)
+public/assets

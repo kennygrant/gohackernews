@@ -20,7 +20,7 @@ func main() {
 	app.Setup(server)
 
 	// Inform user of server setup
-	server.Logf("#info TEST Starting server in %s mode on port %d", server.Mode(), server.Port())
+	server.Logf("#info Starting server in %s mode on port %d", server.Mode(), server.Port())
 
 	// Start the server
 	err = server.Start()

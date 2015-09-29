@@ -18,6 +18,10 @@
     <div class="metadata">
         <span class="domain">at {{ .story.Domain }}</span>
         posted by <a href="/users/{{.story.UserId}}">{{.story.UserName}}</a> {{timeago .story.CreatedAt}}
+        {{ if gt .story.CommentCount 0 }}
          <a href="/stories/{{.story.Id}}">{{.story.CommentCount}} comments</a> 
+         {{ else }}
+          <a href="/stories/{{.story.Id}}">discuss</a> 
+         {{ end }}
     </div>
 </li>

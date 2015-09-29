@@ -1,4 +1,4 @@
-<article>
+<article class="comments narrow">
 <div class="row">
 <ul class="comments">
   {{ $0 := . }}

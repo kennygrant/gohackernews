@@ -11,6 +11,9 @@
     {{ end }}
     
     <a href="/comments/{{.comment.Id}}/upvote" method="post" class="vote">▲</a>
+    {{ if eq .comment.UserId .current_user.Id }}
+      {{ .comment.Points }} points
+    {{ end }}
     {{ if not .story }}
     comment posted on <a href="/stories/{{.comment.StoryId}}">{{.comment.StoryName}}</a> by 
     {{ end}}

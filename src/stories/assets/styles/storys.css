@@ -18,7 +18,8 @@ li.story:hover {
 li.story h3 {
   font-size: 0.85em;
   margin: 0;
-  height: 1.2em;
+  height: 1.3em;
+  line-height:1.3em;
   overflow: hidden;
 }
 
@@ -28,7 +29,7 @@ li.story .vote {
 
 li.story h3 .name {
   display: inline;
-  margin: 0.5rem 0.5rem;
+  margin: 0rem 0.5rem;
 }
 
 li.story .domain {}
@@ -49,7 +50,8 @@ li.story .metadata {
   font-size: 0.7em;
   margin: 0;
   overflow: hidden;
-  height: 2em;
+  height: 1.6em;
+  line-height: 1.6em;
 }
 
 .story form .field {

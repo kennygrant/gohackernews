@@ -1,1 +1,29 @@
 /* CSS Styles for users */
+
+article.users {
+  background-color:#F6F6E7;
+  min-height:50em;
+}
+
+.users {
+  list-style: none;
+}
+
+li.user {
+  line-height: 1.5em;
+  padding: 0.5rem 1rem;
+  margin: 0;
+  border-top: 1px solid #fff;
+}
+
+li.user:hover {
+  background-color: #eeeee6;
+}
+
+li.user h3 {
+  font-size: 0.85em;
+  margin: 0;
+  height: 1.3em;
+  line-height:1.3em;
+  overflow: hidden;
+}

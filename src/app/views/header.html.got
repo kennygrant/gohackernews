@@ -6,10 +6,10 @@
        <li><a href="/stories?filter=Ask:">Ask</a></li>
        <li><a href="/stories?filter=Hiring:">Jobs</a></li>
        <li><a href="/stories?filter=Event:">Events</a></li>
+       <li><a href="/stories?filter=Video:">Videos</a></li>
+       
       
        <li><a href="/comments">Comments</a></li>
-      
-      
        {{ if .current_user.Anon }}
            <li class="right "><a href="/users/login" class="button small ">Login</a></li>
            <li class="right "><a href="/users/create" class="button small ">Register</a></li>

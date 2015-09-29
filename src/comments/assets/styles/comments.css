@@ -1,6 +1,9 @@
 /* CSS Styles for comments */
 
-
+article.comments {
+  background-color:#f6f6ef;
+  min-height:50em;
+}
 
 .comments {
 clear:both;

@@ -10,8 +10,8 @@ import (
 	"github.com/kennygrant/hackernews/src/stories"
 )
 
-// HandleHome displays a list of stories using points and gravity to order them
-// (with an optional filter perhaps?)
+// HandleHome displays a list of stories using gravity to order them
+// used for the home page for gravity rank see votes.go
 func HandleHome(context router.Context) error {
 
 	// Authorise
@@ -43,7 +43,7 @@ func HandleHome(context router.Context) error {
 
 }
 
-// HandleIndex displays a list of stories
+// HandleIndex displays a list of stories at /stories
 func HandleIndex(context router.Context) error {
 
 	// Authorise
@@ -67,10 +67,8 @@ func HandleIndex(context router.Context) error {
 		filter = strings.Replace(filter, "_", "\\_", -1)
 		filter = strings.Replace(filter, "%", "\\%", -1)
 
-		filter = "%" + filter + "%"
-
-		// initially very simple, do ilike query
-		q.Where("stories.name SIMILAR TO ?", filter)
+		// initially very simple, do ilike query for filter with wildcards
+		q.Where("stories.name ILIKE ?", "%"+filter+"%")
 
 		// If filtering, order by rank, not by date
 		q.Order("rank desc, points desc, id desc")

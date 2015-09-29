@@ -11,7 +11,11 @@ function SetSubmitStoryName() {
 
   // From the url, attempt to extract a last param, and set name to a munged version of that
   DOM.On('.active_url_field', 'change', function(e) {
-    DOM.First('.active_name_field').value = urlToSentenceCase(this.value);
+    var field = DOM.First('.active_name_field')
+    if (field.value == "") {
+      field.value = urlToSentenceCase(this.value);
+    }
+    
   });
 
 }

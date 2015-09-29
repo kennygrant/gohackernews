@@ -18,7 +18,7 @@ func HandleIndex(context router.Context) error {
 	}
 
 	// Fetch the users
-	q := users.Query().Order("name asc")
+	q := users.Query().Order("role desc, created_at desc")
 	userList, err := users.FindAll(q)
 	if err != nil {
 		context.Logf("#error Error indexing users %s", err)
