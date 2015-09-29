@@ -3,6 +3,8 @@ db/backup/*
 db/migrate/2015-09-26-001524-Create-Database.sql
 secrets/*
 log/*
+src/app/assets/scripts/analytics.js
 
 # Ignore new assets in public assets dir (generated files)
 public/assets
+
