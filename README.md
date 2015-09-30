@@ -11,11 +11,7 @@ to run the server locally:
 
     cd to/app    
 
-Perform migrations:
-
-    fragmenta migrate
-
-Run the server locally for testing:
+Run the server locally to bootstrap:
 
     fragmenta server
 
