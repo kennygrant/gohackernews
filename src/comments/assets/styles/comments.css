@@ -1,74 +1,81 @@
 /* CSS Styles for comments */
 
 article.comments {
-  background-color:#f6f6ef;
-  min-height:50em;
+  background-color: #f6f6ef;
+  min-height: 50em;
 }
 
 .comments {
-clear:both;
-list-style:none;
+  clear: both;
+  list-style: none;
 }
 
 .comment {
-list-style:none;
-max-width:100%;
-overflow:hidden;
-margin-bottom:2rem; 
-padding:1rem;
+  list-style: none;
+  max-width: 100%;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  padding: 1rem;
 }
 
 .comment .button {
-margin-left:1rem;
+  margin-left: 1rem;
 }
 
 .story .comment .metadata {
-  margin-bottom:0;
+  margin-bottom: 0;
 }
 
 .comment .metadata .vote {
-font-size:0.8em;
-}    
+  font-size: 0.8em;
+}
 
 .comment .button {
-opacity:0.6;
+  opacity: 0.6;
 }
 
 .comment .button:hover {
-opacity:1.0;
+  opacity: 1.0;
 }
 
 .comment p {
-max-width:60em;
-line-height:1.6em;
-margin:0 0 0.3em 0;
-}    
+  max-width: 60em;
+  line-height: 1.6em;
+  margin: 0 0 0.3em 0;
+}
 
-.comment p + p {
-text-indent:0.5em
+.comment blockquote {
+  color: #888;
+  border-left: 3px solid #888;
+  padding: 0 0 0 1em;
+  margin: 0.5em 0.1em;
 }
 
 .comment.minus1 {
-opacity:0.9;
-}   
+  opacity: 0.9;
+}
+
 .comment.minus2 {
-opacity:0.7;
+  opacity: 0.7;
 }
+
 .comment.minus3 {
-opacity:0.5;
+  opacity: 0.5;
 }
+
 .comment.minus4 {
-opacity:0.3;
+  opacity: 0.3;
 }
+
 .comment.minus5 {
-opacity:0.1;
+  opacity: 0.1;
 }
 
 .comment.level0 {
-border-top:1px solid #ccc;
-padding-top:1rem;
+  border-top: 1px solid #ccc;
+  padding-top: 1rem;
 }
 
 .comment.level1 {
-padding-left:4%;
-}    
+  padding-left: 4%;
+}

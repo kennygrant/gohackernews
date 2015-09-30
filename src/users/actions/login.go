@@ -44,13 +44,17 @@ func HandleLogin(context router.Context) error {
 		return router.NotFoundError(err)
 	}
 
-	// Need something neater than this - how best to do it?
+	// Find the user with this email
 	q := users.Where("email=?", params.Get("email"))
 	user, err := users.First(q)
 	if err != nil {
+		q = users.Where("name=?", params.Get("email")) // NB use of email field
+		user, err = users.First(q)
+	}
+
+	if err != nil {
 		context.Logf("#error Login failed for user no such user : %s %s", params.Get("email"), err)
 		return router.Redirect(context, "/users/login?error=failed_email")
-
 	}
 
 	err = auth.CheckPassword(params.Get("password"), user.EncryptedPassword)

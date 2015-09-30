@@ -3,24 +3,23 @@
 DOM.Ready(function() {
   // Watch story form to fetch title of story page
   SetSubmitStoryName();
-
 });
 
 
+// SetSubmitStoryName sets the story name from a URL
+//  attempt to extract a last param from URL, and set name to a munged version of that
 function SetSubmitStoryName() {
 
-  // From the url, attempt to extract a last param, and set name to a munged version of that
   DOM.On('.active_url_field', 'change', function(e) {
     var field = DOM.First('.active_name_field')
     if (field.value == "") {
       field.value = urlToSentenceCase(this.value);
     }
-    
   });
 
 }
 
-
+// Change a URL to a sentence for SetSubmitStoryName
 function urlToSentenceCase(url) {
   var parts, name
   url = url.replace(/\/$/, ""); // remove trailing /
@@ -28,7 +27,7 @@ function urlToSentenceCase(url) {
   name = parts[parts.length - 1]; // last part of string after last /
   name = name.replace(/^\d*-/, ""); // remove prefix numerals with dash (common on id based keys)
   name = name.replace(/\..*$/, ""); // remove .html etc extensions
-  name = name.replace(/-/g, " "); // remove all - in string, replacing with space
+  name = name.replace(/[_\-+]/g, " "); // remove all - or + or _ in string, replacing with space
   name = name.trim(); // remove whitespace trailing or leading
   name = name.toLowerCase(); // all lower
   name = name[0].toUpperCase() + name.substring(1); // Sentence case

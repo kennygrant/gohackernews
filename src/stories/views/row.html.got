@@ -1,4 +1,7 @@
 <li class="story minus{{.story.NegativePoints}}">
+  <a href="/stories/{{.story.Id}}" class="bubble"><b class="arrow"></b>
+    {{.story.CommentCountDisplay}}
+  </a> 
   {{ if .current_user.Admin }}
     <a href="/stories/{{.story.Id}}/update" class="button small grey flag">edit</a>
     <a href="/stories/{{.story.Id}}/flag" class="button small grey flag" method="post">Flag</a>
@@ -9,19 +12,12 @@
        <a href="/stories/{{.story.Id}}" class="points">{{.story.Points}}</a>
        <a href="/stories/{{.story.Id}}/downvote" method="post" class="vote">▼</a>
        </div>
-       {{ if .story.Url }}
-         <a href="{{.story.Url}}" class="name">{{.story.Name}}</a>
-       {{ else }}
-         <a href="{{.story.URLShow}}" class="name">{{.story.Name}}</a>
-       {{ end }}
+        <a href="{{.story.DestinationURL}}" class="name">{{.story.Name}}</a>
+
     </h3>
     <div class="metadata">
-        <span class="domain">at {{ .story.Domain }}</span>
-        posted by <a href="/users/{{.story.UserId}}">{{.story.UserName}}</a> {{timeago .story.CreatedAt}}
-        {{ if gt .story.CommentCount 0 }}
-         <a href="/stories/{{.story.Id}}">{{.story.CommentCount}} comments</a> 
-         {{ else }}
-          <a href="/stories/{{.story.Id}}">discuss</a> 
-         {{ end }}
+        <a href="{{.story.DestinationURL}}" class="domain">{{ .story.Domain }}</a>
+        <a href="/users/{{.story.UserId}}" class="user">{{.story.UserName}}</a>
+        <a href="/stories/{{.story.Id}}" class="date">{{timeago .story.CreatedAt}}</a>
     </div>
 </li>

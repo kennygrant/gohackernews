@@ -28,7 +28,6 @@ function ActivateMethodLinks() {
         window.location.reload();
       }
     }, function() {
-      console.log("#error POST to" + url + "failed");
     });
 
     e.preventDefault();
@@ -49,16 +48,12 @@ function ActivateMethodLinks() {
 function ActivateShowlinks() {
   DOM.On('.show', 'click', function(e) {
     var selector = this.getAttribute('data-show');
-    console.log("SELECTOR", selector)
     DOM.Each(selector, function(el, i) {
-      console.log("FOUND", el)
       if (!el.className.match(/hidden/gi)) {
         el.className = 'hidden';
       } else {
         el.className = el.className.replace(/hidden/gi, '');
       }
-      console.log("after", el)
-
     });
 
     e.preventDefault();

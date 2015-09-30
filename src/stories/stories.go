@@ -2,6 +2,7 @@
 package stories
 
 import (
+	"fmt"
 	"strings"
 	"time"
 
@@ -193,4 +194,20 @@ func (m *Story) Domain() string {
 	}
 
 	return "GN"
+}
+
+// DestinationURL returns the URL of the story (either set URL or if unset for Ask:, just the ShowURL)
+func (m *Story) DestinationURL() string {
+	if m.Url != "" {
+		return m.Url
+	}
+	return m.URLShow()
+}
+
+// CommentCountDisplay returns the comment count or ellipsis if count is 0
+func (m *Story) CommentCountDisplay() string {
+	if m.CommentCount > 0 {
+		return fmt.Sprintf("%d", m.CommentCount)
+	}
+	return "…"
 }

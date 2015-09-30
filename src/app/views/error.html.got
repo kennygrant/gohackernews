@@ -13,5 +13,4 @@
       <p><a href="/users/login" class="button">Login</a></p>   
       {{ end }}
       <p><a class="button grey" method="back">Back</a></p>   
-    
 </section>

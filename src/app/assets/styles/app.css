@@ -15,37 +15,35 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1, h2, h3 {
-  font-family: Futura, "Trebuchet MS", Arial, sans-serif;
   font-style: normal;
-  text-align: center;
+  font-size: 2em;
+  margin: 0;
+  text-align: left;
+  font-family: "Helvetica", sans-serif;
+  text-transform: none;
 }
 
 h1 {
-  text-transform: uppercase;
   color: #05afe7;
 }
 
 h2 {
   color: #555;
+  font-size: 1.5em;
 }
 
 h2 b {
   color: #888;
 }
 
-h3 {}
-
-h4 {}
-
-h5 {
-  font-size: 1.4rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1rem;
+h3 {
+  font-size: 1.1em;
 }
+
 
 a {
   text-decoration: none;
-  color: #ea8c06;
+  color: #ff6600;
 }
 
 a:hover {
@@ -193,7 +191,7 @@ footer {
   margin: 4rem 0 0 0;
   border-top: 1px solid #f1e42a;
   border-bottom: 2px solid #f49a18;
-  color:rgba(255,255,255,0.6);
+  color: rgba(255, 255, 255, 0.6);
 }
 
 nav {
@@ -302,26 +300,6 @@ textarea {
   min-height: 10em;
 }
 
-a {
-  color: #ff6600;
-}
-
-h1, h2, h3 {
-  font-size: 2em;
-  margin: 0;
-  text-align: left;
-  font-family: "Helvetica";
-  text-transform: none;
-}
-
-h2 {
-  font-size: 1.5em;
-}
-
-h3 {
-  font-size: 1.1em;
-}
-
 header, footer {
   background-color: #ff6600;
   border: none;
@@ -330,5 +308,3 @@ header, footer {
 footer a {
   color: #fff;
 }
-
-
