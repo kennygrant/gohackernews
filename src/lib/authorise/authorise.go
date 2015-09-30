@@ -82,6 +82,15 @@ func authoriseReader(c router.Context, r ResourceModel) error {
 		return nil
 	}
 
+	// Allow upvotes and downvotes
+	if strings.HasSuffix(c.Path(), "/upvote") && user.CanUpvote() {
+		return nil
+	}
+
+	if strings.HasSuffix(c.Path(), "/downvote") && user.CanDownvote() {
+		return nil
+	}
+
 	if r != nil {
 		if r.OwnedBy(user.Id) {
 			return nil
