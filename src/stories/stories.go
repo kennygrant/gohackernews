@@ -71,7 +71,7 @@ func Create(params map[string]string) (int64, error) {
 	params = model.CleanParams(params, AllowedParams())
 
 	// Check params for invalid values
-	err := validateParams(params)
+	err := validateParams(params, true)
 	if err != nil {
 		return 0, err
 	}
@@ -84,24 +84,27 @@ func Create(params map[string]string) (int64, error) {
 }
 
 // validateParams checks these params pass validation checks
-func validateParams(params map[string]string) error {
+// TODO: reconsider best interface for this - don't like the bool
+func validateParams(params map[string]string, checkAll bool) error {
 
-	// Now check params are as we expect
-	// This approach does mean they can get away with not sending params in at all...
-	// Investigate fixes
-
-	if len(params["name"]) > 0 {
+	if checkAll || len(params["name"]) > 0 {
 		err := validate.Length(params["name"], 2, 300)
 		if err != nil {
-			return router.BadRequestError(err, "Invalid Name", "The Name must be over 2 characters")
+			return router.BadRequestError(err, "Invalid Name", "The name must be over 2 characters")
 		}
 	}
 
-	if len(params["url"]) > 0 {
+	if checkAll || len(params["url"]) > 0 {
+
 		err := validate.Length(params["url"], 5, 1000)
 		if err != nil {
-			return router.BadRequestError(err, "Invalid URL", "The url must be over 5 characters")
+			return router.BadRequestError(err, "Invalid URL", "The URL must be over 5 characters")
 		}
+
+		if !strings.HasPrefix(params["url"], "http://") && !strings.HasPrefix(params["url"], "https://") {
+			return router.BadRequestError(nil, "Invalid URL", "The URL must have scheme https:// or http://")
+		}
+
 	}
 
 	return nil
@@ -157,8 +160,8 @@ func (m *Story) Update(params map[string]string) error {
 	// Remove params not in AllowedParams
 	params = model.CleanParams(params, AllowedParams())
 
-	// Check params for invalid values
-	err := validateParams(params)
+	// Check params for invalid values, but only if passed in
+	err := validateParams(params, false)
 	if err != nil {
 		return err
 	}
