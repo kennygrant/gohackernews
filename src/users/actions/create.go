@@ -12,16 +12,13 @@ import (
 // HandleCreateShow handles GET users/create
 func HandleCreateShow(context router.Context) error {
 
-	// Authorise
-	err := authorise.Path(context)
-	if err != nil {
-		return router.NotAuthorizedError(err)
-	}
+	// No auth as anyone can create users in this app
 
 	// Setup
 	view := view.New(context)
 	user := users.New()
 	view.AddKey("user", user)
+	view.AddKey("authenticity_token", authorise.CreateAuthenticityToken(context))
 
 	// Serve
 	return view.Render()
@@ -30,8 +27,8 @@ func HandleCreateShow(context router.Context) error {
 // HandleCreate handles POST users/create
 func HandleCreate(context router.Context) error {
 
-	// Authorise
-	err := authorise.Path(context)
+	// Check csrf token
+	err := authorise.AuthenticityToken(context)
 	if err != nil {
 		return router.NotAuthorizedError(err)
 	}

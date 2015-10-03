@@ -6,19 +6,12 @@ import (
 	"github.com/fragmenta/router"
 	"github.com/fragmenta/view"
 
-	"github.com/kennygrant/hackernews/src/lib/authorise"
 	"github.com/kennygrant/hackernews/src/stories"
 )
 
 // HandleHome displays a list of stories using gravity to order them
 // used for the home page for gravity rank see votes.go
 func HandleHome(context router.Context) error {
-
-	// Authorise
-	err := authorise.Path(context)
-	if err != nil {
-		return router.NotAuthorizedError(err)
-	}
 
 	// Build a query
 	q := stories.Query().Limit(500)
@@ -45,12 +38,6 @@ func HandleHome(context router.Context) error {
 
 // HandleIndex displays a list of stories at /stories
 func HandleIndex(context router.Context) error {
-
-	// Authorise
-	err := authorise.Path(context)
-	if err != nil {
-		return router.NotAuthorizedError(err)
-	}
 
 	// Build a query
 	q := stories.Query().Limit(500)

@@ -10,6 +10,8 @@ import (
 // HandleShow serve a get request at /users/1
 func HandleShow(context router.Context) error {
 
+	// No auth - this is public
+
 	// Find the user
 	user, err := users.Find(context.ParamInt("id"))
 	if err != nil {

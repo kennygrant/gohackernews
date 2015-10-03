@@ -30,7 +30,7 @@ func HandleUpdateShow(context router.Context) error {
 	// Render the template
 	view := view.New(context)
 	view.AddKey("story", story)
-	// view.AddKey("csrf",auth.CSRFToken(""))
+	view.AddKey("authenticity_token", authorise.CreateAuthenticityToken(context))
 	return view.Render()
 }
 
@@ -44,7 +44,7 @@ func HandleUpdate(context router.Context) error {
 	}
 
 	// Authorise update story
-	err = authorise.Resource(context, story)
+	err = authorise.ResourceAndAuthenticity(context, story)
 	if err != nil {
 		return router.NotAuthorizedError(err)
 	}

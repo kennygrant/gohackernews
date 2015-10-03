@@ -18,12 +18,6 @@ func HandleShow(context router.Context) error {
 		return router.InternalError(err)
 	}
 
-	// Authorise access
-	err = authorise.Resource(context, story)
-	if err != nil {
-		return router.NotAuthorizedError(err)
-	}
-
 	// Find the comments for this story
 	// Fetch the comments
 	q := comments.Where("story_id=?", story.Id).Order(comments.RankOrder)
@@ -39,5 +33,7 @@ func HandleShow(context router.Context) error {
 	view.AddKey("meta_desc", story.Summary)
 	view.AddKey("meta_keywords", story.Name)
 	view.AddKey("comments", rootComments)
+	view.AddKey("authenticity_token", authorise.CreateAuthenticityToken(context))
+
 	return view.Render()
 }

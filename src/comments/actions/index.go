@@ -7,17 +7,12 @@ import (
 	"github.com/fragmenta/view"
 
 	"github.com/kennygrant/hackernews/src/comments"
-	"github.com/kennygrant/hackernews/src/lib/authorise"
 )
 
 // HandleIndex displays a list of comments
 func HandleIndex(context router.Context) error {
 
-	// Authorise
-	err := authorise.Path(context)
-	if err != nil {
-		return router.NotAuthorizedError(err)
-	}
+	// No auth this is public
 
 	// Build a query to fetch latest 100 comments
 	q := comments.Query().Limit(100).Order("created_at desc")

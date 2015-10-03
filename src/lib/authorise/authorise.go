@@ -49,11 +49,6 @@ func Path(c router.Context) error {
 // if model is nil it is ignored and permission granted
 func Resource(c router.Context, r ResourceModel) error {
 
-	// Short circuit evaluation if this is a public path
-	if publicPath(c.Path()) {
-		return nil
-	}
-
 	// If not public path, check based on user role
 	user := c.Get("current_user").(*users.User)
 	switch user.Role {
@@ -63,6 +58,19 @@ func Resource(c router.Context, r ResourceModel) error {
 		return authoriseReader(c, r)
 	}
 
+}
+
+// ResourceAndAuthenticity authorises the path and resource for the current user
+func ResourceAndAuthenticity(c router.Context, r ResourceModel) error {
+
+	// Check the authenticity token first
+	err := AuthenticityToken(c)
+	if err != nil {
+		return err
+	}
+
+	// Now authorise the resource as normal
+	return Resource(c, r)
 }
 
 // Admins can see all screens
@@ -99,27 +107,4 @@ func authoriseReader(c router.Context, r ResourceModel) error {
 
 	return fmt.Errorf("Path and Resource not authorized:%s %v", c.Path(), r)
 
-}
-
-// publicPath returns true if this path should always be allowed, regardless of user role
-func publicPath(p string) bool {
-	if p == "/" {
-		return true
-	}
-
-	// Anon can log in and create a user (register)
-	if p == "/users/login" || p == "/users/create" {
-		return true
-	}
-
-	// This is a way of saying index and show only are public, no actions
-	// TODO: find a neater way to do this?
-	if strings.HasPrefix(p, "/comments") && strings.Count(p, "/") < 3 {
-		return true
-	}
-	if strings.HasPrefix(p, "/stories") && strings.Count(p, "/") < 3 {
-		return true
-	}
-
-	return false
 }

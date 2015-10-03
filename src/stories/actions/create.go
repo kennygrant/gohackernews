@@ -22,19 +22,18 @@ func HandleCreateShow(context router.Context) error {
 	story := stories.New()
 	view.AddKey("story", story)
 	view.AddKey("meta_title", "Go Hacker News Submit")
+	view.AddKey("authenticity_token", authorise.CreateAuthenticityToken(context))
 	return view.Render()
 }
 
 // HandleCreate handles the POST of the create form for stories
 func HandleCreate(context router.Context) error {
 
-	// Authorise
-	/*
-			err := authorise.Path(context)
-			if err != nil {
-				return router.NotAuthorizedError(err)
-		}
-	*/
+	// Check csrf token
+	err := authorise.AuthenticityToken(context)
+	if err != nil {
+		return router.NotAuthorizedError(err)
+	}
 
 	// Check permissions - if not logged in and above 1 points, redirect to error
 	if !authorise.CurrentUser(context).CanSubmit() {

@@ -5,4 +5,5 @@
     <input type="hidden" name="parent_id" value="{{.comment.Id}}">
     {{ end }}
     <input type=submit value="Add Comment" class="button right">
+    <input name="authenticity_token" type="hidden" value="{{.authenticity_token}}">
 </form>

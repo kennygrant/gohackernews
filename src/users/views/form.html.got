@@ -21,4 +21,6 @@
     <div class="actions clear">
         <input type="submit" class="button" value="Save">
     </div>
+    
+    <input name="authenticity_token" type="hidden" value="{{.authenticity_token}}">
 </form>

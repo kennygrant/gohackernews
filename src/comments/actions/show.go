@@ -5,7 +5,6 @@ import (
 	"github.com/fragmenta/view"
 
 	"github.com/kennygrant/hackernews/src/comments"
-	"github.com/kennygrant/hackernews/src/lib/authorise"
 )
 
 // HandleShow displays a single comment
@@ -17,11 +16,7 @@ func HandleShow(context router.Context) error {
 		return router.InternalError(err)
 	}
 
-	// Authorise access
-	err = authorise.Resource(context, comment)
-	if err != nil {
-		return router.NotAuthorizedError(err)
-	}
+	// No auth as all are public - if we restricted by status we might need to authorise here
 
 	// Render the template
 	view := view.New(context)

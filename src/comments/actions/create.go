@@ -11,7 +11,6 @@ import (
 	"github.com/kennygrant/hackernews/src/stories"
 )
 
-// We should probably get rid of this action completely in this app
 // HandleCreateShow serves the create form via GET for comments
 func HandleCreateShow(context router.Context) error {
 
@@ -27,17 +26,20 @@ func HandleCreateShow(context router.Context) error {
 	view.AddKey("comment", comment)
 
 	// TODO: May have to validate parent_id or story_id
-	//  if we restrict posting on certain items
-	// this wills et these to 0 if the params are not set
 	view.AddKey("story_id", context.ParamInt("story_id"))
 	view.AddKey("parent_id", context.ParamInt("parent_id"))
-
-	// view.AddKey("csrf",auth.CSRFToken(""))
+	view.AddKey("authenticity_token", authorise.CreateAuthenticityToken(context))
 	return view.Render()
 }
 
 // HandleCreate handles the POST of the create form for comments
 func HandleCreate(context router.Context) error {
+
+	// Authorise csrf token
+	err := authorise.AuthenticityToken(context)
+	if err != nil {
+		return router.NotAuthorizedError(err)
+	}
 
 	// Check permissions - if not logged in and above 0 points, redirect
 	if !authorise.CurrentUser(context).CanComment() {

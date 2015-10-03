@@ -22,7 +22,7 @@ func CurrentUser(context router.Context) *users.User {
 	user := &users.User{}
 
 	// Build the session from the secure cookie, or create a new one
-	session, err := auth.Session(context, context.Request())
+	session, err := auth.Session(context.Writer(), context.Request())
 	if err != nil {
 		context.Logf("#error problem retrieving session")
 		return user
@@ -49,4 +49,32 @@ func CurrentUser(context router.Context) *users.User {
 	}
 
 	return user
+}
+
+// CreateAuthenticityToken returns an auth.AuthenticityToken and writes a secret to check it to the cookie
+func CreateAuthenticityToken(context router.Context) string {
+	token, err := auth.AuthenticityToken(context.Writer(), context.Request())
+	if err != nil {
+		context.Logf("#warn invalid authenticity token at %v", context)
+		return "" // empty strings are invalid as tokens
+	}
+
+	return token
+}
+
+// AuthenticityToken checks the token in the current request
+func AuthenticityToken(context router.Context) error {
+	token := context.Param(auth.SessionTokenKey)
+	err := auth.CheckAuthenticityToken(token, context.Request())
+	if err != nil {
+		// If the check fails, log out the user and completely clear the session
+		context.Logf("#warn invalid authenticity token at %v", context)
+		session, err := auth.SessionGet(context.Request())
+		if err != nil {
+			return err
+		}
+		session.Clear(context.Writer())
+	}
+
+	return err
 }

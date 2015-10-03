@@ -8,7 +8,7 @@ import (
 	"github.com/kennygrant/hackernews/src/lib/authorise"
 )
 
-// HandleUpdateShow renders the form to update a comment
+// HandleUpdateShow responds to GET /comments/update with the form to update a comment
 func HandleUpdateShow(context router.Context) error {
 
 	// Find the comment
@@ -26,11 +26,11 @@ func HandleUpdateShow(context router.Context) error {
 	// Render the template
 	view := view.New(context)
 	view.AddKey("comment", comment)
-	// view.AddKey("csrf",auth.CSRFToken(""))
+	view.AddKey("authenticity_token", authorise.CreateAuthenticityToken(context))
 	return view.Render()
 }
 
-// HandleUpdateShow handles the POST of the form to update a comment
+// HandleUpdate responds to POST /comments/update
 func HandleUpdate(context router.Context) error {
 
 	// Find the comment
@@ -39,8 +39,8 @@ func HandleUpdate(context router.Context) error {
 		return router.NotFoundError(err)
 	}
 
-	// Authorise update comment
-	err = authorise.Resource(context, comment)
+	// Authorise update comment, check auth token
+	err = authorise.ResourceAndAuthenticity(context, comment)
 	if err != nil {
 		return router.NotAuthorizedError(err)
 	}
@@ -50,6 +50,7 @@ func HandleUpdate(context router.Context) error {
 	if err != nil {
 		return router.InternalError(err)
 	}
+
 	err = comment.Update(params.Map())
 	if err != nil {
 		return router.InternalError(err)

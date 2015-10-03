@@ -26,7 +26,7 @@ func HandleUpdateShow(context router.Context) error {
 	}
 
 	view.AddKey("user", user)
-
+	view.AddKey("authenticity_token", authorise.CreateAuthenticityToken(context))
 	return view.Render()
 }
 
@@ -42,7 +42,7 @@ func HandleUpdate(context router.Context) error {
 	}
 
 	// Authorise
-	err = authorise.Resource(context, user)
+	err = authorise.ResourceAndAuthenticity(context, user)
 	if err != nil {
 		return router.NotAuthorizedError(err)
 	}
