@@ -6,10 +6,10 @@
     {{ field "Email" "email" .user.Email }}
     {{ field "Password" "password" "" "password" "type=password" }}
   
-    <div class="clear field">
-
-    <input type="submit" class="button " value="Register">
+    <div class="field">
+      <input type="submit" class="button " value="Register">
     </div>
     
+    <input name="authenticity_token" type="hidden" value="{{.authenticity_token}}">
 </form>
 </section>

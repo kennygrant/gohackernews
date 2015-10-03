@@ -29,6 +29,7 @@ created_at timestamp,
 updated_at timestamp,
 name text,
 url text,
+rank integer,
 summary text,
 user_id integer,
 user_name text,
@@ -67,9 +68,9 @@ encrypted_password text,
 points integer
 );
 
-ALTER TABLE fragmenta_metadata OWNER TO hackernews_server;
-ALTER TABLE comments OWNER TO hackernews_server;
-ALTER TABLE flags OWNER TO hackernews_server;
-ALTER TABLE users OWNER TO hackernews_server;
-ALTER TABLE votes OWNER TO hackernews_server;
-ALTER TABLE stories OWNER TO hackernews_server;
+ALTER TABLE fragmenta_metadata OWNER TO gohackernews_server;
+ALTER TABLE comments OWNER TO gohackernews_server;
+ALTER TABLE flags OWNER TO gohackernews_server;
+ALTER TABLE users OWNER TO gohackernews_server;
+ALTER TABLE votes OWNER TO gohackernews_server;
+ALTER TABLE stories OWNER TO gohackernews_server;

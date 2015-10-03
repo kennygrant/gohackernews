@@ -20,9 +20,11 @@ import (
 )
 
 // TODO: This should probably go into a bootstrap package within fragmenta?
+// That would have the happy side-effect of installing the fragmenta cl tool without an extra go get
+// so do that soonest.
 
 const (
-	fragmentaVersion = "1.2"
+	fragmentaVersion = "1.3" // should come from frag pkg
 
 	permissions                 = 0744
 	createDatabaseMigrationName = "Create-Database"

@@ -4,15 +4,21 @@ package main
 import (
 	"fmt"
 
-	// Import the fragmenta command line tool so that if you go-get this repo, you get the tool
-	_ "github.com/fragmenta/fragmenta"
-
 	"github.com/fragmenta/server"
 
 	"github.com/kennygrant/gohackernews/src/app"
 )
 
 func main() {
+
+	// If we have no config, bootstrap first by generating config/migrations
+	if app.RequiresBootStrap() {
+		err := app.Bootstrap()
+		if err != nil {
+			fmt.Printf("Error bootstrapping server %s\n", err)
+			return
+		}
+	}
 
 	// Setup server
 	server, err := server.New()
