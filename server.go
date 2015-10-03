@@ -1,7 +1,11 @@
+// A simple news site inspired by hacker news, written in Go
 package main
 
 import (
 	"fmt"
+
+	// Import the fragmenta command line tool so that if you go-get this repo, you get the tool
+	_ "github.com/fragmenta/fragmenta"
 
 	"github.com/fragmenta/server"
 

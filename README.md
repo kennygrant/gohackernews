@@ -3,7 +3,11 @@ A responsive version of hacker news written in golang.
 
 ## Gettting Started
 
-Go get:
+Get the fragmenta tool
+
+    go get github.com/fragmenta/fragmenta
+
+Go get this app:
 
     go get -u github.com/kennygrant/gohackernews
 
