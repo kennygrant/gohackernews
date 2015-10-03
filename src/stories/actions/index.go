@@ -9,12 +9,14 @@ import (
 	"github.com/kennygrant/hackernews/src/stories"
 )
 
+const listLimit = 100
+
 // HandleHome displays a list of stories using gravity to order them
 // used for the home page for gravity rank see votes.go
 func HandleHome(context router.Context) error {
 
 	// Build a query
-	q := stories.Query().Limit(500)
+	q := stories.Query().Limit(listLimit)
 
 	// Order by rank, then points, then name
 	q.Order("rank desc, points desc, id desc")
@@ -40,7 +42,7 @@ func HandleHome(context router.Context) error {
 func HandleIndex(context router.Context) error {
 
 	// Build a query
-	q := stories.Query().Limit(500)
+	q := stories.Query().Limit(listLimit)
 
 	// Order by date by default
 	q.Order("created_at desc")

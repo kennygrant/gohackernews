@@ -25,12 +25,18 @@ function urlToSentenceCase(url) {
   url = url.replace(/\/$/, ""); // remove trailing /
   parts = url.split("/"); // now split on /
   name = parts[parts.length - 1]; // last part of string after last /
+  name = name.replace(/\?.*$/, ""); //remove anything after ?
   name = name.replace(/^\d*-/, ""); // remove prefix numerals with dash (common on id based keys)
   name = name.replace(/\..*$/, ""); // remove .html etc extensions
   name = name.replace(/[_\-+]/g, " "); // remove all - or + or _ in string, replacing with space
   name = name.trim(); // remove whitespace trailing or leading
   name = name.toLowerCase(); // all lower
   name = name[0].toUpperCase() + name.substring(1); // Sentence case
-  //  name = name.split(" ").map(function(i){return i[0].toUpperCase() + i.substring(1)}).join(" "); // titlecase
+  
+  // Deal with some specific URLs
+  if (url.match(/youtube|vimeo\.com/)) {
+     name = "Video: "
+  }
+  
   return name
 }
