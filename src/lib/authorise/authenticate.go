@@ -6,7 +6,7 @@ import (
 	"github.com/fragmenta/auth"
 	"github.com/fragmenta/router"
 
-	"github.com/kennygrant/hackernews/src/users"
+	"github.com/kennygrant/gohackernews/src/users"
 )
 
 // CurrentUser returns the saved user (or an empty anon user) for the current session cookie

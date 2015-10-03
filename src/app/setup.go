@@ -14,7 +14,7 @@ import (
 	"github.com/fragmenta/view"
 	"github.com/fragmenta/view/helpers"
 
-	"github.com/kennygrant/hackernews/src/lib/authorise"
+	"github.com/kennygrant/gohackernews/src/lib/authorise"
 )
 
 // appAssets holds a reference to our assets for use in asset setup

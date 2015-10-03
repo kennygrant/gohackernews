@@ -4,8 +4,8 @@ import (
 	"github.com/fragmenta/router"
 	"github.com/fragmenta/view"
 
-	"github.com/kennygrant/hackernews/src/lib/authorise"
-	"github.com/kennygrant/hackernews/src/users"
+	"github.com/kennygrant/gohackernews/src/lib/authorise"
+	"github.com/kennygrant/gohackernews/src/users"
 )
 
 // HandleUpdateShow serves a get request at /users/1/update (show form to update)

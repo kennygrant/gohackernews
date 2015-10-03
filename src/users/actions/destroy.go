@@ -3,8 +3,8 @@ package useractions
 import (
 	"github.com/fragmenta/router"
 
-	"github.com/kennygrant/hackernews/src/lib/authorise"
-	"github.com/kennygrant/hackernews/src/users"
+	"github.com/kennygrant/gohackernews/src/lib/authorise"
+	"github.com/kennygrant/gohackernews/src/users"
 )
 
 // POST /users/1/destroy

@@ -6,7 +6,7 @@ import (
 	"github.com/fragmenta/router"
 	"github.com/fragmenta/view"
 
-	"github.com/kennygrant/hackernews/src/stories"
+	"github.com/kennygrant/gohackernews/src/stories"
 )
 
 const listLimit = 100

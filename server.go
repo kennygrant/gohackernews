@@ -9,7 +9,7 @@ import (
 
 	"github.com/fragmenta/server"
 
-	"github.com/kennygrant/hackernews/src/app"
+	"github.com/kennygrant/gohackernews/src/app"
 )
 
 func main() {

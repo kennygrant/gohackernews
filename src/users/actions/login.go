@@ -7,8 +7,8 @@ import (
 	"github.com/fragmenta/router"
 	"github.com/fragmenta/view"
 
-	"github.com/kennygrant/hackernews/src/lib/authorise"
-	"github.com/kennygrant/hackernews/src/users"
+	"github.com/kennygrant/gohackernews/src/lib/authorise"
+	"github.com/kennygrant/gohackernews/src/users"
 )
 
 // HandleLoginShow shows the page at /users/login

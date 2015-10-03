@@ -10,7 +10,7 @@ import (
 	"github.com/fragmenta/model/validate"
 	"github.com/fragmenta/query"
 
-	"github.com/kennygrant/hackernews/src/lib/status"
+	"github.com/kennygrant/gohackernews/src/lib/status"
 )
 
 // Need rank on comments too? rank desc,
