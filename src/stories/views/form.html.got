@@ -1,9 +1,10 @@
 <div class="row stories_form">
 <form method="post" class="resource-update-form">
-    <section class="actions">
+    <div class="actions">
+
+      <a class="button grey" method="back">Cancel</a>
         <input type="submit" class="button" value="Save">
-        <a class="button grey" href="javascript:history.back()">Cancel</a>
-    </section>
+    </div>
   
     <div class="wide-fields">
     {{ field "Url" "url" .story.Url }}

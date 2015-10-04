@@ -1,5 +1,4 @@
-<article class="narrow">
-  <div class="story">
+<article class="narrow story">
          {{ if .current_user.Admin }}
            <a href="/stories/{{.story.Id}}/update" class="button  grey right">edit</a>
          {{end }}
@@ -30,7 +29,4 @@
               {{ template "comments/views/comment.html.got" $0 }}
            {{ end }}
          </ul>
-         
-         </div>
-     
 </article>

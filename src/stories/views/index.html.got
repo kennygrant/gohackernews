@@ -1,5 +1,4 @@
 <article>
-<div class="row">
 <ul class="stories">
   {{ $0 := . }}
   {{ range $i,$m := .stories }}
@@ -9,5 +8,4 @@
      {{ template "stories/views/row.html.got" $0 }}
   {{ end }}
 </ul>
-</div>
 </article>

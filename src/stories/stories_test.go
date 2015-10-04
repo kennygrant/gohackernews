@@ -13,6 +13,12 @@ func fail(t *testing.T, msg string, expected interface{}, result interface{}) {
 // Test create of Story
 func TestCreateStory(t *testing.T) {
 
+	// Test create, validation, filtering
+	// this should insert a story into the db
+	// Check the name was assigned properly
+
+	// Check created at was set properly
+
 }
 
 // Test update of Story

@@ -19,13 +19,11 @@ import (
 	"github.com/fragmenta/query"
 )
 
-// TODO: This should probably go into a bootstrap package within fragmenta?
-// That would have the happy side-effect of installing the fragmenta cl tool without an extra go get
-// so do that soonest.
+// TODO: Most of this should probably go into a config/bootstrap package within fragmenta?
+//	"github.com/fragmenta/fragmenta/config"
 
 const (
-	fragmentaVersion = "1.3" // should come from frag pkg
-
+	fragmentaVersion            = "1.3.1"
 	permissions                 = 0744
 	createDatabaseMigrationName = "Create-Database"
 	createTablesMigrationName   = "Create-Tables"
@@ -110,6 +108,21 @@ func generateConfig(projectPath string) error {
 		"secret_key":      randomKey(32),
 	}
 
+	// Check if the psql binary is available, if not, assume the worst
+	// and setup for mysql instead
+	_, err := runCommand("psql", "--version")
+	if err != nil {
+		log.Printf("Generating config for MYSQL as no psql found")
+
+		ConfigTest["db_adapter"] = "mysql"
+
+		// Truncate username, yes really
+		// MySQL user names can be up to 16 characters long before MySQL 5.7.8)
+		if len(ConfigTest["db_user"]) > 16 {
+			ConfigTest["db_user"] = ConfigTest["db_user"][:16]
+		}
+	}
+
 	// Should we ask for db prefix when setting up?
 	// hmm, in fact can we do this setup here at all!!
 	for k, v := range ConfigTest {
@@ -159,6 +172,15 @@ func generateCreateSQL(projectPath string) error {
 	u := ConfigDevelopment["db_user"]
 	p := ConfigDevelopment["db_pass"]
 	sql := fmt.Sprintf("/* Setup database for %s */\nCREATE USER \"%s\" WITH PASSWORD '%s';\nCREATE DATABASE \"%s\" WITH OWNER \"%s\";", name, u, p, d, u)
+
+	// Adjust sql for mysql dialect  - we should be asking the db adapter for this really
+	if ConfigDevelopment["db_adapter"] == "mysql" {
+		sql = fmt.Sprintf(`
+			CREATE USER %s@localhost IDENTIFIED BY '%s'; 
+			CREATE DATABASE %s;
+			grant all privileges on %s.* to %s@localhost;
+			`, u, p, d, d, u)
+	}
 
 	// Generate a migration to create db with today's date
 	file := migrationPath(projectPath, createDatabaseMigrationName)
