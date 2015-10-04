@@ -205,7 +205,7 @@ func getUserIP(router.Context) string {
 //    update stories set rank = points / POWER((select count(*) from stories) - id + 1,1.8);
 // Similar to HN ranking scheme
 func updateStoriesRank() error {
-	sql := "update stories set rank = 100 * points / POWER((select max(id) from stories) - id + 1,1.8)"
+	sql := "update stories set rank = 100 * points / POWER((select max(id) from stories) - id + 1,1.2)"
 	_, err := query.Exec(sql)
 	return err
 }

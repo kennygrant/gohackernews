@@ -188,7 +188,7 @@ func commentHasUserFlag(comment *comments.Comment, user *users.User) bool {
 
 // updateCommentsRank updates the rank of comments on this story
 func updateCommentsRank(storyID int64) error {
-	sql := "update comments set rank = 100 * points / POWER((select max(id) from comments) - id + 1,1.8) where story_id=$1"
+	sql := "update comments set rank = 100 * points / POWER((select max(id) from comments) - id + 1,1.2) where story_id=$1"
 	_, err := query.Exec(sql, storyID)
 	return err
 }
