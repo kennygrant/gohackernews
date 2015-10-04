@@ -1,14 +1,14 @@
-<div class="row [[ .fragmenta_resources ]]_form">
-<form method="post" class="resource-update-form">
-    <section class="actions">
+<form method="post" class="resource-update-form [[ .fragmenta_resources ]]_form">
+    <input name="authenticity_token" type="hidden" value="{{.authenticity_token}}">
+    
+    <div class="actions">
         <input type="submit" class="button" value="Save">
         <a class="button grey" method="back">Cancel</a>
-    </section>
+    </div>
   
-    <section class="inline-fields">
+    <div class="inline-fields">
     [[ .fragmenta_form_fields ]]
-    </section>
+    </div>
     
-    <input name="authenticity_token" type="hidden" value="{{.authenticity_token}}">
+    
 </form>
-</div>

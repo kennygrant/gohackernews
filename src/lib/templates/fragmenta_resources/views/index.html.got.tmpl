@@ -9,7 +9,7 @@
 </div>
 
 <div class="row">
-<table class="data-table">
+<ul class="comments">
     {{ $0 := . }}
     {{ template "[[ .fragmenta_resources ]]/views/row.html.got" empty }}
     {{ range $i,$m := .[[ .fragmenta_resources ]] }}
@@ -17,6 +17,6 @@
        {{ set $0 "[[ .fragmenta_resource ]]" $m }}
        {{ template "[[ .fragmenta_resources ]]/views/row.html.got" $0 }}
     {{ end }}
-</table>
+</ul>
 </div>
 </article>

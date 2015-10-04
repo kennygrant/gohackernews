@@ -27,8 +27,8 @@ func HandleUpdateShow(context router.Context) error {
     // Render the template
 	view := view.New(context)
 	view.AddKey("[[ .fragmenta_resource ]]", [[ .fragmenta_resource ]])
-   // view.AddKey("csrf",auth.CSRFToken(""))
-    return view.Render()
+  view.AddKey("authenticity_token", authorise.CreateAuthenticityToken(context))
+  return view.Render()
 }
 
 // HandleUpdateShow handles the POST of the form to update a [[ .fragmenta_resource ]]
@@ -41,7 +41,7 @@ func HandleUpdate(context router.Context) error {
     }
 
 	// Authorise update [[ .fragmenta_resource ]]
-	err = authorise.Resource(context, [[ .fragmenta_resource ]])
+	err = authorise.ResourceAndAuthenticity(context, [[ .fragmenta_resource ]])
     if err != nil {
 		return router.NotAuthorizedError(err)	
     }
