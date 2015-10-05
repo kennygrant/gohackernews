@@ -38,15 +38,18 @@ func HandleFlag(context router.Context) error {
 		return router.NotAuthorizedError(err, "Flag Failed", "Sorry, you can't flag yet")
 	}
 
+	// CURRENT User burns points for flagging
 	err = adjustUserPoints(user, -1)
 	if err != nil {
 		return err
 	}
 
+	// Adjust the comment vote
 	err = addCommentVote(comment, user, ip, -5)
 	if err != nil {
 		return err
 	}
+
 	return updateCommentsRank(comment.StoryId)
 }
 
@@ -79,6 +82,7 @@ func HandleDownvote(context router.Context) error {
 		return router.NotAuthorizedError(err, "Vote Failed", "Sorry, you can't downvote yet")
 	}
 
+	// CURRENT User burns points for downvoting
 	err = adjustUserPoints(user, -1)
 	if err != nil {
 		return err
@@ -147,7 +151,7 @@ func addCommentVote(comment *comments.Comment, user *users.User, ip string, delt
 
 	// Update the *comment* user points by delta
 	commentUser, err := users.Find(comment.UserId)
-	err = adjustUserPoints(commentUser, +1)
+	err = adjustUserPoints(commentUser, delta)
 	if err != nil {
 		return err
 	}

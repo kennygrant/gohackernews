@@ -6,12 +6,14 @@
     {{ end }}
     
     {{ if (.current_user.Admin) or (eq .comment.UserId .current_user.Id) }}
+        <a href="/comments/{{.comment.Id}}/flag?authenticity_token={{.authenticity_token}}" method="post" class="button small grey reply">flag</a>
       <a href="/comments/{{.comment.Id}}/update"  class="button small grey reply">edit</a>
     {{ end }}
+    
     {{ end }}
     
     <a href="/comments/{{.comment.Id}}/upvote?authenticity_token={{.authenticity_token}}" method="post" class="vote">▲</a>
-    {{ if eq .comment.UserId .current_user.Id }}
+    {{ if (.current_user.Admin) or (eq .comment.UserId .current_user.Id) }}
       {{ .comment.Points }} points
     {{ end }}
     {{ if not .story }}
@@ -19,7 +21,6 @@
     {{ end}}
     <a href="/users/{{.comment.UserId}}">{{.comment.UserName}}</a> 
     <a href="/comments/{{.comment.Id}}">{{timeago .comment.CreatedAt}}</a>
-    
     <a href="/comments/{{.comment.Id}}/downvote?authenticity_token={{.authenticity_token}}" method="post" class="vote">▼</a>
     </div>
     <div class="content">

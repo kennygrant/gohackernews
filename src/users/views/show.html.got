@@ -4,6 +4,9 @@
   <div class="row">
     <h1>{{.user.Name}}</h1>
     <p>Signed up {{timeago .user.CreatedAt}}</p>
+      {{ if .current_user.Admin }}
+      <p>{{.user.Points}} Points</p>
+      {{ end }}
   </div>
 
   <div class="profile row">

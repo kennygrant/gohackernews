@@ -71,6 +71,10 @@ article.comments {
   opacity: 0.1;
 }
 
+.comment.minus6 {
+  display:none; /* should have showdead for admins I suppose */
+}
+
 .comment.level0 {
   border-top: 1px solid #ccc;
   padding-top: 1rem;

@@ -205,11 +205,15 @@ func (m *Comment) Update(params map[string]string) error {
 	return Query().Where("id=?", m.Id).Update(params)
 }
 
-// NegativePoints returns a negative point score or 0 if points is above 0
+// NegativePoints returns a negative point score between 0 and 5 (positive points return 0, below -6 returns 6)
 func (m *Comment) NegativePoints() int64 {
 	if m.Points > 0 {
 		return 0
 	}
+	if m.Points < -6 {
+		return 6
+	}
+
 	return -m.Points
 }
 
