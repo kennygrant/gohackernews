@@ -1,21 +1,18 @@
 package users
 
-import ()
-
-// User privs at karma points
-// for now these are relaxed
 /*
+  Proposed rules - for now these are relaxed
   1 points - submit, comment
   10 points - upvote (they start with 10 points)
   50 points - downvote
   100 points - flag
 
 	karma is collected for comment upvotes *only* not for story upvotes
-
-  flagging and downvoting sacrifices one point from user
+	karma is sacrificed in negative actions - flagging and downvoting
 */
 
-// CanUpvote returns true if this user can upvote - just let all users upvote for now
+// CanUpvote returns true if this user can upvote
+// TODO: change later - just let all users upvote for now
 func (u *User) CanUpvote() bool {
 	return u.Points > 0
 }

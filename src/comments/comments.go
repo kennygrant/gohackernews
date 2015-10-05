@@ -231,7 +231,7 @@ func (m *Comment) Destroy() error {
 	return Query().Where("id=?", m.Id).Delete()
 }
 
-// The URL for our story
+// URLStory returns the internal resource URL for our story
 func (m *Comment) URLStory() string {
 	return fmt.Sprintf("/stories/%d", m.StoryId)
 }

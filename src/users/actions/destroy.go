@@ -7,7 +7,7 @@ import (
 	"github.com/kennygrant/gohackernews/src/users"
 )
 
-// POST /users/1/destroy
+// HandleDestroy responds to POST /users/1/destroy
 func HandleDestroy(context router.Context) error {
 
 	// Set the user on the context for checking
@@ -17,7 +17,7 @@ func HandleDestroy(context router.Context) error {
 	}
 
 	// Authorise
-	err = authorise.Resource(context, user)
+	err = authorise.ResourceAndAuthenticity(context, user)
 	if err != nil {
 		return router.NotAuthorizedError(err)
 	}

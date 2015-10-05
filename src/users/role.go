@@ -18,12 +18,12 @@ func (m *User) Anon() bool {
 	return m.Role == RoleAnon
 }
 
-// Patient returns true if this user is Patient
+// Reader returns true if this user is Patient
 func (m *User) Reader() bool {
 	return m.Role == RoleReader
 }
 
-// Expert returns true if this user is Expert
+// Editor returns true if this user is Expert
 func (m *User) Editor() bool {
 	return m.Role == RoleEditor
 }
@@ -59,7 +59,7 @@ func Admins() *query.Query {
 	return Query().Where("role=?", RoleAdmin).Order("name asc")
 }
 
-// Admins returns a query which finds all editor users
+// Editors returns a query which finds all editor users
 func Editors() *query.Query {
 	return Query().Where("role=?", RoleEditor).Order("name asc")
 }
