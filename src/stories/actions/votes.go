@@ -13,6 +13,13 @@ import (
 
 // HandleFlag handles POST to /stories/123/flag
 func HandleFlag(context router.Context) error {
+
+	// Protect against CSRF
+	err := authorise.AuthenticityToken(context)
+	if err != nil {
+		return router.NotAuthorizedError(err, "Flag Failed", "CSRF failure")
+	}
+
 	// Find the story
 	story, err := stories.Find(context.ParamInt("id"))
 	if err != nil {
@@ -50,6 +57,13 @@ func HandleFlag(context router.Context) error {
 
 // HandleDownvote handles POST to /stories/123/downvote
 func HandleDownvote(context router.Context) error {
+
+	// Prevent CSRF
+	err := authorise.AuthenticityToken(context)
+	if err != nil {
+		return router.NotAuthorizedError(err, "Vote Failed", "CSRF failure")
+	}
+
 	// Find the story
 	story, err := stories.Find(context.ParamInt("id"))
 	if err != nil {
@@ -91,6 +105,12 @@ func HandleDownvote(context router.Context) error {
 
 // HandleUpvote handles POST to /stories/123/upvote
 func HandleUpvote(context router.Context) error {
+
+	// Prevent CSRF
+	err := authorise.AuthenticityToken(context)
+	if err != nil {
+		return router.NotAuthorizedError(err, "Vote Failed", "CSRF failure")
+	}
 
 	// Find the story
 	story, err := stories.Find(context.ParamInt("id"))

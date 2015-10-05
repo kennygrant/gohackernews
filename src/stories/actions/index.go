@@ -6,6 +6,7 @@ import (
 	"github.com/fragmenta/router"
 	"github.com/fragmenta/view"
 
+	"github.com/kennygrant/gohackernews/src/lib/authorise"
 	"github.com/kennygrant/gohackernews/src/stories"
 )
 
@@ -18,8 +19,8 @@ func HandleHome(context router.Context) error {
 	// Build a query
 	q := stories.Query().Limit(listLimit)
 
-	// Order by rank, then points, then name
-	q.Order("rank desc, points desc, id desc")
+	// Select only above 0 points,  Order by rank, then points, then name
+	q.Where("points > 0").Order("rank desc, points desc, id desc")
 
 	// Fetch the stories
 	results, err := stories.FindAll(q)
@@ -33,6 +34,8 @@ func HandleHome(context router.Context) error {
 	view.AddKey("meta_title", "Go Hacker News")
 	view.AddKey("meta_desc", "News for golang Hackers, in the style of Hacker News")
 	view.AddKey("meta_keywords", "golang news, blog, links, go developers")
+	view.AddKey("authenticity_token", authorise.CreateAuthenticityToken(context))
+
 	view.Template("stories/views/index.html.got")
 	return view.Render()
 
@@ -45,7 +48,7 @@ func HandleIndex(context router.Context) error {
 	q := stories.Query().Limit(listLimit)
 
 	// Order by date by default
-	q.Order("created_at desc")
+	q.Where("points > -6").Order("created_at desc")
 
 	// Filter if necessary - this assumes name and summary cols
 	filter := context.Param("filter")
@@ -74,6 +77,8 @@ func HandleIndex(context router.Context) error {
 	view.AddKey("filter", filter)
 	view.AddKey("stories", results)
 	view.AddKey("meta_title", "Go Hacker News Links")
+	view.AddKey("authenticity_token", authorise.CreateAuthenticityToken(context))
+
 	return view.Render()
 
 }

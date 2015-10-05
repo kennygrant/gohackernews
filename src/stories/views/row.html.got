@@ -3,14 +3,14 @@
     {{.story.CommentCountDisplay}}
   </a> 
   {{ if .current_user.Admin }}
-    <a href="/stories/{{.story.Id}}/update" class="button small grey flag">edit</a>
-    <a href="/stories/{{.story.Id}}/flag" class="button small grey flag" method="post">Flag</a>
+    <a href="/stories/{{.story.Id}}/update?authenticity_token={{.authenticity_token}}" class="button small grey flag">edit</a>
+    <a href="/stories/{{.story.Id}}/flag?authenticity_token={{.authenticity_token}}" class="button small grey flag" method="post">Flag</a>
   {{end }}
     <h3>
        <div class="voting">
-       <a href="/stories/{{.story.Id}}/upvote" method="post" class="vote">▲</a>
+       <a href="/stories/{{.story.Id}}/upvote?authenticity_token={{.authenticity_token}}" method="post" class="vote">▲</a>
        <a href="/stories/{{.story.Id}}" class="points">{{.story.Points}}</a>
-       <a href="/stories/{{.story.Id}}/downvote" method="post" class="vote">▼</a>
+       <a href="/stories/{{.story.Id}}/downvote?authenticity_token={{.authenticity_token}}" method="post" class="vote">▼</a>
        </div>
         <a href="{{.story.DestinationURL}}" class="name">{{.story.Name}}</a>
 
