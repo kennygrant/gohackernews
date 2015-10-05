@@ -1,6 +1,8 @@
 package useractions
 
 import (
+	"strings"
+
 	"github.com/fragmenta/router"
 	"github.com/fragmenta/view"
 
@@ -39,16 +41,30 @@ func HandleCreate(context router.Context) error {
 		return router.InternalError(err)
 	}
 
-	// We  check for duplicates in here - name and email must be unique
-	count, err := users.Query().Where("email=?", params.Get("email")).Count()
-	if err != nil {
-		return router.InternalError(err)
-	}
-	if count > 0 {
-		return router.NotAuthorizedError(err, "User already exists", "Sorry, a user already exists with that email.")
+	// Check for email duplicates
+	email := params.Get("email")
+	if len(email) > 0 {
+
+		if len(email) < 3 || !strings.Contains(email, "@") {
+			return router.InternalError(err, "Invalid email", "Please just miss out the email field, or use a valid email.")
+		}
+
+		count, err := users.Query().Where("email=?", email).Count()
+		if err != nil {
+			return router.InternalError(err)
+		}
+		if count > 0 {
+			return router.NotAuthorizedError(err, "User already exists", "Sorry, a user already exists with that email.")
+		}
 	}
 
-	count, err = users.Query().Where("name=?", params.Get("name")).Count()
+	// Check for invalid or duplicate names
+	name := params.Get("name")
+	if len(name) < 2 {
+		return router.InternalError(err, "Name too short", "Please choose a username longer than 2 characters")
+	}
+
+	count, err := users.Query().Where("name=?", name).Count()
 	if err != nil {
 		return router.InternalError(err)
 	}
