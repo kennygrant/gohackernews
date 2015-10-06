@@ -11,7 +11,7 @@
     
          <div class="metadata">
              at {{ .story.Domain }}
-             <a href="/users/{{.user.Id}}">posted by {{.user.Name}}</a> {{timeago .story.CreatedAt }} &nbsp; {{ if not .current_user.CanComment }}<a href="/users/create" class="">Register</a> to comment or vote on this story.{{ end }}
+             <a href="/users/{{.story.UserId}}">posted by {{.story.UserName}}</a> {{timeago .story.CreatedAt }} &nbsp; {{ if not .current_user.CanComment }}<a href="/users/create" class="">Register</a> to comment or vote on this story.{{ end }}
          </div>
          
          <div class="summary">
