@@ -106,25 +106,25 @@ li.story .points {
 }
 
 li.story h3 {
-  font-size: 0.85em;
+  font-size: 0.9em;
   margin: 0;
   height: 1.3em;
   line-height: 1.3em;
   overflow: hidden;
 }
 
-li.story .vote {
-  font-size: 0.75em;
-}
-
-li.story h3 .name {
-  display: inline;
-  margin-left: 0.5rem;
-}
-
 li.story .voting {
-  display: inline-block;
+  float:left;
+  padding-right:0.5rem;
+  margin-top:0.5rem;
 }
+
+li.story .vote {
+  font-size: 0.9em;
+  padding:1rem 0.2rem;
+}
+
+
 
 li.story .metadata {
   font-size: 0.7em;
@@ -154,7 +154,7 @@ li.story .bubble:hover {
   opacity: 1.0;
 }
 
-li.story .bubble .arrow {
+li.story .bubble .bubble-tick {
   display: block;
   border-style: solid;
   position: absolute;
@@ -202,6 +202,14 @@ li.story .button {
   li.story .button {
     display: block;
   }
+  li.story .voting {
+    margin-top:0;
+  }
+  
+  li.story .vote {
+    padding:0;
+  }
+  
   li.story .metadata {
     display: inline;
     font-size: 1em;
