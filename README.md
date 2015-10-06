@@ -3,18 +3,21 @@ A responsive version of hacker news written in golang.
 
 ## Gettting Started
 
+The app requires postgresql just now to bootstrap locally.
+
 Go get this app:
 
     go get -u github.com/kennygrant/gohackernews
 
-Then to build and run the server locally, get the fragmenta command line tool:
+Then to build and run the server locally, as you'd expect:
+
+    go run server.go
+
+or get the fragmenta command line tool (for things like migrations, deploy etc) and run it with that:
 
     go get -u github.com/fragmenta/fragmenta
-
-Change dir and run the server to bootstrap (requires a Postgresql install at present):
-
-    cd $GOPATH/src/github.com/kennygrant/gohackernews
     fragmenta server
+
 
 
 ## App Structure
