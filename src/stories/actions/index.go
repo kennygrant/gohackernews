@@ -31,9 +31,9 @@ func HandleHome(context router.Context) error {
 	// Render the template
 	view := view.New(context)
 	view.AddKey("stories", results)
-	view.AddKey("meta_title", "Go Hacker News")
-	view.AddKey("meta_desc", "News for golang Hackers, in the style of Hacker News")
-	view.AddKey("meta_keywords", "golang news, blog, links, go developers")
+	view.AddKey("meta_title", "Golang News")
+	view.AddKey("meta_desc", "News for Go Hackers, in the style of Hacker News. A curated selection of the latest links about the Go programming language.")
+	view.AddKey("meta_keywords", "golang news, blog, links, go developers, go web apps, web applications, fragmenta")
 	view.AddKey("authenticity_token", authorise.CreateAuthenticityToken(context))
 
 	view.Template("stories/views/index.html.got")
