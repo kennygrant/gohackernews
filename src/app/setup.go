@@ -85,8 +85,8 @@ func setupAssets(server *server.Server) {
 func setupView(server *server.Server) {
 	defer server.Timef("#info Finished loading templates in %s", time.Now())
 
-	// A very limited translation - would prefer to use editable.js instead and offer proper editing
-	// with styles, and proper sanitization...
+	// A very limited translation - would prefer to use editable.js
+	// instead and offer proper editing TODO: move to editable.js instead
 	view.Helpers["markup"] = markup
 	view.Helpers["timeago"] = timeago
 
