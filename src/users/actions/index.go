@@ -17,17 +17,32 @@ func HandleIndex(context router.Context) error {
 		return router.NotAuthorizedError(err)
 	}
 
-	// Fetch the users
-	q := users.Query().Order("role desc, created_at desc")
+	// Query for most recent 100 users
+	q := users.Query().Order("created_at desc").Limit(100)
+
+	// Fetch 100 of them
 	userList, err := users.FindAll(q)
 	if err != nil {
-		context.Logf("#error Error indexing users %s", err)
+		return router.InternalError(err)
+	}
+
+	// Get a count of all users
+	count, err := q.Count()
+	if err != nil {
+		return router.InternalError(err)
+	}
+
+	// Get a count of admin users
+	adminsCount, err := q.Where("role=100").Count()
+	if err != nil {
 		return router.InternalError(err)
 	}
 
 	// Serve template
 	view := view.New(context)
 	view.AddKey("users", userList)
+	view.AddKey("count", count)
+	view.AddKey("adminsCount", adminsCount)
 	return view.Render()
 
 }

@@ -1,28 +1,32 @@
-<section class="padded">
+<section class="user padded">
 
+  <div class="actions right">
+    {{ if .current_user.Admin }}
+     <a href="/users/{{.current_user.Id}}/update" class="button grey">edit</a>
+    {{end }}
+    {{ if eq .current_user.Id .user.Id }}
+      <a class="button grey" href="/users/logout" method="post">Logout</a>
+    {{ end }}
+  </div>
   
-  <div class="row">
-    <h1>{{.user.Name}}</h1>
+  <div class="name">
+    <h1>{{.user.Name}} {{ if .current_user.Admin }}({{.user.Points}}){{ end }}</h1>
     <p>Signed up {{timeago .user.CreatedAt}}</p>
-      {{ if .current_user.Admin }}
-      <p>{{.user.Points}} Points</p>
-      {{ end }}
   </div>
 
-  <div class="profile row">
+  <div class="profile">
     {{ sanitize .user.Summary }}
   </div>
-  
-  <div class="row clear">
-  <br>
-  {{ if .current_user.Admin }}
-   <a href="/users/{{.current_user.Id}}/update" class="button grey">edit</a>
-  {{end }}
-  {{ if eq .current_user.Id .user.Id }}
-    <a class="button grey" href="/users/logout" method="post">Logout</a>
-  {{ end }}
+</section>
 
-  </div>
-  
-  
+
+<section class="row">
+<ul class="comments">
+  {{ $0 := . }}
+  {{ range $i,$m := .comments }}
+     {{ set $0 "i" $i }}
+     {{ set $0 "comment" $m }}
+     {{ template "comments/views/comment.html.got" $0 }}
+  {{ end }}
+</ul>
 </section>

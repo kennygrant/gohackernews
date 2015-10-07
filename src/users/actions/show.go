@@ -4,6 +4,7 @@ import (
 	"github.com/fragmenta/router"
 	"github.com/fragmenta/view"
 
+	"github.com/kennygrant/gohackernews/src/comments"
 	"github.com/kennygrant/gohackernews/src/users"
 )
 
@@ -19,11 +20,17 @@ func HandleShow(context router.Context) error {
 		return router.NotFoundError(err)
 	}
 
-	// Set up view
-	view := view.New(context)
+	// Get the user comments
+	q := comments.Where("user_id=?", user.Id).Limit(100).Order("created_at desc")
+	userComments, err := comments.FindAll(q)
+	if err != nil {
+		return router.InternalError(err)
+	}
 
 	// Render the Template
+	view := view.New(context)
 	view.AddKey("user", user)
+	view.AddKey("comments", userComments)
 	view.AddKey("meta_title", user.Name)
 	view.AddKey("meta_desc", user.Name)
 	return view.Render()

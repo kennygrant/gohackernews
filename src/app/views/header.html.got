@@ -1,19 +1,20 @@
 <nav>
   <ul>
-    <li><a href="/" title="Curated links about the Go programming language">Golang News</a></li>
+    <li><a href="/" title="Golang News - Curated links about the Go programming language">Golang News</a></li>
     <li><a title="Newest articles about the Go programming language" href="/stories">New</a></li>
     <li><a title="A place to show GN your stuff" href="/stories?filter=Show:">Show</a></li>
-    <li><a title="Ask GN" href="/stories?filter=Ask:">Ask</a></li>
+    <li><a title="Ask golang news" href="/stories?filter=Ask:">Ask</a></li>
     <li><a title="Jobs for golang programmers" href="/stories?filter=Hiring:">Jobs</a></li>
     <li><a title="Events for golang programmers" href="/stories?filter=Event:">Events</a></li>
     <li><a title="Videos about Go" href="/stories?filter=Video:">Videos</a></li>
+    <li><a title="Podcasts and Screencasts about Go" href="/stories?filter=Cast:">Casts</a></li>
+  
     <li><a href="/comments">Comments</a></li>
     
     {{ if .current_user.Anon }}
        <li class="right "><a href="/users/login" class="button small ">Login</a></li>
        <li class="right "><a href="/users/create" class="button small ">Register</a></li>
     {{ else }}
-      <li><a href="/comments?u={{.current_user.Id}}">Threads</a></li>
       <li><a class="button grey small logout" href="/stories/create">Submit</a></li>
       <li class="right ">
         <a href="/users/{{.current_user.Id}}">{{.current_user.Name}} ({{.current_user.Points}})</a>

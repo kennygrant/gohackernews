@@ -1,7 +1,9 @@
 <li id="comment{{.comment.Id}}" class="comment level{{ .comment.Level }} minus{{ .comment.NegativePoints }}">
     <div class="metadata">
+
     {{ if .current_user.CanComment }}
-    {{ if ne .comment.UserId .current_user.Id }}
+
+    {{ if (.story) and (ne .comment.UserId .current_user.Id) }}
       <a href="#" class="show button small grey reply" data-show="#comment{{.comment.Id}} .reply-form">reply</a>
     {{ end }}
     
@@ -26,7 +28,7 @@
     <div class="content">
     {{ markup .comment.Text }}
     </div>
-    {{ if ne .comment.UserId .current_user.Id  }}
+    {{ if (.story) and (ne .comment.UserId .current_user.Id)  }}
       <div class="reply-form hidden">
       {{ template "comments/views/form_embed.html.got" . }}
        </div>

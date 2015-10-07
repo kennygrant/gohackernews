@@ -2,6 +2,7 @@
 
 .stories {
   list-style: none;
+  margin:0;
 }
 
 .story form .field {
@@ -95,6 +96,8 @@ li.story {
   padding: 0.5rem 1rem;
   margin: 0;
   border-top: 1px solid #fff;
+  list-style:none;
+  overflow:hidden;
 }
 
 li.story:hover {
@@ -193,7 +196,6 @@ li.story .button {
   li.story {
     height: 1.5em;
     overflow: hidden;
-    overflow-x: scroll;
   }
   li.story h3 {
     display: inline;

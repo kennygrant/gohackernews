@@ -1,19 +1,32 @@
 /* CSS Styles for users */
 
-article.users {
-  background-color:#F6F6E7;
-  min-height:50em;
+.user .name {
+    padding:1rem;
+  float:left;
+  margin-right:2em;
+}
+
+.user .profile {
+  padding:1rem;
+  float:left;
+  margin-right:2em;
+}
+
+.user .actions .button {
+  margin-left:1rem;
 }
 
 .users {
+  margin:0;
   list-style: none;
+  min-height:50em;
 }
 
 li.user {
+  border-bottom:1px solid #ccc;
   line-height: 1.5em;
   padding: 0.5rem 1rem;
   margin: 0;
-  border-top: 1px solid #fff;
 }
 
 li.user:hover {
