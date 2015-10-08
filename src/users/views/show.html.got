@@ -10,7 +10,7 @@
   </div>
   
   <div class="name">
-    <h1>{{.user.Name}} {{ if .current_user.Admin }}({{.user.Points}}){{ end }}</h1>
+    <h1>{{.user.Name}} ({{.user.Points}})</h1>
     <p>Signed up {{timeago .user.CreatedAt}}</p>
   </div>
 
