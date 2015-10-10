@@ -1,5 +1,10 @@
 /* CSS Styles for users */
 
+section.user {
+  min-height:10rem;
+  margin-bottom:3rem;
+}
+
 .user .name {
     padding:1rem;
   float:left;
@@ -40,3 +45,12 @@ li.user h3 {
   line-height:1.3em;
   overflow: hidden;
 }
+
+.user_activity {
+  background:#f6f6ef;
+}
+
+.user_activity .comment {
+  border-top:1px solid #fff;
+}
+

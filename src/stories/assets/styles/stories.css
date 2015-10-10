@@ -36,6 +36,16 @@
   color: #ea8c06;
 }
 
+.story .register {
+  margin:1rem 0;
+  text-align:center;
+}
+
+.story .register .button {
+  margin-right:1em;
+  display:block;
+}
+
 .story .name {
   color: #0ab1e8;
 }
@@ -202,6 +212,14 @@ li.story .button {
     display: inline;
     font-size: 1em;
   }
+  
+  .story .register {
+    text-align:left;
+  }
+  .story .register .button {
+    display:inline-block;
+  }
+  
   li.story {
     height: 1.5em;
     overflow: hidden;

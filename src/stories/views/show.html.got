@@ -14,8 +14,15 @@
              {{ if exists .story.GodocURL }}
                <a href="{{.story.GodocURL}}" class="domain docs">godoc.org</a>
              {{ end }}
-             <a href="/users/{{.story.UserId}}">posted by {{.story.UserName}}</a> {{timeago .story.CreatedAt }} &nbsp; {{ if not .current_user.CanComment }}<a href="/users/create" class="">Register</a> to comment or vote on this story.{{ end }}
+             <a href="/users/{{.story.UserId}}">posted by {{.story.UserName}}</a> {{timeago .story.CreatedAt }} &nbsp; 
          </div>
+         
+
+        {{ if not .current_user.CanComment }}
+          <div class="register">
+            <a href="/users/create" class="button">Register</a> To comment or vote on this story
+          </div>
+       {{ end }}
          
          <div class="summary">
            {{ markup .story.Summary }}
