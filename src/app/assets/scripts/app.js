@@ -5,6 +5,7 @@ DOM.Ready(function() {
   ActivateMethodLinks();
 });
 
+
 // Perform AJAX post on click on method=post|delete anchors
 function ActivateMethodLinks() {
   DOM.On('a[method="post"], a[method="delete"]', 'click', function(e) {
@@ -15,11 +16,20 @@ function ActivateMethodLinks() {
       }
     }
 
+    // Collect the authenticity token from meta tags in header
+    var meta = DOM.First("meta[name='authenticity_token']")
+    if (meta === undefined) {
+      e.preventDefault();
+      return false
+    }
+    var token = meta.getAttribute('content');
+    
     // Perform a post to the specified url (href of link)
     var url = this.getAttribute('href');
     var redirect = this.getAttribute('data-redirect');
-
-    DOM.Post(url, null, function() {
+    var data = "authenticity_token="+token
+    
+    DOM.Post(url, data, function() {
       if (redirect !== null) {
         // If we have a redirect, redirect to it after the link is clicked
         window.location = redirect;

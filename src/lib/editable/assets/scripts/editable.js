@@ -7,7 +7,11 @@
 
 // On document ready, scan for and activate toolbars associated with contenteditable
 DOM.Ready(function(){
-  // Activate editable content
+  if (!DOM.Exists('.content-editable-toolbar')) {
+    return
+  }
+  
+    // Activate editable content
   Editable.Activate('.content-editable-toolbar');
 });
 

@@ -1,6 +1,8 @@
 package storyactions
 
 import (
+	"strings"
+
 	"github.com/fragmenta/router"
 	"github.com/fragmenta/view"
 
@@ -43,9 +45,23 @@ func HandleCreate(context router.Context) error {
 	// Get user details
 	user := authorise.CurrentUser(context)
 	ip := getUserIP(context)
+	url := context.Param("url")
+
+	// Get params
+	params, err := context.Params()
+	if err != nil {
+		return router.InternalError(err)
+	}
+
+	// Strip trailing slashes on url before comparisons
+	// we could possibly also strip url fragments
+	if strings.HasSuffix(url, "/") {
+		url = strings.Trim(url, "/")
+		params.Set("url", url)
+	}
 
 	// Check that no story with this url already exists
-	q := stories.Where("url=?", context.Param("url"))
+	q := stories.Where("url=?", url)
 	duplicates, err := stories.FindAll(q)
 	if err != nil {
 		return router.InternalError(err)
@@ -57,12 +73,6 @@ func HandleCreate(context router.Context) error {
 		addStoryVote(dupe, user, ip, 1)
 
 		return router.Redirect(context, dupe.URLShow())
-	}
-
-	// Setup context
-	params, err := context.Params()
-	if err != nil {
-		return router.InternalError(err)
 	}
 
 	// Set a few params

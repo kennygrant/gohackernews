@@ -33,7 +33,7 @@ func HandleFlag(context router.Context) error {
 		return router.NotAuthorizedError(err, "Flag Failed", "Sorry you are not allowed to flag twice, nice try!")
 	}
 
-	// Authorise upvote on story for this user - our rules are:
+	// Authorise upvote on story for this user
 	if !user.CanFlag() {
 		return router.NotAuthorizedError(err, "Flag Failed", "Sorry, you can't flag yet")
 	}

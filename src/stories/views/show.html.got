@@ -3,14 +3,17 @@
            <a href="/stories/{{.story.Id}}/update" class="button  grey right">edit</a>
          {{end }}
          <h1>
-             <a href="/stories/{{.story.Id}}/upvote?authenticity_token={{.authenticity_token}}" method="post" class="vote">▲</a>
+             <a href="/stories/{{.story.Id}}/upvote" method="post" class="vote {{if not .current_user.CanUpvote }}disabled{{ end }}">▲</a>
              <a href="/stories/{{.story.Id}}" class="points">{{.story.Points}}</a>
-             <a href="/stories/{{.story.Id}}/downvote?authenticity_token={{.authenticity_token}}" method="post" class="vote">▼</a>
+             <a href="/stories/{{.story.Id}}/downvote" method="post" class="vote {{if not .current_user.CanDownvote }}disabled{{ end }}">▼</a>
              <a href="{{.story.Url}}" class="name">{{.story.Name}}</a>
          </h1>
     
          <div class="metadata">
              at {{ .story.Domain }}
+             {{ if exists .story.GodocURL }}
+               <a href="{{.story.GodocURL}}" class="domain docs">godoc.org</a>
+             {{ end }}
              <a href="/users/{{.story.UserId}}">posted by {{.story.UserName}}</a> {{timeago .story.CreatedAt }} &nbsp; {{ if not .current_user.CanComment }}<a href="/users/create" class="">Register</a> to comment or vote on this story.{{ end }}
          </div>
          

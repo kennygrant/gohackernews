@@ -1,10 +1,8 @@
 <article>
 <ul class="stories">
   {{ $0 := . }}
-  {{ range $i,$m := .stories }}
-     {{ set $0 "i" $i }}
-     {{ set $0 "story" $m }}
-     {{ set $0 "user" $m }}
+  {{ range .stories }}
+     {{ set $0 "story" . }}
      {{ template "stories/views/row.html.got" $0 }}
   {{ end }}
 </ul>

@@ -1,21 +1,20 @@
 <li class="story minus{{.story.NegativePoints}}">
-  <a href="/stories/{{.story.Id}}" class="bubble"><b class="bubble-tick"></b>
-    {{.story.CommentCountDisplay}}
-  </a> 
+  <a href="/stories/{{.story.Id}}" class="bubble"><b class="bubble-tick"></b>{{.story.CommentCountDisplay}}</a> 
   {{ if .current_user.Admin }}
     <a href="/stories/{{.story.Id}}/update" class="button small grey flag">edit</a>
-    <a href="/stories/{{.story.Id}}/flag?authenticity_token={{.authenticity_token}}" class="button small grey flag" method="post">Flag</a>
+    <a href="/stories/{{.story.Id}}/flag" class="button small grey flag" method="post">Flag</a>
   {{end }}
-  
     <div class="voting">
-      <a href="/stories/{{.story.Id}}/upvote?authenticity_token={{.authenticity_token}}" method="post" class="vote">▲</a>
+      <a href="/stories/{{.story.Id}}/upvote" method="post" class="vote {{if not .current_user.CanUpvote }}disabled{{ end }}">▲</a>
       <a href="/stories/{{.story.Id}}" class="points">{{.story.Points}}</a>
-      <a href="/stories/{{.story.Id}}/downvote?authenticity_token={{.authenticity_token}}" method="post" class="vote">▼</a>
+      <a href="/stories/{{.story.Id}}/downvote" method="post" class="vote {{if not .current_user.CanDownvote }}disabled{{ end }}">▼</a>
     </div>
-  
     <h3><a href="{{.story.DestinationURL}}" class="name">{{.story.Name}}</a></h3>
     <div class="metadata">
         <a href="{{.story.DestinationURL}}" class="domain">{{ .story.Domain }}</a>
+        {{ if exists .story.GodocURL }}
+          <a href="{{.story.GodocURL}}" class="domain docs">godoc.org</a>
+        {{ end }}
         <a href="/users/{{.story.UserId}}" class="user">{{.story.UserName}}</a>
         <a href="/stories/{{.story.Id}}" class="date">{{timeago .story.CreatedAt}}</a>
     </div>

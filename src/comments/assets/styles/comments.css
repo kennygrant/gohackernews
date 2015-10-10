@@ -83,3 +83,21 @@ article.comments {
 .comment.level1 {
   padding-left: 4%;
 }
+
+.comment.level2 {
+  padding-left: 8%;
+}
+
+.comment.level3 {
+  padding-left: 12%;
+}
+
+.comment.level4 {
+  padding-left: 16%;
+}
+
+.comment.level5,.comment.level6, .comment.level7,.comment.level8,.comment.level9,.comment.level10 {
+  padding-left: 20%;
+}
+
+

@@ -27,6 +27,11 @@
   font-size: 0.65em;
 }
 
+.story .vote.disabled {
+  opacity:0.3;
+  cursor:default;
+}
+
 .story .metadata {
   color: #ea8c06;
 }

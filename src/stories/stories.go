@@ -207,6 +207,14 @@ func (m *Story) DestinationURL() string {
 	return m.URLShow()
 }
 
+// GodocURL returns the godoc.org URL for this story, or empty string if none
+func (m *Story) GodocURL() string {
+	if strings.Contains(m.Url, "https://github.com") {
+		return strings.Replace(m.Url, "https://github.com", "https://godoc.org/github.com", 1)
+	}
+	return ""
+}
+
 // CommentCountDisplay returns the comment count or ellipsis if count is 0
 func (m *Story) CommentCountDisplay() string {
 	if m.CommentCount > 0 {
