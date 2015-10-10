@@ -162,6 +162,16 @@ func addStoryVote(story *stories.Story, user *users.User, ip string, delta int64
 		return router.InternalError(err, "Vote Failed", "Sorry your adjust vote points")
 	}
 
+	// Update the *story* posting user points by delta
+	storyUser, err := users.Find(story.UserId)
+	if err != nil {
+		return err
+	}
+	err = adjustUserPoints(storyUser, delta)
+	if err != nil {
+		return err
+	}
+
 	return recordStoryVote(story, user, ip, delta)
 }
 

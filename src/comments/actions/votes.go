@@ -151,6 +151,9 @@ func addCommentVote(comment *comments.Comment, user *users.User, ip string, delt
 
 	// Update the *comment* user points by delta
 	commentUser, err := users.Find(comment.UserId)
+	if err != nil {
+		return err
+	}
 	err = adjustUserPoints(commentUser, delta)
 	if err != nil {
 		return err

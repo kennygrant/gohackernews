@@ -42,16 +42,16 @@ func HandleCreate(context router.Context) error {
 		return router.NotAuthorizedError(nil, "Sorry", "You need to be registered and have more than 1 points to submit stories.")
 	}
 
-	// Get user details
-	user := authorise.CurrentUser(context)
-	ip := getUserIP(context)
-	url := context.Param("url")
-
 	// Get params
 	params, err := context.Params()
 	if err != nil {
 		return router.InternalError(err)
 	}
+
+	// Get user details
+	user := authorise.CurrentUser(context)
+	ip := getUserIP(context)
+	url := params.Get("url")
 
 	// Strip trailing slashes on url before comparisons
 	// we could possibly also strip url fragments
@@ -69,9 +69,8 @@ func HandleCreate(context router.Context) error {
 
 	if len(duplicates) > 0 {
 		dupe := duplicates[0]
-		// Add a point to dupe
+		// Add a point to dupe and return
 		addStoryVote(dupe, user, ip, 1)
-
 		return router.Redirect(context, dupe.URLShow())
 	}
 

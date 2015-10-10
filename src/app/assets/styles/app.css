@@ -186,6 +186,7 @@ footer {
 
 footer p {
   color:#eee;
+  font-size:0.8em;
 }
 
 footer form {
@@ -194,16 +195,35 @@ footer form {
 
 header {
   margin: 0 0 0 0;
+  padding:0.2rem 0 1rem 0;
   color: #fff;
 }
 
+header .golang_news {
+  display:none;
+}
+
 header nav {
-  width: 60em;
+  width: 100%;
+  clear: both;
+  font-weight: 300;
+}
+
+header nav ul {
+  padding:0.4em 0;
+}
+
+header nav .user {
+  clear:both;
+  width:100%;
+  display:block;
+  text-align:center;
 }
 
 
+
 header a {
-  line-height: 4rem;
+  line-height: 3rem;
   color: #fff;
 }
 
@@ -211,14 +231,6 @@ header a:hover {
   color: #fff;
 }
 
-nav {
-  clear: both;
-  font-weight: 300;
-}
-
-nav.admin {
-  background-color: #000;
-}
 
 article {
   clear: both;
@@ -251,7 +263,7 @@ section.narrow {
 }
 
 header {
-  height: 4rem;
+
 }
 
 
@@ -294,13 +306,6 @@ section.actions .button {
 }
 
 
-@media(max-width:750px) {
-  header {
-    /* put this in a media query just in case of incompatible browsers */
-    overflow: scroll;
-  }
-}
-
 @media(min-width:750px) {
   section.actions {
     text-align: right;
@@ -309,11 +314,24 @@ section.actions .button {
   section.actions .button {
     float: right;
   }
-  header nav {
-    width: 100%;
-  }
+
   header {
+    height: 4rem;
+    line-height:4rem;
     overflow: hidden;
+    padding:0;
+  }
+  
+  header nav .user {
+    float:right;
+    display:inline;
+    width:auto;
+    padding:0;
+  }
+  
+  
+  header .golang_news {
+    display:inline;
   }
 }
 
