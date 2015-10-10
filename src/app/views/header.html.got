@@ -2,10 +2,10 @@
   <ul>
     <li><a href="/" title="Golang News - Curated links about the Go programming language">Golang News</a></li>
   
-    <li><a title="Jobs for golang programmers" href="/stories/code">Code</a></li>
+    <li><a title="Golang Code Packages" href="/stories/code">Code</a></li>
+    <li><a title="Videos about the Go programming language" href="/stories?q=Video:">Videos</a></li>
     <li><a title="Jobs for golang programmers" href="/stories?q=Hiring:">Jobs</a></li>
     <li><a title="Events for golang programmers" href="/stories?q=Event:">Events</a></li>
-    <li><a title="Videos about Go" href="/stories?q=Video:">Videos</a></li>
     <li><a title="Podcasts and Screencasts about Go" href="/stories?q=Cast:">Casts</a></li>
     <li><a title="Newest articles about the Go programming language" href="/stories">New</a></li>
     <li><a title="A place to show GN your stuff" href="/stories?q=Show:">Show</a></li>

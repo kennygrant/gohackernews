@@ -1,4 +1,10 @@
+<div>
+  <form action="/stories" method="get">
+    <input name="q" type="text" placeholder="Search Golang News">
+  </form>
+</div>
 <p>
   <a href="https://github.com/kennygrant/gohackernews">Source on Github</a> | 
   <a href="http://fragmenta.eu">Made with Fragmenta</a>
 </p>
+

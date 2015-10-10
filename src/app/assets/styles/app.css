@@ -176,13 +176,20 @@ footer a:hover {
     color: #ddd;
 }
 
-header a {
-  line-height: 4rem;
-  color: #fff;
+footer {
+  clear: both;
+  font-size: 0.9em;
+  text-align: center;
+  padding: 2rem 0 1rem 0;
+  margin: 0;
 }
 
-header a:hover {
-  color: #fff;
+footer p {
+  color:#eee;
+}
+
+footer form {
+  margin:0;
 }
 
 header {
@@ -194,13 +201,14 @@ header nav {
   width: 60em;
 }
 
-footer {
-  clear: both;
-  font-size: 0.9em;
-  text-align: center;
-  padding: 2rem 0 1rem 0;
-  margin: 0;
-  color: rgba(255, 255, 255, 0.6);
+
+header a {
+  line-height: 4rem;
+  color: #fff;
+}
+
+header a:hover {
+  color: #fff;
 }
 
 nav {

@@ -210,6 +210,10 @@ func (m *Story) DestinationURL() string {
 // GodocURL returns the godoc.org URL for this story, or empty string if none
 func (m *Story) GodocURL() string {
 	if strings.Contains(m.Url, "https://github.com") {
+		// Check this is not a document, commit or other fragment, rather than repo
+		if strings.Contains(m.Url, "/commit/") || strings.HasSuffix(m.Url, ".md") {
+			return ""
+		}
 		return strings.Replace(m.Url, "https://github.com", "https://godoc.org/github.com", 1)
 	}
 	return ""
