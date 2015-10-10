@@ -23,6 +23,12 @@ func HandleHome(context router.Context) error {
 	// Select only above 0 points,  Order by rank, then points, then name
 	q.Where("points > 0").Order("rank desc, points desc, id desc")
 
+	// Set the offset in pages if we have one
+	page := int(context.ParamInt("page"))
+	if page > 0 {
+		q.Offset(listLimit * page)
+	}
+
 	// Fetch the stories
 	results, err := stories.FindAll(q)
 	if err != nil {
@@ -32,6 +38,7 @@ func HandleHome(context router.Context) error {
 	// Render the template
 	view := view.New(context)
 	setStoriesMetadata(view)
+	view.AddKey("page", page)
 	view.AddKey("stories", results)
 	view.AddKey("authenticity_token", authorise.CreateAuthenticityToken(context))
 	view.Template("stories/views/index.html.got")
@@ -50,6 +57,12 @@ func HandleCode(context router.Context) error {
 	// other code repos can be added later
 	q.Where("url ILIKE 'https://github.com%'").OrWhere("url ILIKE 'https://bitbucket.org'")
 
+	// Set the offset in pages if we have one
+	page := int(context.ParamInt("page"))
+	if page > 0 {
+		q.Offset(listLimit * page)
+	}
+
 	// Fetch the stories
 	results, err := stories.FindAll(q)
 	if err != nil {
@@ -59,6 +72,7 @@ func HandleCode(context router.Context) error {
 	// Render the template
 	view := view.New(context)
 	setStoriesMetadata(view)
+	view.AddKey("page", page)
 	view.AddKey("stories", results)
 	view.Template("stories/views/index.html.got")
 	return view.Render()
@@ -91,6 +105,12 @@ func HandleIndex(context router.Context) error {
 		q.Order("rank desc, points desc, id desc")
 	}
 
+	// Set the offset in pages if we have one
+	page := int(context.ParamInt("page"))
+	if page > 0 {
+		q.Offset(listLimit * page)
+	}
+
 	// Fetch the stories
 	results, err := stories.FindAll(q)
 	if err != nil {
@@ -100,7 +120,7 @@ func HandleIndex(context router.Context) error {
 	// Render the template
 	view := view.New(context)
 	setStoriesMetadata(view)
-	view.AddKey("filter", filter)
+	view.AddKey("page", page)
 	view.AddKey("stories", results)
 	view.AddKey("meta_title", "Golang News links")
 	view.AddKey("authenticity_token", authorise.CreateAuthenticityToken(context))

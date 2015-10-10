@@ -96,6 +96,10 @@
   margin-top: 2rem;
 }
 
+li.more_link {
+  text-align:center;
+}
+
 li.story {
   line-height: 1.5em;
   padding: 0.5rem 1rem;

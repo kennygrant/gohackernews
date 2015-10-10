@@ -5,5 +5,8 @@
      {{ set $0 "story" . }}
      {{ template "stories/views/row.html.got" $0 }}
   {{ end }}
+  {{ if eq (len .stories) 100 }}
+  <li class="more_link story"><a href="?page={{add .page 1 }}">Show More</a></li>
+  {{ end }}
 </ul>
 </article>
