@@ -74,6 +74,9 @@ func HandleCode(context router.Context) error {
 	setStoriesMetadata(view)
 	view.AddKey("page", page)
 	view.AddKey("stories", results)
+	// TODO: remove these calls and put in a filter
+	// - given it is not too expensive, we could just generate tokens on every request
+	view.AddKey("authenticity_token", authorise.CreateAuthenticityToken(context))
 	view.Template("stories/views/index.html.got")
 	return view.Render()
 
