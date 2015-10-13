@@ -10,7 +10,7 @@
          </h1>
     
          <div class="metadata">
-             at {{ .story.Domain }}
+             at <a href="{{.story.Url}}" class="domain">{{ .story.Domain }}</a>
              {{ if exists .story.GodocURL }}
                <a href="{{.story.GodocURL}}" class="domain docs">godoc.org</a>
              {{ end }}
