@@ -5,9 +5,15 @@
     <a href="/stories/{{.story.Id}}/flag" class="button small grey flag" method="post">Flag</a>
   {{end }}
     <div class="voting">
+      {{ if .current_user.Anon }}
+      <a href="/users/create" class="vote disabled">▲</a>
+      <a href="/stories/{{.story.Id}}" class="points">{{.story.Points}}</a>
+      <a href="/users/create" class="vote disabled">▼</a>
+      {{ else }}
       <a href="/stories/{{.story.Id}}/upvote" method="post" class="vote {{if not .current_user.CanUpvote }}disabled{{ end }}">▲</a>
       <a href="/stories/{{.story.Id}}" class="points">{{.story.Points}}</a>
       <a href="/stories/{{.story.Id}}/downvote" method="post" class="vote {{if not .current_user.CanDownvote }}disabled{{ end }}">▼</a>
+      {{ end }}
     </div>
     <h3><a href="{{.story.DestinationURL}}" class="name">{{.story.Name}}</a></h3>
     <div class="metadata">

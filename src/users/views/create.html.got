@@ -1,6 +1,6 @@
 <section class="narrow">
 <form method="post">
-    <h1>Register</h1>
+    <h1>Register to vote and submit</h1>
 
     {{ field "Name" "name" .user.Name }}
     {{ field "Email (optional)" "email" .user.Email }}
