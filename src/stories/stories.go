@@ -199,6 +199,11 @@ func (m *Story) Domain() string {
 	return "GN"
 }
 
+// ShowAsk returns true if this is a Show: or Ask: story
+func (m *Story) ShowAsk() bool {
+	return strings.HasPrefix(m.Name, "Show:") || strings.HasPrefix(m.Name, "Ask:")
+}
+
 // DestinationURL returns the URL of the story (either set URL or if unset for Ask:, just the ShowURL)
 func (m *Story) DestinationURL() string {
 	if m.Url != "" {

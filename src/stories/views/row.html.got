@@ -15,13 +15,17 @@
       <a href="/stories/{{.story.Id}}/downvote" method="post" class="vote {{if not .current_user.CanDownvote }}disabled{{ end }}">▼</a>
       {{ end }}
     </div>
+    {{ if .story.ShowAsk }}
+    <h3><a href="{{.story.URLShow}}" class="name">{{.story.Name}}</a></h3>
+    {{ else }}
     <h3><a href="{{.story.DestinationURL}}" class="name">{{.story.Name}}</a></h3>
+    {{ end }}
     <div class="metadata">
         <a href="{{.story.DestinationURL}}" class="domain">{{ .story.Domain }}</a>
         {{ if exists .story.GodocURL }}
           <a href="{{.story.GodocURL}}" class="domain docs">godoc.org</a>
         {{ end }}
         <a href="/users/{{.story.UserId}}" class="user">{{.story.UserName}}</a>
-        <a href="/stories/{{.story.Id}}" class="date">{{timeago .story.CreatedAt}}</a>
+        <a href="{{.story.URLShow}}" class="date">{{timeago .story.CreatedAt}}</a>
     </div>
 </li>
