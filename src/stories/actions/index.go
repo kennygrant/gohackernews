@@ -45,6 +45,12 @@ func HandleHome(context router.Context) error {
 	view.AddKey("stories", results)
 	view.AddKey("authenticity_token", authorise.CreateAuthenticityToken(context))
 	view.Template("stories/views/index.html.got")
+
+	if context.Param("format") == ".xml" {
+		view.Layout("")
+		view.Template("stories/views/index.xml.got")
+	}
+
 	return view.Render()
 
 }
@@ -81,6 +87,12 @@ func HandleCode(context router.Context) error {
 	// - given it is not too expensive, we could just generate tokens on every request
 	view.AddKey("authenticity_token", authorise.CreateAuthenticityToken(context))
 	view.Template("stories/views/index.html.got")
+
+	if context.Param("format") == ".xml" {
+		view.Layout("")
+		view.Template("stories/views/index.xml.got")
+	}
+
 	return view.Render()
 
 }
