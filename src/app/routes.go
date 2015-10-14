@@ -17,7 +17,8 @@ func setupRoutes(r *router.Router) {
 	// Add the home page route
 	r.Add("/", storyactions.HandleHome)
 
-	r.Add("/stories", storyactions.HandleIndex)
+	r.Add("/stories{format:(.xml)?}", storyactions.HandleIndex)
+	r.Add("/index{format:(.xml)?}", storyactions.HandleIndex)
 	r.Add("/stories/code", storyactions.HandleCode)
 	r.Add("/stories/create", storyactions.HandleCreateShow)
 	r.Add("/stories/create", storyactions.HandleCreate).Post()

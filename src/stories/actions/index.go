@@ -1,7 +1,10 @@
 package storyactions
 
 import (
+	"fmt"
+	"net/http"
 	"strings"
+	"time"
 
 	"github.com/fragmenta/router"
 	"github.com/fragmenta/view"
@@ -37,7 +40,7 @@ func HandleHome(context router.Context) error {
 
 	// Render the template
 	view := view.New(context)
-	setStoriesMetadata(view)
+	setStoriesMetadata(view, context.Request())
 	view.AddKey("page", page)
 	view.AddKey("stories", results)
 	view.AddKey("authenticity_token", authorise.CreateAuthenticityToken(context))
@@ -71,7 +74,7 @@ func HandleCode(context router.Context) error {
 
 	// Render the template
 	view := view.New(context)
-	setStoriesMetadata(view)
+	setStoriesMetadata(view, context.Request())
 	view.AddKey("page", page)
 	view.AddKey("stories", results)
 	// TODO: remove these calls and put in a filter
@@ -122,19 +125,38 @@ func HandleIndex(context router.Context) error {
 
 	// Render the template
 	view := view.New(context)
-	setStoriesMetadata(view)
+	setStoriesMetadata(view, context.Request())
 	view.AddKey("page", page)
 	view.AddKey("stories", results)
 	view.AddKey("meta_title", "Golang News links")
 	view.AddKey("authenticity_token", authorise.CreateAuthenticityToken(context))
 
+	if context.Param("format") == ".xml" {
+		view.Layout("")
+		view.Template("stories/views/index.xml.got")
+	}
+
 	return view.Render()
 
 }
 
-func setStoriesMetadata(view *view.Renderer) {
+func setStoriesMetadata(view *view.Renderer, request *http.Request) {
+	view.AddKey("pubdate", time.Now()) // could use latest story date instead?
 	view.AddKey("meta_title", "Golang News")
 	view.AddKey("meta_desc", "News for Go Hackers, in the style of Hacker News. A curated selection of the latest links about the Go programming language.")
 	view.AddKey("meta_keywords", "golang news, blog, links, go developers, go web apps, web applications, fragmenta")
+
+	p := strings.Replace(request.URL.Path, ".xml", "", 1)
+	if p == "/" {
+		p = "/index"
+	}
+
+	q := request.URL.RawQuery
+	if len(q) > 0 {
+		q = "?" + q
+	}
+
+	url := fmt.Sprintf("http://%s%s.xml%s", request.Host, p, q)
+	view.AddKey("meta_rss", url)
 
 }

@@ -1,0 +1,19 @@
+{{ html "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" }}
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>{{ .meta_title }}</title>
+    <link>http://golangnews.com</link>
+    <atom:link href="{{ .meta_rss }}" rel="self" type="application/rss+xml" />
+    <description>{{ .meta_desc }}</description>
+    <pubDate>{{ date .pubdate.UTC "Mon, 02 Jan 2006 15:04:00 +0000" }}</pubDate>
+    {{ range .stories }}
+    <item>
+      <title>{{  .Name }}</title>
+      <description>{{ if exists .Summary }}{{ .Summary }}{{ end }} {{ .Points }} points posted by {{.UserName}} </description>
+      <link>{{  .DestinationURL }}</link>
+      <guid>http://golangnews.com{{ .URLShow }}</guid>
+      <pubDate>{{ date .CreatedAt.UTC "Mon, 02 Jan 2006 15:04:00 +0000" }}</pubDate>
+    </item>
+    {{ end }}
+  </channel>
+</rss>
