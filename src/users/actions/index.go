@@ -18,7 +18,7 @@ func HandleIndex(context router.Context) error {
 	}
 
 	// Query for most recent 100 users
-	q := users.Query().Order("created_at desc").Limit(100)
+	q := users.Query().Order("points desc, created_at desc").Limit(100)
 
 	// Fetch 100 of them
 	userList, err := users.FindAll(q)

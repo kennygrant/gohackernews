@@ -19,7 +19,6 @@ import (
 type User struct {
 	model.Model
 	status.ModelStatus
-
 	Role              int64
 	EncryptedPassword string
 	Email             string
@@ -27,8 +26,7 @@ type User struct {
 	Title             string
 	Summary           string
 	Text              string
-
-	Points int64
+	Points            int64
 }
 
 // AllowedParams returns an array of acceptable params in update
