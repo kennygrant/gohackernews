@@ -25,6 +25,10 @@
         {{ if exists .story.GodocURL }}
           <a href="{{.story.GodocURL}}" class="domain docs">godoc.org</a>
         {{ end }}
+        {{ if exists .story.VetURL }}
+          <a href="{{.story.VetURL}}" class="domain docs">govet</a>
+        {{ end }}
+        
         <a href="/users/{{.story.UserId}}" class="user">{{.story.UserName}}</a>
         <a href="{{.story.URLShow}}" class="date">{{timeago .story.CreatedAt}}</a>
     </div>

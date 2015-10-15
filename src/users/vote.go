@@ -1,7 +1,7 @@
 package users
 
 /*
-  Proposed rules - for now these are relaxed
+  Proposed voting rules - for now these are relaxed
   1 points - submit, comment
   10 points - upvote (they start with 10 points)
   50 points - downvote

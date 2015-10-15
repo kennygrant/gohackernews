@@ -212,14 +212,30 @@ func (m *Story) DestinationURL() string {
 	return m.URLShow()
 }
 
+// Code returns true if this is a link to a git repository
+// At present we only check for github urls, we should at least check for bitbucket
+func (m *Story) Code() bool {
+	if strings.Contains(m.Url, "https://github.com") {
+		if strings.Contains(m.Url, "/commit/") || strings.HasSuffix(m.Url, ".md") {
+			return false
+		}
+		return true
+	}
+	return false
+}
+
 // GodocURL returns the godoc.org URL for this story, or empty string if none
 func (m *Story) GodocURL() string {
-	if strings.Contains(m.Url, "https://github.com") {
-		// Check this is not a document, commit or other fragment, rather than repo
-		if strings.Contains(m.Url, "/commit/") || strings.HasSuffix(m.Url, ".md") {
-			return ""
-		}
+	if m.Code() {
 		return strings.Replace(m.Url, "https://github.com", "https://godoc.org/github.com", 1)
+	}
+	return ""
+}
+
+// VetURL returns a URL for goreportcard.com, for code repos
+func (m *Story) VetURL() string {
+	if m.Code() {
+		return strings.Replace(m.Url, "https://github.com/", "http://goreportcard.com/report/", 1)
 	}
 	return ""
 }

@@ -1,9 +1,11 @@
-# Golang Hacker News
-A responsive version of hacker news written in golang. 
+# Golang News
+A responsive news website for links about the Go programming language, written in Go. You can see a this website in action at this link:
+
+[http://golangnews.com](http://golangnews.com)
 
 ## Gettting Started
 
-The app requires postgresql just now to bootstrap locally.
+The app requires postgresql just now to bootstrap locally (not Mysql). So make sure you have psql installed. The bootstrap process will create a database and settings for you, but you'll need to promote the first user to admin in order to use the site locally.
 
 Go get this app:
 
