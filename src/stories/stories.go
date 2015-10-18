@@ -212,6 +212,14 @@ func (m *Story) DestinationURL() string {
 	return m.URLShow()
 }
 
+// ListURL returns the URL to use for this story in lists for Show/Ask stories, this is the story link, for others, it is the destination URL
+func (m *Story) ListURL() string {
+	if !m.ShowAsk() && m.Url != "" {
+		return m.Url
+	}
+	return m.URLShow()
+}
+
 // Code returns true if this is a link to a git repository
 // At present we only check for github urls, we should at least check for bitbucket
 func (m *Story) Code() bool {
@@ -246,4 +254,25 @@ func (m *Story) CommentCountDisplay() string {
 		return fmt.Sprintf("%d", m.CommentCount)
 	}
 	return "…"
+}
+
+// NameDisplay returns a title string without hashtags (assumed to be at the end),
+// by truncating the title at the first #
+func (m *Story) NameDisplay() string {
+	if strings.Contains(m.Name, "#") {
+		return m.Name[0:strings.Index(m.Name, "#")]
+	}
+	return m.Name
+}
+
+// Tags are defined as words beginning with # in the title
+// TODO: for speed and clarity we could extract at submit time instead and store in db
+func (m *Story) Tags() []string {
+	var tags []string
+	if strings.Contains(m.Name, "#") {
+		// split on " #"
+		parts := strings.Split(m.Name, " #")
+		tags = parts[1:]
+	}
+	return tags
 }

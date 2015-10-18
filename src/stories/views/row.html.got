@@ -1,8 +1,7 @@
-<li class="story minus{{.story.NegativePoints}}">
+<li class="story {{ if gt .story.NegativePoints 0 }}minus{{.story.NegativePoints}}{{end}}">
   <a href="/stories/{{.story.Id}}" class="bubble"><b class="bubble-tick"></b>{{.story.CommentCountDisplay}}</a> 
   {{ if .current_user.Admin }}
     <a href="/stories/{{.story.Id}}/update" class="button small grey flag">edit</a>
-    <a href="/stories/{{.story.Id}}/flag" class="button small grey flag" method="post">Flag</a>
   {{end }}
     <div class="voting">
       {{ if .current_user.Anon }}
@@ -15,12 +14,13 @@
       <a href="/stories/{{.story.Id}}/downvote" method="post" class="vote {{if not .current_user.CanDownvote }}disabled{{ end }}">▼</a>
       {{ end }}
     </div>
-    {{ if .story.ShowAsk }}
-    <h3><a href="{{.story.URLShow}}" class="name">{{.story.Name}}</a></h3>
-    {{ else }}
-    <h3><a href="{{.story.DestinationURL}}" class="name">{{.story.Name}}</a></h3>
-    {{ end }}
+    <h3><a href="{{.story.ListURL}}" class="name">{{.story.NameDisplay}}</a></h3>
     <div class="metadata">
+      <ul class="tags">
+          {{ range .story.Tags }}
+            <li><a href="/stories?q=%23{{.}}">{{.}}</a></li>
+          {{ end }}
+      </ul>
         <a href="{{.story.DestinationURL}}" class="domain">{{ .story.Domain }}</a>
         {{ if exists .story.GodocURL }}
           <a href="{{.story.GodocURL}}" class="domain docs">godoc.org</a>

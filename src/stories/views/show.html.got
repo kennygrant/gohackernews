@@ -1,16 +1,20 @@
 <article class="narrow story">
-         {{ if .current_user.Admin }}
-           <a href="/stories/{{.story.Id}}/update" class="button  grey right">edit</a>
-         {{end }}
+    
+       
          <h1>
              <a href="/stories/{{.story.Id}}/upvote" method="post" class="vote {{if not .current_user.CanUpvote }}disabled{{ end }}">▲</a>
              <a href="/stories/{{.story.Id}}" class="points">{{.story.Points}}</a>
              <a href="/stories/{{.story.Id}}/downvote" method="post" class="vote {{if not .current_user.CanDownvote }}disabled{{ end }}">▼</a>
-             <a href="{{.story.Url}}" class="name">{{.story.Name}}</a>
+             <a href="{{.story.Url}}" class="name">{{.story.NameDisplay}}</a>
          </h1>
     
          <div class="metadata">
-             at <a href="{{.story.Url}}" class="domain">{{ .story.Domain }}</a>
+           <ul class="tags">
+               {{ range .story.Tags }}
+                 <li><a href="/stories?q=%23{{.}}">{{.}}</a></li>
+               {{ end }}
+           </ul>
+             <a href="{{.story.Url}}" class="domain">{{ .story.Domain }}</a>
              {{ if exists .story.GodocURL }}
                <a href="{{.story.GodocURL}}" class="domain docs">godoc.org</a>
              {{ end }}
@@ -20,7 +24,12 @@
              <a href="/users/{{.story.UserId}}">posted by {{.story.UserName}}</a> {{timeago .story.CreatedAt }} &nbsp; 
          </div>
          
-
+         <div class="actions">
+        {{ if .current_user.Admin }}
+          <a href="/stories/{{.story.Id}}/update" class="button grey">edit</a>
+          <a href="/stories/{{.story.Id}}/flag" class="button grey flag" method="post">Flag</a>
+        {{end }}
+        </div>
         {{ if not .current_user.CanComment }}
           <div class="register">
             <a href="/users/create" class="button">Register</a> To comment or vote on this story

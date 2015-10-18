@@ -2,7 +2,7 @@
 
   <div class="actions right">
     {{ if .current_user.Admin }}
-     <a href="/users/{{.current_user.Id}}/update" class="button grey">edit</a>
+     <a href="/users/{{.user.Id}}/update" class="button grey">edit</a>
     {{end }}
     {{ if eq .current_user.Id .user.Id }}
       <a class="button grey" href="/users/logout" method="post">Logout</a>

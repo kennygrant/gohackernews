@@ -34,6 +34,7 @@
 
 .story .metadata {
   color: #ea8c06;
+  margin:1rem 0;
 }
 
 .story .register {
@@ -46,12 +47,42 @@
   display:block;
 }
 
+.story .actions {
+  float:none;
+  margin:1rem 0;
+  text-align:center;
+}
+
+.story .actions .button {
+  margin-right:1rem;
+}
+
 .story .name {
   color: #0ab1e8;
 }
 
 .story .name:hover {
   color: #656565;
+}
+
+.tags {
+  list-style:none;
+  display:inline;
+  padding:0;
+  margin:0;
+}
+.tags li {
+  padding:0;
+  margin:0;
+  display:inline;
+}
+
+.tags li a {
+  background-color:#ccc;
+  padding:0 0.5rem 0.1rem 0.5rem;
+  border-radius:0.4rem;
+  margin:0 0.1rem;
+  color:#fff;
 }
 
 .story .domain {
@@ -99,7 +130,8 @@
 }
 
 .story h1 .name {
-  font-size: 0.9em;
+  display:inline;
+  font-size: 0.8em;
 }
 
 .story .comments {
@@ -218,6 +250,14 @@ li.story .button {
   }
   .story .register .button {
     display:inline-block;
+  }
+  
+  .story .actions {
+    float:right;
+  }
+
+  .story .actions .button {
+    margin:0 0 0 1rem;
   }
   
   li.story {
