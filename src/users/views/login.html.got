@@ -1,7 +1,7 @@
 <section class="narrow">
-<h1>Login</h1>
+
 <form action="/users/login" method="post">
- 
+    <h1>Login</h1>
     {{ field "Email or Username" "email" "" "text" }}
     {{ field "Password" "password" "" "password" "type=password" }}
 

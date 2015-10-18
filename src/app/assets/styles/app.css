@@ -1,9 +1,6 @@
-@font-face {
-  font-family: Lato src: url(/assets/fonts/lato.ttf);
-}
 
 body {
-  font: 1.6em/1.6em "Lato", "Roboto", "Helvetica Neue", Arial, sans-serif;
+  font: 1.6em/1.6em "Roboto", "Helvetica Neue", Arial, sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -116,7 +113,7 @@ code {
 }
 
 nav .button.small {
-  top: 0.7rem;
+  top: 0.4rem;
   background-color: #fff;
   color: #0ab1e8;
   opacity: 0.8;
@@ -143,29 +140,27 @@ ul.list {
   color: #444;
 }
 
-ul.inline, nav ul {
+ul.inline {
   list-style: none;
   margin: 0;
   padding: 0;
   display: inline;
 }
 
-ul.inline li, nav ul li {
+ul.inline li {
   display: inline-block;
   white-space: nowrap;
   padding: 0 2rem;
   margin: 0 0 0.2rem 0;
 }
 
-nav ul li {
-  padding: 0 0.8rem;
-  margin: 0;
-}
-
 header, footer {
   background-color: #ff6600;
   background-color: #0ab1e8;
   border: none;
+  margin:0;
+  padding:0;
+  color: #fff;
 }
 
 footer a {
@@ -181,7 +176,6 @@ footer {
   font-size: 0.9em;
   text-align: center;
   padding: 2rem 0 1rem 0;
-  margin: 0;
 }
 
 footer p {
@@ -193,37 +187,146 @@ footer form {
   margin:0;
 }
 
+header form {
+  margin:0;
+  padding:0;
+}
+
 header {
-  margin: 0 0 0 0;
-  padding:0.2rem 0 1rem 0;
-  color: #fff;
+  min-height:3.2rem;
 }
 
 header .golang_news {
-  display:none;
+  text-transform:uppercase;
 }
 
 header nav {
   width: 100%;
   clear: both;
   font-weight: 300;
+  padding-bottom:0.5rem;
 }
 
 header nav ul {
-  padding:0.4em 0;
-}
-
-header nav .user {
+  margin:0;
+  padding:0 0 0 1rem;
+  list-style: none;
+  line-height:2.8rem;
   clear:both;
-  width:100%;
-  display:block;
-  text-align:center;
+}
+
+header nav ul li {
+  list-style: none;
+  float:left;
+  white-space: nowrap;
+  padding:0 0.5rem;
+  margin: 0;
+}
+
+header nav .sections {
+  padding-top:0.2em;
+}
+
+header nav .user_badge {
+  margin-right:1rem;
 }
 
 
+header nav .tags {
+  padding:0rem 1rem 0rem 1rem;
+  display:block;
+}
+
+header nav .tags li {
+  padding:0 0.8rem;
+}
+
+header .tags li a {
+  font-size:0.9em;
+  color:#666;
+  background-color:#eee;
+}
+
+header .tags li a:hover {
+  color:#aaa;
+}
+
+header .title  {
+  padding:0;
+}
+
+header .title .site {
+  font-size:1.3em;
+  text-shadow:-0.25rem 0.25rem 0 #037aa1;
+  font-weight:800;
+  margin:0.2rem 1rem 0 1rem;
+  position:relative;
+  z-index:2;
+}
+
+
+header .title .user_badge {
+  text-align:center;
+  width:100%;
+  position:absolute;
+  top:0.2rem;
+  block-shadow:-0.25rem 0.25rem 0 #037aa1;
+  margin:0 auto;
+  padding:0;
+}
+
+header .user_badge .register {
+  float:none;
+  top:0.1rem;
+  height:2rem;
+  line-height:2rem;
+  padding:0 0.5rem;
+}
+
+header .site_strap {
+  display:none;
+}
+
+header .search {
+  float:right;
+  position:relative;
+  z-index:2;
+}
+
+
+header .search img {
+  width:22px;
+  height:22px;
+  padding:0.6rem 0.5rem 0 0;
+}
+
+
+header .search_form {
+  overflow:hidden;
+  height:3rem;
+  padding:0 1.5rem;
+  margin:0.5rem 0 0.2rem 0;
+  clear:both;
+  width:93%;
+}
+
+header .search_form input {
+  color:#666;
+  font-weight: 400;
+  border-radius:0;
+  font-size:1em;
+  padding:0.5rem 0.7rem;
+  line-height:1.8rem;
+  height:auto;
+  border:1px solid transparent;
+  width:100%;
+}
+
+header .search_form input:focus {
+  opacity:1.0;
+}
 
 header a {
-  line-height: 3rem;
   color: #fff;
 }
 
@@ -260,10 +363,6 @@ section.padded {
 section.narrow {
   padding: 0 2rem;
   max-width: 50em;
-}
-
-header {
-
 }
 
 
@@ -307,6 +406,7 @@ section.actions .button {
 
 
 @media(min-width:750px) {
+
   section.actions {
     text-align: right;
     margin-top: -4.5rem;
@@ -315,24 +415,25 @@ section.actions .button {
     float: right;
   }
 
-  header {
-    height: 4rem;
-    line-height:4rem;
-    overflow: hidden;
-    padding:0;
+  header .site_strap {
+    display:block;
+    float:left;
+    padding:0.2rem 0 0 0;
   }
   
-  header nav .user {
-    float:right;
-    display:inline;
-    width:auto;
-    padding:0;
+  header .site {
+    margin-right:0;
+    padding-right:0;
+  }
+  
+  header .search_form {
+    text-align:center;
+    width:97%;
   }
   
   
-  header .golang_news {
-    display:inline;
-  }
+
+
 }
 
 article .story {

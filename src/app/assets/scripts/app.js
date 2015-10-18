@@ -60,7 +60,7 @@ function ActivateShowlinks() {
     var selector = this.getAttribute('data-show');
     DOM.Each(selector, function(el, i) {
       if (!el.className.match(/hidden/gi)) {
-        el.className = 'hidden';
+        el.className = el.className + ' hidden';
       } else {
         el.className = el.className.replace(/hidden/gi, '');
       }

@@ -83,6 +83,8 @@ func HandleCode(context router.Context) error {
 	setStoriesMetadata(view, context.Request())
 	view.AddKey("page", page)
 	view.AddKey("stories", results)
+	view.AddKey("tags", []string{"web", "mobile", "data", "email", "crypto", "data", "graphics", "ui", "security"})
+
 	// TODO: remove these calls and put in a filter
 	// - given it is not too expensive, we could just generate tokens on every request
 	view.AddKey("authenticity_token", authorise.CreateAuthenticityToken(context))
@@ -137,6 +139,16 @@ func HandleIndex(context router.Context) error {
 
 	// Render the template
 	view := view.New(context)
+	/*
+		// Consider how best to do this
+
+		switch filter {
+		case "Hiring:":
+			view.AddKey("tags", []string{"sf", "nyc", "boston", "london", "berlin"})
+		default:
+			view.AddKey("tags", []string{"web", "mobile", "graphics", "security"})
+		}
+	*/
 	setStoriesMetadata(view, context.Request())
 	view.AddKey("page", page)
 	view.AddKey("stories", results)

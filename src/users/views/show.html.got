@@ -1,6 +1,6 @@
 <section class="user padded">
 
-  <div class="actions right">
+  <div class="actions">
     {{ if .current_user.Admin }}
      <a href="/users/{{.user.Id}}/update" class="button grey">edit</a>
     {{end }}

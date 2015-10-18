@@ -16,7 +16,8 @@ func HandleCreateShow(context router.Context) error {
 	// Authorise
 	err := authorise.Path(context)
 	if err != nil {
-		return router.NotAuthorizedError(err)
+		// When not allowed to post stories, redirect to register screen
+		router.Redirect(context, "/users/create")
 	}
 
 	// Render the template
