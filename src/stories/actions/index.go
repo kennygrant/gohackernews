@@ -83,7 +83,7 @@ func HandleCode(context router.Context) error {
 	setStoriesMetadata(view, context.Request())
 	view.AddKey("page", page)
 	view.AddKey("stories", results)
-	view.AddKey("tags", []string{"web", "mobile", "data", "email", "crypto", "data", "graphics", "ui", "security"})
+	//	view.AddKey("tags", []string{"web", "mobile", "data", "email", "crypto", "data", "graphics", "ui", "security"})
 
 	// TODO: remove these calls and put in a filter
 	// - given it is not too expensive, we could just generate tokens on every request

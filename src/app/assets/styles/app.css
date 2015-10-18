@@ -435,6 +435,8 @@ section.actions .button {
   header .site {
     margin-right:0;
     padding-right:0;
+    position:relative;
+    z-index:2;
   }
   
   header .search_form {
