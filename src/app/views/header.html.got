@@ -10,7 +10,12 @@
     </li>
         
       <!-- change to http://golangnews.com -->
-    <li class="site"><a href="/" title="Golang News - Curated links about the Go programming language">GN</a></li>
+    <li class="site">
+      <a href="/" title="Golang News - Curated links about the Go programming language">
+        <span class="logo">GN</span>
+        <span class="long">Golang News</span>
+      </a>
+    </li>
     <li class="site_strap">News for Go programmers</li>
 
     <li class="search">
@@ -37,7 +42,7 @@
     <li><a title="A place to show GN your stuff" href="/stories?q=Show:">Show</a></li>
     <li><a title="Ask golang news" href="/stories?q=Ask:">Ask</a></li>
     <li><a href="/comments">Comments</a></li>
-    <li class=""><a class="" href="/stories/create">Submit</a></li>
+    <li class="submit"><a class="button small" href="/stories/create">Submit</a></li>
   </ul>
   
   {{ if .tags }}

@@ -255,15 +255,24 @@ header .title  {
   padding:0;
 }
 
-header .title .site {
+header .title .logo {
   font-size:1.3em;
-  text-shadow:-0.25rem 0.25rem 0 #037aa1;
+  text-shadow:-0.25rem 0.25rem 0 rgba(10,134,174,0.5);
   font-weight:800;
-  margin:0.2rem 1rem 0 1rem;
+  margin:0.4rem 1rem 0 1rem;
   position:relative;
   z-index:2;
+  text-transform:uppercase;
+  display:block;
 }
 
+header .title .long {
+  display:none;
+}
+
+header .site_strap {
+  display:none;
+}
 
 header .title .user_badge {
   text-align:center;
@@ -273,6 +282,7 @@ header .title .user_badge {
   block-shadow:-0.25rem 0.25rem 0 #037aa1;
   margin:0 auto;
   padding:0;
+
 }
 
 header .user_badge .register {
@@ -283,9 +293,6 @@ header .user_badge .register {
   padding:0 0.5rem;
 }
 
-header .site_strap {
-  display:none;
-}
 
 header .search {
   float:right;
@@ -305,7 +312,7 @@ header .search_form {
   overflow:hidden;
   height:3rem;
   padding:0 1.5rem;
-  margin:0.5rem 0 0.2rem 0;
+  margin:0.5rem 0 1rem 0;
   clear:both;
   width:93%;
 }
@@ -324,6 +331,10 @@ header .search_form input {
 
 header .search_form input:focus {
   opacity:1.0;
+}
+
+header .submit .button {
+ top:0rem;
 }
 
 header a {
@@ -431,8 +442,27 @@ section.actions .button {
     width:97%;
   }
   
+  header .site .logo {
+    display:none;
+  }
   
+  header .title .long {
+    display:block;
+    margin:0.2rem 1rem 0 1rem;
+  }
+  
+    header .title .site_strap {
+      opacity:0.8;
+    }
+    
+    header .submit {
+      float:right;
+      
+    }
 
+      header .submit .button {
+       top:0rem;
+      }
 
 }
 
