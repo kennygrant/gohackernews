@@ -48,6 +48,9 @@ func Setup(server *server.Server) {
 	// We use this below in Resource, and also in views to determine current user attributes
 	router.AddFilter(authorise.CurrentUserFilter)
 
+	// Add an authenticity token filter to write out a secret token for each request (CSRF protection)
+	router.AddFilter(authorise.AuthenticityTokenFilter)
+
 	// Setup our router and handlers
 	setupRoutes(router)
 

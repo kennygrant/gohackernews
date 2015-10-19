@@ -25,7 +25,7 @@ func HandleCreateShow(context router.Context) error {
 	story := stories.New()
 	view.AddKey("story", story)
 	view.AddKey("meta_title", "Go Hacker News Submit")
-	view.AddKey("authenticity_token", authorise.CreateAuthenticityToken(context))
+
 	return view.Render()
 }
 

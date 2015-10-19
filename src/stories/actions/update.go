@@ -30,7 +30,7 @@ func HandleUpdateShow(context router.Context) error {
 	// Render the template
 	view := view.New(context)
 	view.AddKey("story", story)
-	view.AddKey("authenticity_token", authorise.CreateAuthenticityToken(context))
+
 	return view.Render()
 }
 

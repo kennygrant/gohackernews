@@ -5,7 +5,6 @@ import (
 	"github.com/fragmenta/view"
 
 	"github.com/kennygrant/gohackernews/src/comments"
-	"github.com/kennygrant/gohackernews/src/lib/authorise"
 )
 
 // HandleShow displays a single comment
@@ -22,6 +21,6 @@ func HandleShow(context router.Context) error {
 	// Render the template
 	view := view.New(context)
 	view.AddKey("comment", comment)
-	view.AddKey("authenticity_token", authorise.CreateAuthenticityToken(context))
+
 	return view.Render()
 }

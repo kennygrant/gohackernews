@@ -5,7 +5,6 @@ import (
 	"github.com/fragmenta/view"
 
 	"github.com/kennygrant/gohackernews/src/comments"
-	"github.com/kennygrant/gohackernews/src/lib/authorise"
 	"github.com/kennygrant/gohackernews/src/stories"
 )
 
@@ -33,7 +32,6 @@ func HandleShow(context router.Context) error {
 	view.AddKey("meta_desc", story.Summary)
 	view.AddKey("meta_keywords", story.Name)
 	view.AddKey("comments", rootComments)
-	view.AddKey("authenticity_token", authorise.CreateAuthenticityToken(context))
 
 	return view.Render()
 }

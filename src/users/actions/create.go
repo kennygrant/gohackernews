@@ -20,7 +20,6 @@ func HandleCreateShow(context router.Context) error {
 	view := view.New(context)
 	user := users.New()
 	view.AddKey("user", user)
-	view.AddKey("authenticity_token", authorise.CreateAuthenticityToken(context))
 
 	// Serve
 	return view.Render()

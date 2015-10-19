@@ -28,7 +28,7 @@ func HandleCreateShow(context router.Context) error {
 	// TODO: May have to validate parent_id or story_id
 	view.AddKey("story_id", context.ParamInt("story_id"))
 	view.AddKey("parent_id", context.ParamInt("parent_id"))
-	view.AddKey("authenticity_token", authorise.CreateAuthenticityToken(context))
+
 	return view.Render()
 }
 

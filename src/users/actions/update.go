@@ -26,7 +26,7 @@ func HandleUpdateShow(context router.Context) error {
 	}
 
 	view.AddKey("user", user)
-	view.AddKey("authenticity_token", authorise.CreateAuthenticityToken(context))
+
 	return view.Render()
 }
 

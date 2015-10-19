@@ -51,15 +51,15 @@ func CurrentUser(context router.Context) *users.User {
 	return user
 }
 
-// CreateAuthenticityToken returns an auth.AuthenticityToken and writes a secret to check it to the cookie
-func CreateAuthenticityToken(context router.Context) string {
-	token, err := auth.AuthenticityToken(context.Writer(), context.Request())
+// AuthenticityTokenFilter returns a filter function which sets
+// the authenticity token on the context and on the cookie
+func AuthenticityTokenFilter(c router.Context) error {
+	token, err := auth.AuthenticityToken(c.Writer(), c.Request())
 	if err != nil {
-		context.Logf("#warn invalid authenticity token at %v", context)
-		return "" // empty strings are invalid as tokens
+		return err
 	}
-
-	return token
+	c.Set("authenticity_token", token)
+	return nil
 }
 
 // AuthenticityToken checks the token in the current request

@@ -9,7 +9,6 @@ import (
 	"github.com/fragmenta/router"
 	"github.com/fragmenta/view"
 
-	"github.com/kennygrant/gohackernews/src/lib/authorise"
 	"github.com/kennygrant/gohackernews/src/stories"
 )
 
@@ -43,7 +42,6 @@ func HandleHome(context router.Context) error {
 	setStoriesMetadata(view, context.Request())
 	view.AddKey("page", page)
 	view.AddKey("stories", results)
-	view.AddKey("authenticity_token", authorise.CreateAuthenticityToken(context))
 	view.Template("stories/views/index.html.got")
 
 	if context.Param("format") == ".xml" {
@@ -87,7 +85,7 @@ func HandleCode(context router.Context) error {
 
 	// TODO: remove these calls and put in a filter
 	// - given it is not too expensive, we could just generate tokens on every request
-	view.AddKey("authenticity_token", authorise.CreateAuthenticityToken(context))
+
 	view.Template("stories/views/index.html.got")
 
 	if context.Param("format") == ".xml" {
@@ -153,7 +151,6 @@ func HandleIndex(context router.Context) error {
 	view.AddKey("page", page)
 	view.AddKey("stories", results)
 	view.AddKey("meta_title", "Golang News links")
-	view.AddKey("authenticity_token", authorise.CreateAuthenticityToken(context))
 
 	if context.Param("format") == ".xml" {
 		view.Layout("")

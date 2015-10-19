@@ -7,7 +7,6 @@ import (
 	"github.com/fragmenta/view"
 
 	"github.com/kennygrant/gohackernews/src/comments"
-	"github.com/kennygrant/gohackernews/src/lib/authorise"
 )
 
 // HandleIndex displays a list of comments
@@ -45,7 +44,6 @@ func HandleIndex(context router.Context) error {
 	view.AddKey("filter", filter)
 	view.AddKey("comments", results)
 	view.AddKey("meta_title", "Comments")
-	view.AddKey("authenticity_token", authorise.CreateAuthenticityToken(context))
 
 	return view.Render()
 

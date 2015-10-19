@@ -1,11 +1,11 @@
-<nav>
+<nav alt="Golang News - Curated links about the Go programming language">
   <ul class="title">
     
     <li class="user_badge">
       {{ if not .current_user.Anon }}
         <a href="/users/{{.current_user.Id}}">{{.current_user.Name}} ({{.current_user.Points}})</a>
       {{ else }}
-        <a class="button small register" href="/users/create">Sign Up</a>
+        <a class="register" href="/users/create">Sign Up</a>
       {{ end }}
     </li>
         
@@ -16,7 +16,6 @@
         <span class="long">Golang News</span>
       </a>
     </li>
-    <li class="site_strap">News for Go programmers</li>
 
     <li class="search">
     <a class="show" href="#" data-show=".search_form">
@@ -42,7 +41,7 @@
     <li><a title="A place to show GN your stuff" href="/stories?q=Show:">Show</a></li>
     <li><a title="Ask golang news" href="/stories?q=Ask:">Ask</a></li>
     <li><a href="/comments">Comments</a></li>
-    <li class="submit"><a class="button small" href="/stories/create">Submit</a></li>
+    <li class="submit"><a href="/stories/create">Submit</a></li>
   </ul>
   
   {{ if .tags }}
