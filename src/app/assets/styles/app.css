@@ -201,17 +201,16 @@ header .golang_news {
 }
 
 header nav {
-  width: 100%;
   clear: both;
   font-weight: 300;
-  padding-bottom:0.5rem;
+  padding:0.5rem 0 1rem 0;
 }
 
 header nav ul {
   margin:0;
-  padding:0 0 0 1rem;
+  padding:0;
   list-style: none;
-  line-height:2.8rem;
+  line-height:2.2rem;
   clear:both;
 }
 
@@ -219,47 +218,15 @@ header nav ul li {
   list-style: none;
   float:left;
   white-space: nowrap;
-  padding:0 0.5rem;
+  padding:0 0.5rem 0 1rem;
   margin: 0;
-}
-
-header nav .sections {
-  padding-top:0.2em;
-}
-
-header nav .user_badge {
-  margin-right:1rem;
-}
-
-
-header nav .tags {
-  padding:0rem 1rem 0rem 1rem;
-  display:block;
-}
-
-header nav .tags li {
-  padding:0 0.8rem;
-}
-
-header .tags li a {
-  font-size:0.9em;
-  color:#666;
-  background-color:#eee;
-}
-
-header .tags li a:hover {
-  color:#aaa;
-}
-
-header .title  {
-  padding:0;
 }
 
 header .title .logo {
   font-size:1.3em;
   text-shadow:-0.25rem 0.25rem 0 rgba(10,134,174,0.5);
   font-weight:800;
-  margin:0.4rem 1rem 0 1rem;
+  margin:0.2rem 0 0 0;
   position:relative;
   z-index:2;
   text-transform:uppercase;
@@ -278,21 +245,12 @@ header .title .user_badge {
   text-align:center;
   width:100%;
   position:absolute;
-  top:0.2rem;
+  top:0.5rem;
   block-shadow:-0.25rem 0.25rem 0 #037aa1;
   margin:0 auto;
   padding:0;
 
 }
-
-header .user_badge .register {
-  float:none;
-  top:0.1rem;
-  height:2rem;
-  line-height:2rem;
-  padding:0 0.5rem;
-}
-
 
 header .search {
   float:right;
@@ -304,7 +262,7 @@ header .search {
 header .search img {
   width:22px;
   height:22px;
-  padding:0.6rem 0.5rem 0 0;
+  padding:0rem 0.5rem 0 0;
 }
 
 
@@ -450,7 +408,6 @@ section.actions .button {
   
   header .title .long {
     display:block;
-    margin:0.2rem 1rem 0 1rem;
   }
   
     header .title .site_strap {
@@ -461,6 +418,10 @@ section.actions .button {
       float:right;
       margin-right:0.5rem;
     }
+
+  header nav ul li {
+    padding:0 1rem;
+  }
 
 }
 
