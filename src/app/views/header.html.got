@@ -5,7 +5,7 @@
       {{ if not .current_user.Anon }}
         <a href="/users/{{.current_user.Id}}">{{.current_user.Name}} ({{.current_user.Points}})</a>
       {{ else }}
-        <a class="register" href="/users/create">Sign Up</a>
+        <a class="register" href="/users/create">Links and News about the Go Programming language</a>
       {{ end }}
     </li>
         
@@ -41,7 +41,11 @@
     <li><a title="A place to show GN your stuff" href="/stories?q=Show:">Show</a></li>
     <li><a title="Ask golang news" href="/stories?q=Ask:">Ask</a></li>
     <li><a href="/comments">Comments</a></li>
+    {{ if not .current_user.Anon }}
     <li class="submit"><a href="/stories/create">Submit</a></li>
+    {{ else }}
+    <li class="submit"><a class="register" href="/users/create">Register</a></li>
+    {{ end }}
   </ul>
   
   {{ if .tags }}
