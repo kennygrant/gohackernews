@@ -11,7 +11,7 @@ import (
 	"github.com/kennygrant/gohackernews/src/users"
 )
 
-// HandleCreateShow handles GET users/create
+// HandleCreateShow handles GET /users/create
 func HandleCreateShow(context router.Context) error {
 
 	// No auth as anyone can create users in this app
@@ -25,7 +25,7 @@ func HandleCreateShow(context router.Context) error {
 	return view.Render()
 }
 
-// HandleCreate handles POST users/create
+// HandleCreate handles POST /users/create from the register page
 func HandleCreate(context router.Context) error {
 
 	// Check csrf token
@@ -77,7 +77,7 @@ func HandleCreate(context router.Context) error {
 	params.SetInt("points", 1)
 
 	// Now try to create the user
-	id, err := users.Create(params.Map())
+	id, err := users.Create(params.Clean(users.AllowedParams()))
 	if err != nil {
 		return router.InternalError(err, "Error", "Sorry, an error occurred creating the user record.")
 	}

@@ -31,6 +31,11 @@ type Story struct {
 
 // AllowedParams returns an array of allowed param keys
 func AllowedParams() []string {
+	return []string{"name", "points", "summary", "url"}
+}
+
+// AllowedParamsAdmin returns an array of allowed param keys
+func AllowedParamsAdmin() []string {
 	return []string{"status", "user_id", "user_name", "name", "points", "summary", "url", "comment_count"}
 }
 
@@ -66,9 +71,6 @@ func New() *Story {
 
 // Create inserts a new record in the database using params, and returns the newly created id
 func Create(params map[string]string) (int64, error) {
-
-	// Remove params not in AllowedParams
-	params = model.CleanParams(params, AllowedParams())
 
 	// Check params for invalid values
 	err := validateParams(params, true)
@@ -156,9 +158,6 @@ func Published() *query.Query {
 
 // Update sets the record in the database from params
 func (m *Story) Update(params map[string]string) error {
-
-	// Remove params not in AllowedParams
-	params = model.CleanParams(params, AllowedParams())
 
 	// Check params for invalid values, but only if passed in
 	err := validateParams(params, false)

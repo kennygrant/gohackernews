@@ -41,6 +41,11 @@ type Comment struct {
 
 // AllowedParams returns an array of allowed param keys
 func AllowedParams() []string {
+	return []string{"text"}
+}
+
+// AllowedParamsAdmin returns an array of allowed param keys
+func AllowedParamsAdmin() []string {
 	return []string{"status", "user_id", "user_name", "parent_id", "points", "story_id", "text", "dotted_ids", "story_id", "story_name", "rank"}
 }
 
@@ -79,9 +84,6 @@ func New() *Comment {
 
 // Create inserts a new record in the database using params, and returns the newly created id
 func Create(params map[string]string) (int64, error) {
-
-	// Remove params not in AllowedParams
-	params = model.CleanParams(params, AllowedParams())
 
 	// Check params for invalid values
 	err := validateParams(params)
@@ -189,9 +191,6 @@ func Where(format string, args ...interface{}) *query.Query {
 
 // Update sets the record in the database from params
 func (m *Comment) Update(params map[string]string) error {
-
-	// Remove params not in AllowedParams
-	params = model.CleanParams(params, AllowedParams())
 
 	// Check params for invalid values
 	err := validateParams(params)

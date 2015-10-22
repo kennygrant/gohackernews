@@ -51,7 +51,14 @@ func HandleUpdate(context router.Context) error {
 		return router.InternalError(err)
 	}
 
-	err = comment.Update(params.Map())
+	// Clean params according to role
+	accepted := comments.AllowedParams()
+	if authorise.CurrentUser(context).Admin() {
+		accepted = comments.AllowedParamsAdmin()
+	}
+	cleanedParams := params.Clean(accepted)
+
+	err = comment.Update(cleanedParams)
 	if err != nil {
 		return router.InternalError(err)
 	}

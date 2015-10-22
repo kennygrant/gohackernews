@@ -1,6 +1,7 @@
 package storyactions
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/fragmenta/router"
@@ -74,13 +75,19 @@ func HandleCreate(context router.Context) error {
 		addStoryVote(dupe, user, ip, 1)
 		return router.Redirect(context, dupe.URLShow())
 	}
+	// Clean params according to role
+	accepted := stories.AllowedParams()
+	if authorise.CurrentUser(context).Admin() {
+		accepted = stories.AllowedParamsAdmin()
+	}
+	cleanedParams := params.Clean(accepted)
 
 	// Set a few params
-	params.SetInt("points", 1)
-	params.SetInt("user_id", user.Id)
-	params.Set("user_name", user.Name)
+	cleanedParams["points"] = "1"
+	cleanedParams["user_id"] = fmt.Sprintf("%d", user.Id)
+	cleanedParams["user_name"] = user.Name
 
-	id, err := stories.Create(params.Map())
+	id, err := stories.Create(cleanedParams)
 	if err != nil {
 		return err // Create returns a router.Error
 	}

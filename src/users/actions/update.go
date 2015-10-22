@@ -53,9 +53,13 @@ func HandleUpdate(context router.Context) error {
 		return router.InternalError(err)
 	}
 
-	context.Logf("PARAMS RECD:%v", params)
-
-	err = user.Update(params.Map())
+	// Clean params according to role
+	accepted := users.AllowedParams()
+	if authorise.CurrentUser(context).Admin() {
+		accepted = users.AllowedParamsAdmin()
+	}
+	allowedParams := params.Clean(accepted)
+	err = user.Update(allowedParams)
 	if err != nil {
 		return router.InternalError(err)
 	}

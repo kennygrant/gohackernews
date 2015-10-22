@@ -80,7 +80,10 @@ func HandleCreate(context router.Context) error {
 		params.Set("dotted_ids", fmt.Sprintf(parent.DottedIds+"."))
 	}
 
-	id, err := comments.Create(params.Map())
+	// Clean params allowing all through (since we have manually reset them above)
+	accepted := comments.AllowedParamsAdmin()
+	cleanedParams := params.Clean(accepted)
+	id, err := comments.Create(cleanedParams)
 	if err != nil {
 		return router.InternalError(err)
 	}
@@ -88,8 +91,7 @@ func HandleCreate(context router.Context) error {
 	// Log creation
 	context.Logf("#info Created comment id,%d", id)
 
-	// Update the story comment Count
-
+	// Update the story comment count
 	storyParams := map[string]string{"comment_count": fmt.Sprintf("%d", story.CommentCount+1)}
 	err = story.Update(storyParams)
 	if err != nil {

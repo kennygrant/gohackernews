@@ -54,7 +54,15 @@ func HandleUpdate(context router.Context) error {
 	if err != nil {
 		return router.InternalError(err)
 	}
-	err = story.Update(params.Map())
+
+	// Clean params according to role
+	accepted := stories.AllowedParams()
+	if authorise.CurrentUser(context).Admin() {
+		accepted = stories.AllowedParamsAdmin()
+	}
+	cleanedParams := params.Clean(accepted)
+
+	err = story.Update(cleanedParams)
 	if err != nil {
 		return err // Create returns a router.Error
 	}

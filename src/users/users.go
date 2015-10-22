@@ -31,6 +31,11 @@ type User struct {
 
 // AllowedParams returns an array of acceptable params in update
 func AllowedParams() []string {
+	return []string{"name", "summary", "email", "text", "title", "password"}
+}
+
+// AllowedParamsAdmin returns an array of acceptable params in update for admins
+func AllowedParamsAdmin() []string {
 	return []string{"name", "summary", "email", "status", "role", "text", "title", "password", "points"}
 }
 
@@ -66,8 +71,6 @@ func New() *User {
 
 // Create inserts a new user
 func Create(params map[string]string) (int64, error) {
-
-	params = model.CleanParams(params, AllowedParams())
 
 	err := validateParams(params)
 	if err != nil {
@@ -205,9 +208,6 @@ func validateParams(unsafeParams map[string]string) error {
 
 // Update this user
 func (m *User) Update(params map[string]string) error {
-
-	// Remove params not in AllowedParams
-	params = model.CleanParams(params, AllowedParams())
 
 	err := validateParams(params)
 	if err != nil {
