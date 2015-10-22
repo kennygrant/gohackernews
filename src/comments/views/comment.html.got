@@ -1,6 +1,22 @@
 <li id="comment{{.comment.Id}}" class="comment level{{ .comment.Level }} minus{{ .comment.NegativePoints }}">
     <div class="metadata">
-
+    <a href="/comments/{{.comment.Id}}/upvote" method="post" class="vote {{if not .current_user.CanUpvote }}disabled{{ end }}">▲</a>
+    {{ if (.current_user.Admin) or (eq .comment.UserId .current_user.Id) }}
+      {{ .comment.Points }} points
+    {{ end }}
+    {{ if not .story }}
+    comment posted on <a href="/stories/{{.comment.StoryId}}">{{.comment.StoryName}}</a> by 
+    {{ end}}
+    <a href="/users/{{.comment.UserId}}">{{.comment.UserName}}</a> 
+    <a href="/comments/{{.comment.Id}}">{{timeago .comment.CreatedAt}}</a>
+    <a href="/comments/{{.comment.Id}}/downvote" method="post" class="vote {{if not .current_user.CanDownvote }}disabled{{ end }}">▼</a>
+    </div>
+    
+    
+    <div class="content">
+    {{ markup .comment.Text }}
+    </div>
+    
     {{ if .current_user.CanComment }}
 
     {{ if (.story) and (ne .comment.UserId .current_user.Id) }}
@@ -14,20 +30,6 @@
     
     {{ end }}
     
-    <a href="/comments/{{.comment.Id}}/upvote" method="post" class="vote {{if not .current_user.CanUpvote }}disabled{{ end }}">▲</a>
-    {{ if (.current_user.Admin) or (eq .comment.UserId .current_user.Id) }}
-      {{ .comment.Points }} points
-    {{ end }}
-    {{ if not .story }}
-    comment posted on <a href="/stories/{{.comment.StoryId}}">{{.comment.StoryName}}</a> by 
-    {{ end}}
-    <a href="/users/{{.comment.UserId}}">{{.comment.UserName}}</a> 
-    <a href="/comments/{{.comment.Id}}">{{timeago .comment.CreatedAt}}</a>
-    <a href="/comments/{{.comment.Id}}/downvote" method="post" class="vote {{if not .current_user.CanDownvote }}disabled{{ end }}">▼</a>
-    </div>
-    <div class="content">
-    {{ markup .comment.Text }}
-    </div>
     {{ if (.story) and (ne .comment.UserId .current_user.Id)  }}
       <div class="reply-form hidden">
       {{ template "comments/views/form_embed.html.got" . }}
