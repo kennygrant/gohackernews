@@ -76,8 +76,8 @@ func HandleCreate(context router.Context) error {
 	params.SetInt("role", users.RoleReader)
 	params.SetInt("points", 1)
 
-	// Now try to create the user
-	id, err := users.Create(params.Clean(users.AllowedParams()))
+	// Now try to create the user - NB AllowedParamsAdmin, we allow points etc on create as we explicitly set them
+	id, err := users.Create(params.Clean(users.AllowedParamsAdmin()))
 	if err != nil {
 		return router.InternalError(err, "Error", "Sorry, an error occurred creating the user record.")
 	}
