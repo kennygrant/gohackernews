@@ -298,6 +298,7 @@ func openDatabase(config map[string]string) error {
 		"user":     config["db_user"],
 		"password": config["db_pass"],
 		"db":       config["db"],
+		"host":     config["db_host"],
 		// "debug"     : "true",
 	}
 

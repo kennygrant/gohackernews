@@ -1,16 +1,21 @@
 #!/bin/sh
-# A simple shell script to deploy via ansible playlists
-# Use an ansible playbook which copies files up and then restarts the server
 echo "UPLOADING...";
 
 # choose a playbook
-playbook="./bin/hackernews-app.yml"
-if [ "$1" == "production" ]; then
-    playbook="./bin/hackernews-app.yml"
-fi
+#playbook="/Users/kenny/Documents/Work/Server/Ansible/golangnews.yml"
+#if [ "$1" == "production" ]; then
+#    playbook="/Users/kenny/Documents/Work/Server/Ansible/golangnews.yml"
+#fi
+#
+## Upload
+#echo "Using ansible playbook at $playbook";
+#ansible-playbook -t "upload" "$playbook";
 
-# Upload
-echo "Using ansible playbook at $playbook";
-ansible-playbook -t "upload" "$playbook";
+# fix ansible for coreos?
+# use raw mode in ansible and just rsync up and restart service. 
+
+/Users/kenny/Documents/Work/Scripts/Upload/upload.rb -s golangnews -g
+
+echo "NOW RESTART SERVICE...";
 
 exit 0;

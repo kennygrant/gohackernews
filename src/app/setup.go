@@ -144,6 +144,7 @@ func setupDatabase(server *server.Server) {
 		"user":     config["db_user"],
 		"password": config["db_pass"],
 		"db":       config["db"],
+		"host":     config["db_host"],
 	}
 
 	// Ask query to open the database
