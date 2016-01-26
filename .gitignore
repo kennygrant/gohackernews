@@ -5,6 +5,8 @@ secrets/*
 log/*
 src/app/assets/scripts/analytics.js
 
+
+
 # Ignore new assets in public assets dir (generated files)
 public/assets
 
