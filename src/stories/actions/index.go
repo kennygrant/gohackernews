@@ -177,7 +177,7 @@ func setStoriesMetadata(view *view.Renderer, request *http.Request) {
 		q = "?" + q
 	}
 
-	url := fmt.Sprintf("/%s.xml%s", p, q)
+	url := fmt.Sprintf("%s.xml%s", p, q)
 	view.AddKey("meta_rss", url)
 
 }
