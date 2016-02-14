@@ -7,8 +7,8 @@
     <h1>Submit Story</h1>
     <div class="wide-fields">
     {{ field "Url" "url" .story.Url "class=active_url_field"}}
-    {{ field "Name" "name" .story.Name "class=active_name_field" }}
-    {{ textarea "Summary" "summary" .story.Summary }}
+    {{ field "Name - add tags with hashtags, e.g. #web, add sections with a prefix e.g. Video:" "name" .story.Name "class=active_name_field" }}
+    {{ textarea "Summary - add a short description of the link here" "summary" .story.Summary }}
     </div>
     <input name="authenticity_token" type="hidden" value="{{.authenticity_token}}">
 </form>
@@ -16,3 +16,4 @@
 </article>
 <!-- quick hack to hide submit -->
 <script>DOM.First("nav .button").style.display = "none"</script>
+

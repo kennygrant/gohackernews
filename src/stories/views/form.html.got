@@ -8,8 +8,8 @@
   
     <div class="wide-fields">
     {{ field "Url" "url" .story.Url }}
-    {{ field "Name" "name" .story.Name }}
-    {{ field "Summary" "summary" .story.Summary }}
+    {{ field "Name - add tags with hashtags, e.g. #web, add sections with a prefix e.g. Video:" "name" .story.Name }}
+    {{ field "Summary - add a short description of the link here" "summary" .story.Summary }}
     </div>
   
     {{ if .current_user.Admin }}
