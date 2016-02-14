@@ -16,6 +16,7 @@ import (
 	"github.com/fragmenta/view/helpers"
 
 	"github.com/kennygrant/gohackernews/src/lib/authorise"
+	"github.com/kennygrant/gohackernews/src/lib/facebook"
 	"github.com/kennygrant/gohackernews/src/lib/mail"
 	"github.com/kennygrant/gohackernews/src/lib/twitter"
 	"github.com/kennygrant/gohackernews/src/stories/actions"
@@ -76,13 +77,25 @@ func setupServices(server *server.Server) {
 	if config["twitter_secret"] != "" {
 		twitter.Setup(config["twitter_key"], config["twitter_secret"], config["twitter_token"], config["twitter_token_secret"])
 
-		tweetTime := time.Date(now.Year(), now.Month(), now.Day(), 11, 0, 0, 0, time.UTC)
-		tweetInterval := 12 * time.Hour // Daily check for new stories to tweet twice a day
+		tweetTime := time.Date(now.Year(), now.Month(), now.Day(), 22, 0, 0, 0, time.UTC)
+		tweetInterval := 5 * time.Hour
 
 		// For testing
 		//tweetTime = now.Add(time.Second * 5)
 
 		schedule.At(storyactions.TweetTopStory, context, tweetTime, tweetInterval)
+	}
+
+	// Set up twitter if available, and schedule tweets
+	if config["facebook_token"] != "" {
+		facebook.Setup(config["facebook_token"])
+		fbTime := time.Date(now.Year(), now.Month(), now.Day(), 21, 40, 0, 0, time.UTC)
+		fbInterval := 6 * time.Hour
+
+		// For test, try sending immediately
+		//fbTime = now.Add(time.Second * 5)
+
+		schedule.At(storyactions.FacebookPostTopStory, context, fbTime, fbInterval)
 	}
 
 	// Set up mail
