@@ -36,7 +36,7 @@ func AllowedParams() []string {
 
 // AllowedParamsAdmin returns an array of allowed param keys
 func AllowedParamsAdmin() []string {
-	return []string{"status", "user_id", "user_name", "name", "points", "summary", "url", "comment_count"}
+	return []string{"status", "user_id", "user_name", "name", "points", "summary", "url", "comment_count", "tweeted_at", "newsletter_at"}
 }
 
 // NewWithColumns creates a new story instance and fills it with data from the database cols provided
@@ -154,6 +154,11 @@ func Where(format string, args ...interface{}) *query.Query {
 // Published returns a query for all stories with status >= published
 func Published() *query.Query {
 	return Query().Where("status>=?", status.Published)
+}
+
+// Popular returns a query for all stories with points over a certain threshold
+func Popular() *query.Query {
+	return Query().Where("points > 3")
 }
 
 // Update sets the record in the database from params

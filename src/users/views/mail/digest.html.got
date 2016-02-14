@@ -1,0 +1,35 @@
+<html>
+<head>
+    <title>Golang News Weekly Digest [Test]</title>
+</head>
+<body>
+<article>
+<h1>Golang News Weekly Digest</h1>
+
+<h2>Popular Stories</h2>
+{{ range .stories }}
+<div class="story">
+  <h3><a href="https://golangnews.com/{{.URLShow}}">{{.Name}}</a></h3>
+  <p><a href="{{.DestinationURL}}" class="domain">{{ .Domain }}</a></p>
+  <p>{{ sanitize .Summary}}</p>
+    <ul class="tags">
+         {{ range .Tags }}
+           <li style="display:inline;list-style:none;"><a href="https://golangnews.com/stories?q=%23{{.}}">{{.}}</a></li>
+         {{ end }}
+     </ul>
+</div>
+{{ end }}
+
+<h2>Jobs</h2>
+{{ range .jobs }}
+<div class="job story">
+  <h3><a href="https://golangnews.com/{{.URLShow}}">{{.Name}}</a></h3>
+</div>
+{{ end }}
+
+</article>
+<footer>
+  <p>Sent from <a href="https://golangnews.com">golangnews.com</a></p>
+</footer>  
+</body>
+</html>
