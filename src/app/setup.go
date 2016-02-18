@@ -90,7 +90,7 @@ func setupServices(server *server.Server) {
 	if config["facebook_token"] != "" {
 		facebook.Setup(config["facebook_token"])
 		fbTime := time.Date(now.Year(), now.Month(), now.Day(), 21, 40, 0, 0, time.UTC)
-		fbInterval := 6 * time.Hour
+		fbInterval := 12 * time.Hour
 
 		// For test, try sending immediately
 		//fbTime = now.Add(time.Second * 5)
@@ -103,7 +103,7 @@ func setupServices(server *server.Server) {
 		mail.Setup(config["mail_secret"], config["mail_from"])
 
 		// Schedule emails to go out at 09:00 every day, starting from the next occurance
-		emailTime := time.Date(now.Year(), now.Month(), now.Day(), 9, 0, 0, 0, time.UTC)
+		emailTime := time.Date(now.Year(), now.Month(), now.Day(), 13, 37, 0, 0, time.UTC)
 		emailInterval := 24 * time.Hour // Daily check for new emails/texts to send
 
 		// For testing send immediately on launch

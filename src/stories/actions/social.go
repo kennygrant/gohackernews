@@ -20,7 +20,7 @@ func TweetTopStory(context schedule.Context) {
 	q := stories.Popular().Limit(1).Order("rank desc, points desc, id desc")
 
 	// Don't fetch old stories
-	q.Where("created_at > current_timestamp - interval '1 day'")
+	q.Where("created_at > current_timestamp - interval '10 days'")
 
 	// Don't fetch stories that have already been tweeted
 	q.Where("tweeted_at IS NULL")
@@ -61,8 +61,8 @@ func FacebookPostTopStory(context schedule.Context) {
 	// Get the top story
 	q := stories.Popular().Limit(1).Order("rank desc, points desc, id desc")
 
-	// Don't fetch old stories, only 1 hour or newer
-	q.Where("created_at > current_timestamp - interval '5 hours'")
+	// Don't fetch old stories
+	q.Where("created_at > current_timestamp - interval '12 hours'")
 
 	// Fetch the story
 	results, err := stories.FindAll(q)
@@ -73,7 +73,7 @@ func FacebookPostTopStory(context schedule.Context) {
 
 	if len(results) > 0 {
 		story := results[0]
-		context.Logf("#error facebook posting %s", story.Name)
+		context.Logf("#info facebook posting %s", story.Name)
 		err := facebook.Post(story.Name, story.Url)
 		if err != nil {
 			context.Logf("#error facebook post top story %s", err)

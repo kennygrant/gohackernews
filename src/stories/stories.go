@@ -158,7 +158,7 @@ func Published() *query.Query {
 
 // Popular returns a query for all stories with points over a certain threshold
 func Popular() *query.Query {
-	return Query().Where("points > 3")
+	return Query().Where("points > 2")
 }
 
 // Update sets the record in the database from params
