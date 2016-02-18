@@ -5,6 +5,12 @@
   margin:0;
 }
 
+article .story {
+  background-color: #fefefe;
+  padding: 2rem;
+}
+
+
 .story form .field {
   clear: both;
   display: block;
@@ -150,13 +156,13 @@ li.story {
   line-height: 1.5em;
   padding: 0.5rem 1rem;
   margin: 0;
-  border-top: 1px solid #fff;
+  border-top: 1px solid #f6f6ef;
   list-style:none;
   overflow:hidden;
 }
 
 li.story:hover {
-  background-color: #eeeee6;
+  background-color: #eee;
 }
 
 li.story .points {
