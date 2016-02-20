@@ -43,7 +43,7 @@ This contains files related to stories on the website.
 This contains files related to comments on the website.
 
 #### The src/lib folder
-lib is used to store utility packages which can be used by several parts of the app. Some examples of libraries are included, but unused in this example application. 
+lib is used to store utility packages which can be used by several parts of the app.
 
 #### The src/lib/templates folder
-Templates for generating new resources are stored in here and used by fragmenta generate to generate a new resource package, containing assets, code and views.  
+Templates for generating new resources are stored in here and used by fragmenta generate to generate a new resource package, containing assets, code and views for the resource.  
