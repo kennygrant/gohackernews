@@ -78,7 +78,7 @@ func setupServices(server *server.Server) {
 		twitter.Setup(config["twitter_key"], config["twitter_secret"], config["twitter_token"], config["twitter_token_secret"])
 
 		tweetTime := time.Date(now.Year(), now.Month(), now.Day(), 22, 0, 0, 0, time.UTC)
-		tweetInterval := 7 * time.Hour
+		tweetInterval := 9 * time.Hour
 
 		// For testing
 		//tweetTime = now.Add(time.Second * 5)
@@ -90,7 +90,7 @@ func setupServices(server *server.Server) {
 	if config["facebook_token"] != "" {
 		facebook.Setup(config["facebook_token"])
 		fbTime := time.Date(now.Year(), now.Month(), now.Day(), 12, 55, 0, 0, time.UTC)
-		fbInterval := 12 * time.Hour
+		fbInterval := 6 * time.Hour
 
 		// For test, try sending immediately
 		//fbTime = now.Add(time.Second * 5)
