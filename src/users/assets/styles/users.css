@@ -51,11 +51,10 @@ li.user h3 {
 }
 
 .user_activity {
-  background:#f6f6ef;
 }
 
 .user_activity .comment {
-  border-top:1px solid #fff;
+  border-top:1px solid #f6f6ef;
 }
 
 @media(min-width:750px) {
