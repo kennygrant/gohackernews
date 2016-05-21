@@ -17,6 +17,11 @@ func HandleShow(context router.Context) error {
 		return router.InternalError(err)
 	}
 
+	// Redirect requests to the canonical url
+	if context.Path() != story.URLShow() {
+		return router.Redirect(context, story.URLShow())
+	}
+
 	// Find the comments for this story
 	// Fetch the comments
 	q := comments.Where("story_id=?", story.Id).Order(comments.RankOrder)

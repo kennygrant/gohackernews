@@ -2,9 +2,9 @@
     
        
          <h1>
-             <a href="/stories/{{.story.Id}}/upvote" method="post" class="vote {{if not .current_user.CanUpvote }}disabled{{ end }}">▲</a>
+             <a href="/stories/{{.story.Id}}/upvote" rel="nofollow" method="post" class="vote {{if not .current_user.CanUpvote }}disabled{{ end }}">▲</a>
              <a href="/stories/{{.story.Id}}" class="points">{{.story.Points}}</a>
-             <a href="/stories/{{.story.Id}}/downvote" method="post" class="vote {{if not .current_user.CanDownvote }}disabled{{ end }}">▼</a>
+             <a href="/stories/{{.story.Id}}/downvote" rel="nofollow" method="post" class="vote {{if not .current_user.CanDownvote }}disabled{{ end }}">▼</a>
              <a href="{{.story.Url}}" class="name">{{.story.NameDisplay}}</a>
          </h1>
     
@@ -26,8 +26,8 @@
          
          <div class="actions">
         {{ if .current_user.Admin }}
-          <a href="/stories/{{.story.Id}}/update" class="button grey">edit</a>
-          <a href="/stories/{{.story.Id}}/flag" class="button grey flag" method="post">Flag</a>
+          <a href="/stories/{{.story.Id}}/update" rel="nofollow" class="button grey">edit</a>
+          <a href="/stories/{{.story.Id}}/flag" rel="nofollow" class="button grey flag" method="post">Flag</a>
         {{end }}
         </div>
         {{ if not .current_user.CanComment }}
