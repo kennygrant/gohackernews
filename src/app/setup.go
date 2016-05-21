@@ -16,7 +16,6 @@ import (
 	"github.com/fragmenta/view/helpers"
 
 	"github.com/kennygrant/gohackernews/src/lib/authorise"
-	"github.com/kennygrant/gohackernews/src/lib/facebook"
 	"github.com/kennygrant/gohackernews/src/lib/mail"
 	"github.com/kennygrant/gohackernews/src/lib/twitter"
 	"github.com/kennygrant/gohackernews/src/stories/actions"
@@ -67,6 +66,12 @@ func Setup(server *server.Server) {
 
 // setupServices sets up external services from our config file
 func setupServices(server *server.Server) {
+
+	// Don't send if not on production server
+	if !server.Production() {
+		return
+	}
+
 	config := server.Configuration()
 
 	context := schedule.NewContext(server.Logger, server)
@@ -77,7 +82,7 @@ func setupServices(server *server.Server) {
 	if config["twitter_secret"] != "" {
 		twitter.Setup(config["twitter_key"], config["twitter_secret"], config["twitter_token"], config["twitter_token_secret"])
 
-		tweetTime := time.Date(now.Year(), now.Month(), now.Day(), 22, 0, 0, 0, time.UTC)
+		tweetTime := time.Date(now.Year(), now.Month(), now.Day(), 11, 0, 0, 0, time.UTC)
 		tweetInterval := 9 * time.Hour
 
 		// For testing
@@ -86,31 +91,34 @@ func setupServices(server *server.Server) {
 		schedule.At(storyactions.TweetTopStory, context, tweetTime, tweetInterval)
 	}
 
-	// Set up twitter if available, and schedule tweets
-	if config["facebook_token"] != "" {
-		facebook.Setup(config["facebook_token"])
-		fbTime := time.Date(now.Year(), now.Month(), now.Day(), 12, 55, 0, 0, time.UTC)
-		fbInterval := 6 * time.Hour
-
-		// For test, try sending immediately
-		//fbTime = now.Add(time.Second * 5)
-
-		schedule.At(storyactions.FacebookPostTopStory, context, fbTime, fbInterval)
-	}
-
 	// Set up mail
 	if config["mail_secret"] != "" {
 		mail.Setup(config["mail_secret"], config["mail_from"])
 
 		// Schedule emails to go out at 09:00 every day, starting from the next occurance
-		emailTime := time.Date(now.Year(), now.Month(), now.Day(), 13, 37, 13, 37, time.UTC)
-		emailInterval := 24 * time.Hour // Daily check for new emails/texts to send
+		emailTime := time.Date(now.Year(), now.Month(), now.Day(), 10, 10, 10, 10, time.UTC)
+		emailInterval := 7 * 24 * time.Hour // Send Emails weekly
 
 		// For testing send immediately on launch
 		//emailTime = now.Add(time.Second * 2)
 
 		schedule.At(useractions.DailyEmail, context, emailTime, emailInterval)
 	}
+
+	/*
+		// Forget fb until you have tokens set up, or perhaps forever... not many gophers on fb
+		// G+ would be a better target - share with tweets above as well.
+			if config["facebook_token"] != "" {
+				facebook.Setup(config["facebook_token"])
+				fbTime := time.Date(now.Year(), now.Month(), now.Day(), 12, 55, 0, 0, time.UTC)
+				fbInterval := 6 * time.Hour
+
+				// For test, try sending immediately
+				//fbTime = now.Add(time.Second * 5)
+
+				schedule.At(storyactions.FacebookPostTopStory, context, fbTime, fbInterval)
+			}
+	*/
 
 }
 

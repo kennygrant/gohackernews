@@ -252,6 +252,20 @@ func (m *Story) VetURL() string {
 	return ""
 }
 
+// YouTube returns true if this is a youtube video
+func (m *Story) YouTube() bool {
+	return strings.Contains(m.Url, "youtube.com/watch?v=")
+}
+
+// YouTubeURL returns the youtube URL
+func (m *Story) YouTubeURL() string {
+	url := strings.Replace(m.Url, "https://m.youtube.com", "https://www.youtube.com", 1)
+	// https://www.youtube.com/watch?v=sZx3oZt7LVg ->
+	// https://www.youtube.com/embed/sZx3oZt7LVg
+	url = strings.Replace(url, "watch?v=", "embed/", 1)
+	return url
+}
+
 // CommentCountDisplay returns the comment count or ellipsis if count is 0
 func (m *Story) CommentCountDisplay() string {
 	if m.CommentCount > 0 {

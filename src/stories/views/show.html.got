@@ -40,6 +40,12 @@
            {{ markup .story.Summary }}
          </div>
          
+         {{ if .story.YouTube }}
+         <div class="video-player">
+          <iframe width="100%" height="auto" src="{{ .story.YouTubeURL }}" frameborder="0" allowfullscreen></iframe>
+        </div>
+         {{ end }}
+         
          {{ if .current_user.CanComment }}
           {{ template "comments/views/form_embed.html.got" . }}
          {{ end }}

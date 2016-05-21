@@ -1,14 +1,15 @@
 #!/bin/sh
 echo "UPLOADING...";
 
-# choose a playbook
-playbook="/Users/kenny/Documents/Work/Server/Ansible/golangnews.yml"
+ansibledir="/Users/kenny/Documents/Work/Server/Ansible"
+playbook="$ansibledir/golangnews.yml"
 if [ "$1" == "production" ]; then
-    playbook="/Users/kenny/Documents/Work/Server/Ansible/golangnews.yml"
+    playbook="$ansibledir/golangnews.yml"
 fi
 
 # Upload
 echo "Using ansible playbook at $playbook";
+cd $ansibledir;
 ansible-playbook -t "upload" "$playbook";
 
 
