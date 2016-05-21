@@ -58,7 +58,6 @@ func HandleIndex(context router.Context) error {
 	setStoriesMetadata(view, context.Request())
 	view.AddKey("page", page)
 	view.AddKey("stories", results)
-	view.AddKey("meta_title", "Golang News links")
 
 	if context.Param("format") == ".xml" {
 		view.Layout("")
