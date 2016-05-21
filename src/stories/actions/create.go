@@ -53,14 +53,31 @@ func HandleCreate(context router.Context) error {
 	// Get user details
 	user := authorise.CurrentUser(context)
 	ip := getUserIP(context)
+
+	// Process urls
 	url := params.Get("url")
 
 	// Strip trailing slashes on url before comparisons
-	// we could possibly also strip url fragments
 	if strings.HasSuffix(url, "/") {
 		url = strings.Trim(url, "/")
-		params.Set("url", url)
 	}
+
+	// Strip ?utm_source etc - remove all after ?utm_source
+	if strings.Contains(url, "?utm_") {
+		url = strings.Split(url, "?utm_")[0]
+	}
+
+	// Strip url fragments (For example trailing # on medium urls)
+	if strings.Contains(url, "#") {
+		url = strings.Split(url, "#")[0]
+	}
+
+	// Rewrite mobile youtube links
+	if strings.HasPrefix(url, "https://m.youtube.com") {
+		url = strings.Replace(url, "https://m.youtube.com", "https://www.youtube.com", 1)
+	}
+
+	params.Set("url", url)
 
 	// Check that no story with this url already exists
 	q := stories.Where("url=?", url)
