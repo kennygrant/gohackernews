@@ -87,10 +87,16 @@ func HandleCreate(context router.Context) error {
 	}
 
 	if len(duplicates) > 0 {
-		dupe := duplicates[0]
+		story := duplicates[0]
+
+		// Check we have no votes already from this user, if we do fail
+		if storyHasUserVote(story, user) {
+			return router.NotAuthorizedError(err, "Vote Failed", "Sorry you are not allowed to vote twice, nice try Luis!")
+		}
+
 		// Add a point to dupe and return
-		addStoryVote(dupe, user, ip, 1)
-		return router.Redirect(context, dupe.URLShow())
+		addStoryVote(story, user, ip, 1)
+		return router.Redirect(context, story.URLShow())
 	}
 	// Clean params according to role
 	accepted := stories.AllowedParams()
