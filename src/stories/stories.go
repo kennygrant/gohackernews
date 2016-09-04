@@ -216,12 +216,20 @@ func (m *Story) DestinationURL() string {
 	return m.URLShow()
 }
 
-// ListURL returns the URL to use for this story in lists for Show/Ask stories, this is the story link, for others, it is the destination URL
-func (m *Story) ListURL() string {
-	if !m.ShowAsk() && m.Url != "" {
-		return m.Url
+// PrimaryURL returns the URL to use for this story in lists
+// Videos and Show Ask stories link to the story, for other links for now it is the destination
+func (m *Story) PrimaryURL() string {
+	// If video or show or ask, return story url
+	if m.YouTube() || m.ShowAsk() {
+		return m.URLShow()
 	}
-	return m.URLShow()
+
+	// If no url, return url show
+	if m.Url == "" {
+		return m.URLShow()
+	}
+
+	return m.Url
 }
 
 // Code returns true if this is a link to a git repository

@@ -2,6 +2,7 @@ package storyactions
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/fragmenta/query"
@@ -35,7 +36,18 @@ func TweetTopStory(context schedule.Context) {
 
 	if len(results) > 0 {
 		story := results[0]
-		tweet := fmt.Sprintf("%s #golang %s", story.Name, story.Url)
+
+		// Link to the primary url for this type of story
+		url := story.PrimaryURL()
+
+		if strings.HasPrefix(url, "/") {
+			url = "https://golangnews.com" + url
+		}
+
+		tweet := fmt.Sprintf("%s #golang %s", story.Name, url)
+
+		context.Logf("#info sending tweet:%s", tweet)
+
 		_, err := twitter.Tweet(tweet)
 		if err != nil {
 			context.Logf("#error tweeting top story %s", err)

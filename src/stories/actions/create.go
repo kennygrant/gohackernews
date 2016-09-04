@@ -91,7 +91,8 @@ func HandleCreate(context router.Context) error {
 
 		// Check we have no votes already from this user, if we do fail
 		if storyHasUserVote(story, user) {
-			return router.NotAuthorizedError(err, "Vote Failed", "Sorry you are not allowed to vote twice, nice try Luis!")
+			return router.NotAuthorizedError(err, "Vote Failed", "Sorry you are not allowed to vote twice, nice try!")
+
 		}
 
 		// Add a point to dupe and return

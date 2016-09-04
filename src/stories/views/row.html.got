@@ -14,7 +14,7 @@
       <a href="/stories/{{.story.Id}}/downvote" method="post" class="vote {{if not .current_user.CanDownvote }}disabled{{ end }}">▼</a>
       {{ end }}
     </div>
-    <h3><a href="{{.story.ListURL}}" class="name">{{.story.NameDisplay}}</a></h3>
+    <h3><a href="{{.story.PrimaryURL}}" class="name">{{.story.NameDisplay}}</a></h3>
     <div class="metadata">
       <ul class="tags">
           {{ range .story.Tags }}
