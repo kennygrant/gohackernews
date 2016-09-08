@@ -82,8 +82,8 @@ func setupServices(server *server.Server) {
 	if config["twitter_secret"] != "" {
 		twitter.Setup(config["twitter_key"], config["twitter_secret"], config["twitter_token"], config["twitter_token_secret"])
 
-		tweetTime := time.Date(now.Year(), now.Month(), now.Day(), 11, 0, 0, 0, time.UTC)
-		tweetInterval := 9 * time.Hour
+		tweetTime := time.Date(now.Year(), now.Month(), now.Day(), 9, 0, 0, 0, time.UTC)
+		tweetInterval := 5 * time.Hour
 
 		// For testing
 		//tweetTime = now.Add(time.Second * 5)
@@ -104,21 +104,6 @@ func setupServices(server *server.Server) {
 
 		schedule.At(useractions.DailyEmail, context, emailTime, emailInterval)
 	}
-
-	/*
-		// Forget fb until you have tokens set up, or perhaps forever... not many gophers on fb
-		// G+ would be a better target - share with tweets above as well.
-			if config["facebook_token"] != "" {
-				facebook.Setup(config["facebook_token"])
-				fbTime := time.Date(now.Year(), now.Month(), now.Day(), 12, 55, 0, 0, time.UTC)
-				fbInterval := 6 * time.Hour
-
-				// For test, try sending immediately
-				//fbTime = now.Add(time.Second * 5)
-
-				schedule.At(storyactions.FacebookPostTopStory, context, fbTime, fbInterval)
-			}
-	*/
 
 }
 
