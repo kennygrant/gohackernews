@@ -22,7 +22,8 @@ func TweetTopStory(context schedule.Context) {
 
 	// Don't fetch old stories - at some point soon this can come down to 1 day
 	// as all older stories will have been tweeted
-	q.Where("created_at > current_timestamp - interval '60 days'")
+	// For now omit this as we have a backlog of old unposted stories
+	// q.Where("created_at > current_timestamp - interval '60 days'")
 
 	// Don't fetch stories that have already been tweeted
 	q.Where("tweeted_at IS NULL")
