@@ -47,6 +47,11 @@ func TweetTopStory(context schedule.Context) {
 
 		tweet := fmt.Sprintf("%s #golang %s", story.Name, url)
 
+		// If the tweet will be too long for twitter, just tweet the url
+		if len(tweet) > 140 {
+			tweet = url
+		}
+
 		context.Logf("#info sending tweet:%s", tweet)
 
 		_, err := twitter.Tweet(tweet)
