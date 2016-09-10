@@ -81,6 +81,12 @@ func errHandler(context router.Context, e error) {
 
 	view.Template("app/views/error.html.got")
 
-	context.Logf("#error %s\n", err)
+	// Log 404 as info only
+	if err.Status == 404 {
+		context.Logf("#info %s\n", err)
+	} else {
+		context.Logf("#error %s\n", err)
+	}
+
 	view.Render()
 }
