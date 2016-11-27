@@ -1,3 +1,4 @@
+// Package mail provides a wrapper around sending mail via the fragile sendgrid API
 package mail
 
 import (

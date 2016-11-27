@@ -1,3 +1,4 @@
+// Package status provides status values for models
 package status
 
 import (
@@ -5,14 +6,12 @@ import (
 	"github.com/fragmenta/view/helpers"
 )
 
-// ModelStatus adds status to a model - this may in future be removed and moved into apps as it is frequently modified
+// ModelStatus adds status to a model
 type ModelStatus struct {
 	Status int64
 }
 
-// Status values
-// If these need to be substantially modified for a particular model,
-// it may be better to move this into the model package concerned and modify as required
+// Standard status values shared between models
 const (
 	Draft       = 0
 	Final       = 10

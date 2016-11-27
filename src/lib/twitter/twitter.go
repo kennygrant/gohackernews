@@ -1,3 +1,4 @@
+// Package twitter providers a wrapper calling the twitter v1.1 API via https
 package twitter
 
 import (
