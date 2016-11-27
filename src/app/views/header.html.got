@@ -48,7 +48,8 @@
     {{ if not .current_user.Anon }}
     <li class="submit"><a href="/stories/create" title="Submit links about the Go programming language">Submit</a></li>
     {{ else }}
-    <li class="submit"><a class="register" href="/users/create">Register</a></li>
+    <li class="submit"><a class="register" href="/users/create">Sign up</a></li>
+    <li class="submit"><a class="register" href="/users/login">Log in</a></li>
     {{ end }}
   </ul>
   
