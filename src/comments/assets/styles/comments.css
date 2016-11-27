@@ -30,6 +30,11 @@ article.comments {
   font-size: 0.8em;
 }
 
+.comment .reply-form {
+  clear:both;
+  margin-top:4rem;
+}
+
 .comment .button {
   opacity: 0.6;
 }

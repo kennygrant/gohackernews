@@ -17,8 +17,9 @@
     {{ markup .comment.Text }}
     </div>
     
+    
     {{ if .current_user.CanComment }}
-
+    <div class="actions">
     {{ if (.story) and (ne .comment.UserId .current_user.Id) }}
       <a href="#" class="show button small grey reply" data-show="#comment{{.comment.Id}} .reply-form">reply</a>
     {{ end }}
@@ -27,7 +28,7 @@
         <a href="/comments/{{.comment.Id}}/flag" method="post" class="button small grey reply">flag</a>
       <a href="/comments/{{.comment.Id}}/update"  class="button small grey reply">edit</a>
     {{ end }}
-    
+    </div>
     {{ end }}
     
     {{ if (.story) and (ne .comment.UserId .current_user.Id)  }}
