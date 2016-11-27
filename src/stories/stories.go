@@ -31,7 +31,7 @@ type Story struct {
 
 // AllowedParams returns an array of allowed param keys
 func AllowedParams() []string {
-	return []string{"name", "points", "summary", "url"}
+	return []string{"name", "summary", "url"}
 }
 
 // AllowedParamsAdmin returns an array of allowed param keys
