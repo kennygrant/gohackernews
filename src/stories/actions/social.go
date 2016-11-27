@@ -8,7 +8,6 @@ import (
 	"github.com/fragmenta/query"
 	"github.com/fragmenta/server/schedule"
 
-	"github.com/kennygrant/gohackernews/src/lib/facebook"
 	"github.com/kennygrant/gohackernews/src/lib/twitter"
 	"github.com/kennygrant/gohackernews/src/stories"
 )
@@ -71,36 +70,4 @@ func TweetTopStory(context schedule.Context) {
 		context.Logf("#warn no top story found for tweet")
 	}
 
-}
-
-// FacebookPostTopStory facebook posts the top story
-func FacebookPostTopStory(context schedule.Context) {
-	context.Log("#info posting top story facebook")
-
-	// Get the top story
-	q := stories.Popular().Limit(1).Order("rank desc, points desc, id desc")
-
-	// Don't fetch old stories
-	q.Where("created_at > current_timestamp - interval '6 hours'")
-
-	// Fetch the story
-	results, err := stories.FindAll(q)
-	if err != nil {
-		context.Logf("#error getting top story for fb %s", err)
-		return
-	}
-
-	if len(results) > 0 {
-		story := results[0]
-		context.Logf("#info facebook posting %s", story.Name)
-		err := facebook.Post(story.Name, story.Url)
-		if err != nil {
-			context.Logf("#error facebook post top story %s", err)
-			return
-		}
-		// Do not record fb posts - this could lead to duplicates...
-		// we should perhaps have a join table for social media posts, rather than dates on stories?
-	} else {
-		context.Logf("#warn no top story found for fb")
-	}
 }
