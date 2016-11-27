@@ -1,10 +1,13 @@
 <div class="row comments_form">
 <form method="post" class="resource-update-form">
   
-    <p>Comment {{.comment.Id}} by <a href="{{ .comment.UserId }}">{{ .comment.UserName }}</a></p>
+    <p>
+      Comment by <a href="{{ .comment.UserId }}">{{ .comment.UserName }}</a>
+      on <a href="/stories/{{ .comment.StoryId }}">{{ .comment.StoryName }}</a>
+    </p>
     
     <div class="wide-fields">
-    {{ textarea "Text" "text" .comment.Text }}
+    {{ textarea "" "text" .comment.Text }}
     </div>
     
     

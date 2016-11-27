@@ -1,6 +1,4 @@
 <article class="narrow story">
-    
-       
          <h1>
              <a href="/stories/{{.story.Id}}/upvote" rel="nofollow" method="post" class="vote {{if not .current_user.CanUpvote }}disabled{{ end }}">▲</a>
              <a href="/stories/{{.story.Id}}" class="points">{{.story.Points}}</a>
@@ -28,6 +26,8 @@
         {{ if .current_user.Admin }}
           <a href="/stories/{{.story.Id}}/update" rel="nofollow" class="button grey">edit</a>
           <a href="/stories/{{.story.Id}}/flag" rel="nofollow" class="button grey flag" method="post">Flag</a>
+        {{ else if and .story.Editable  (.story.OwnedBy .current_user.Id) }}
+          <a href="/stories/{{.story.Id}}/update" rel="nofollow" class="button grey">edit</a>
         {{end }}
         </div>
         {{ if not .current_user.CanComment }}

@@ -13,7 +13,7 @@ import (
 	"github.com/kennygrant/gohackernews/src/lib/status"
 )
 
-// Need rank on comments too? rank desc,
+// RankOrder orders comments by points then created at
 const RankOrder = "points desc, id desc"
 
 // Comment handles saving and retreiving comments from the database
@@ -237,4 +237,15 @@ func (m *Comment) Destroy() error {
 // URLStory returns the internal resource URL for our story
 func (m *Comment) URLStory() string {
 	return fmt.Sprintf("/stories/%d", m.StoryId)
+}
+
+// Editable returns true if this comment is editable.
+// Comments are editable if less than 3 hours old.
+func (m *Comment) Editable() bool {
+	return time.Now().Sub(m.CreatedAt) < time.Hour*3
+}
+
+// OwnedBy returns true if this user id owns this comment.
+func (m *Comment) OwnedBy(uid int64) bool {
+	return uid == m.UserId
 }

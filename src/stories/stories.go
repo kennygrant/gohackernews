@@ -302,3 +302,14 @@ func (m *Story) Tags() []string {
 	}
 	return tags
 }
+
+// Editable returns true if this story is editable.
+// Stories are editable if less than 1 hours old
+func (m *Story) Editable() bool {
+	return time.Now().Sub(m.CreatedAt) < time.Hour*1
+}
+
+// OwnedBy returns true if this user id owns this story.
+func (m *Story) OwnedBy(uid int64) bool {
+	return uid == m.UserId
+}

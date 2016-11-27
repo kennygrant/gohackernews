@@ -1,6 +1,8 @@
 package commentactions
 
 import (
+	"fmt"
+
 	"github.com/fragmenta/router"
 	"github.com/fragmenta/view"
 
@@ -63,6 +65,10 @@ func HandleUpdate(context router.Context) error {
 		return router.InternalError(err)
 	}
 
-	// Redirect to comment
-	return router.Redirect(context, comment.URLShow())
+	// Redirect to the story concerned, or the comment if no story
+	if comment.StoryId > 0 {
+		return router.Redirect(context, fmt.Sprintf("/stories/%d", comment.StoryId))
+	}
+
+	return router.Redirect(context, fmt.Sprintf("/comments/%d", comment.Id))
 }
