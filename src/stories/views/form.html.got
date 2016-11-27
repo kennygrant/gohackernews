@@ -9,7 +9,7 @@
     <div class="wide-fields">
     {{ field "Url" "url" .story.Url }}
     {{ field "Name - add tags with hashtags, e.g. #web, add sections with a prefix e.g. Video:" "name" .story.Name }}
-    {{ field "Summary - add a short description of the link here" "summary" .story.Summary }}
+    {{ textarea "Add a short description of the link here for display on the story page" "summary" .story.Summary }}
     </div>
   
     {{ if .current_user.Admin }}
