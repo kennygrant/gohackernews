@@ -236,7 +236,7 @@ func (m *Story) PrimaryURL() string {
 // At present we only check for github urls, we should at least check for bitbucket
 func (m *Story) Code() bool {
 	if strings.Contains(m.Url, "https://github.com") {
-		if strings.Contains(m.Url, "/commit/") || strings.HasSuffix(m.Url, ".md") {
+		if strings.Contains(m.Url, "/commit/") || strings.Contains(m.Url, "/releases/") || strings.HasSuffix(m.Url, ".md") {
 			return false
 		}
 		return true
