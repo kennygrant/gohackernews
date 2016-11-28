@@ -41,14 +41,15 @@ func TweetTopStory(context schedule.Context) {
 		url := story.PrimaryURL()
 
 		if strings.HasPrefix(url, "/") {
+			// FIXME use url from config
 			url = "https://golangnews.com" + url
 		}
 
 		tweet := fmt.Sprintf("%s #golang %s", story.Name, url)
 
-		// If the tweet will be too long for twitter, just tweet the url
+		// If the tweet will be too long for twitter, use GN url
 		if len(tweet) > 140 {
-			tweet = url
+			tweet = fmt.Sprintf("%s #golang %s", story.Name, story.URLShow())
 		}
 
 		context.Logf("#info sending tweet:%s", tweet)
