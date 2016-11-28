@@ -6,18 +6,31 @@
         <input type="submit" class="button" value="Save">
     </div>
   
+    {{ if .current_user.Admin }}
+    <div class="wide-fields">
+    {{ field "Url" "url" .story.Url }}
+    {{ field "Name - add tags with hashtags, e.g. #web, add sections with a prefix e.g. Video:" "name" .story.Name }}
+    <div class="field">
+        <label>Text</label>
+        {{ template "lib/editable/views/editable-toolbar.html.got"}}
+        <textarea name="summary" class="content-textarea" id="story-content-textarea">{{.story.Summary}}</textarea>
+        <div contenteditable class="content-editable" id="story-content-editable">{{html .story.Summary}}</div>
+      </div>
+    {{ textarea "Add a short description of the link here for display on the story page" "summary" .story.Summary }}
+    </div>
+    <div class="inline-fields">
+    {{ select "Status" "status" .story.Status .story.StatusOptions }}
+    {{ field "UserId" "user_id" .story.UserId }}
+    {{ field "Points" "points" .story.Points }}
+    </div>
+    {{ else }}
+    
     <div class="wide-fields">
     {{ field "Url" "url" .story.Url }}
     {{ field "Name - add tags with hashtags, e.g. #web, add sections with a prefix e.g. Video:" "name" .story.Name }}
     {{ textarea "Add a short description of the link here for display on the story page" "summary" .story.Summary }}
     </div>
   
-    {{ if .current_user.Admin }}
-    <div class="inline-fields">
-    {{ select "Status" "status" .story.Status .story.StatusOptions }}
-    {{ field "UserId" "user_id" .story.UserId }}
-    {{ field "Points" "points" .story.Points }}
-    </div>
     {{ end }}
     
 
