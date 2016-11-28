@@ -5,6 +5,7 @@
       <input type="submit" class="button" value="Submit">
     </div>
     <h1>Submit Story</h1>
+    <p>Please read the <a href="/stories/1">contributor guidelines</a> before submitting stories.</p>
     <div class="wide-fields">
     {{ field "Url" "url" .story.Url "class=active_url_field"}}
     {{ field "Name - add tags with hashtags, e.g. #web, add sections with a prefix e.g. Video:" "name" .story.Name "class=active_name_field" }}

@@ -5,5 +5,6 @@
     <input type="hidden" name="parent_id" value="{{.comment.Id}}">
     {{ end }}
     <input type=submit value="Add Comment" class="button right">
+    <a href="/stories/1#comments" class="comment_guidelines_link right" target="_blank">Contributing</a>
     <input name="authenticity_token" type="hidden" value="{{.authenticity_token}}">
 </form>
