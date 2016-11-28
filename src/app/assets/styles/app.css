@@ -1,12 +1,12 @@
 
 body {
-  font: 1.6em/1.6em "Roboto", "Helvetica Neue", Arial, sans-serif;
+  font: 1.6em/1.6em "Open Sans", "Helvetica Neue", "Helvetica", Arial, sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
   letter-spacing: normal;
   color: #666;
-  font-weight: 300;
+  font-weight: 500;
   font-style: normal;
   margin: 0.8rem 0 0.5rem 0;
 }
@@ -15,18 +15,21 @@ h1, h2, h3 {
   font-style: normal;
   font-size: 2em;
   margin: 0;
+  font-weight: 300;
   text-align: left;
-  font-family: "Helvetica", sans-serif;
+  font-family: "Open Sans", "Helvetica Neue","Helvetica", sans-serif;
   text-transform: none;
 }
+
 
 h1 {
   color: #05afe7;
 }
 
 h2 {
-  color: #555;
-  font-size: 1.5em;
+  color: #05afe7;
+  font-size: 1.6em;
+  margin:2rem 0 0 0;
 }
 
 h2 b {
@@ -35,6 +38,18 @@ h2 b {
 
 h3 {
   font-size: 1.1em;
+  margin:0.45rem 0 0 0;
+}
+
+h4 {
+  font-size: 1em;
+  margin:0.4rem 0 0 0;
+}
+
+h5 {
+  font-size: 1em;
+  text-transform:uppercase;
+  margin:0.4rem 0 0 0;
 }
 
 a {
@@ -225,7 +240,7 @@ header nav ul li {
 header .title .logo {
   font-size:1.3em;
   text-shadow:-0.25rem 0.25rem 0 rgba(10,134,174,0.5);
-  font-weight:800;
+  font-weight:600;
   margin:0.2rem 0 0 0;
   position:relative;
   z-index:2;
