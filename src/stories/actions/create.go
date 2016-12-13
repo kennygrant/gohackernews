@@ -86,16 +86,16 @@ func HandleCreate(context router.Context) error {
 		return router.InternalError(err)
 	}
 
-	if len(duplicates) > 0 {
+	// If we have a duplicate story, with the same non-null url, upvote or reject
+	if len(duplicates) > 0 && url != "" {
 		story := duplicates[0]
 
 		// Check we have no votes already from this user, if we do fail
 		if storyHasUserVote(story, user) {
-			return router.NotAuthorizedError(err, "Vote Failed", "Sorry you are not allowed to vote twice, nice try!")
-
+			return router.NotAuthorizedError(err, "Vote Failed", "You have already submitted this story.")
 		}
 
-		// Add a point to dupe and return
+		// Add a point to dupe and show the story
 		addStoryVote(story, user, ip, 1)
 		return router.Redirect(context, story.URLShow())
 	}

@@ -97,7 +97,7 @@ func validateParams(params map[string]string, checkAll bool) error {
 		}
 	}
 
-	if checkAll || len(params["url"]) > 0 {
+	if len(params["url"]) > 0 {
 
 		err := validate.Length(params["url"], 5, 1000)
 		if err != nil {
