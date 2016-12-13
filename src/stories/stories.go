@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/fragmenta/model"
+	"github.com/fragmenta/model/file"
 	"github.com/fragmenta/model/validate"
 	"github.com/fragmenta/query"
 	"github.com/fragmenta/router"
@@ -208,12 +209,13 @@ func (m *Story) ShowAsk() bool {
 	return strings.HasPrefix(m.Name, "Show:") || strings.HasPrefix(m.Name, "Ask:")
 }
 
-// DestinationURL returns the URL of the story (either set URL or if unset for Ask:, just the ShowURL)
+// DestinationURL returns the URL of the story
+// if no url is set, it uses the CanonicalURL
 func (m *Story) DestinationURL() string {
 	if m.Url != "" {
 		return m.Url
 	}
-	return m.URLShow()
+	return m.CanonicalURL()
 }
 
 // PrimaryURL returns the URL to use for this story in lists
@@ -221,15 +223,21 @@ func (m *Story) DestinationURL() string {
 func (m *Story) PrimaryURL() string {
 	// If video or show or ask, return story url
 	if m.YouTube() || m.ShowAsk() {
-		return m.URLShow()
+		return m.CanonicalURL()
 	}
 
-	// If no url, return url show
+	// If no url, return canonical url
 	if m.Url == "" {
-		return m.URLShow()
+		return m.CanonicalURL()
 	}
 
 	return m.Url
+}
+
+// CanonicalURL is the canonical URL of the story on this site
+// including a slug for seo
+func (m *Story) CanonicalURL() string {
+	return fmt.Sprintf("/stories/%d-%s", m.Id, file.SanitizeName(m.Name))
 }
 
 // Code returns true if this is a link to a git repository

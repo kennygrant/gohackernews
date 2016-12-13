@@ -1,6 +1,8 @@
 package storyactions
 
 import (
+	"fmt"
+
 	"github.com/fragmenta/router"
 	"github.com/fragmenta/view"
 
@@ -18,8 +20,8 @@ func HandleShow(context router.Context) error {
 	}
 
 	// Redirect requests to the canonical url
-	if context.Path() != story.URLShow() {
-		return router.Redirect(context, story.URLShow())
+	if context.Path() != story.CanonicalURL() {
+		return router.Redirect(context, story.CanonicalURL())
 	}
 
 	// Find the comments for this story
@@ -30,12 +32,17 @@ func HandleShow(context router.Context) error {
 		return router.InternalError(err)
 	}
 
+	meta := story.Summary
+	if len(meta) == 0 {
+		meta = fmt.Sprintf("A story on %s, %s", context.Config("meta_title"), context.Config("meta_desc"))
+	}
+
 	// Render the template
 	view := view.New(context)
 	view.AddKey("story", story)
 	view.AddKey("meta_title", story.Name)
-	view.AddKey("meta_desc", story.Summary)
-	view.AddKey("meta_keywords", story.Name)
+	view.AddKey("meta_desc", meta)
+	view.AddKey("meta_keywords", fmt.Sprintf("%s %s", story.Name, context.Config("meta_keywords")))
 	view.AddKey("comments", rootComments)
 
 	return view.Render()

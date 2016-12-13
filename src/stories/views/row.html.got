@@ -1,16 +1,16 @@
 <li class="story {{ if gt .story.NegativePoints 0 }}minus{{.story.NegativePoints}}{{end}}">
-  <a href="/stories/{{.story.Id}}" class="bubble"><b class="bubble-tick"></b>{{.story.CommentCountDisplay}}</a> 
+  <a href="{{.story.CanonicalURL}}" class="bubble"><b class="bubble-tick"></b>{{.story.CommentCountDisplay}}</a> 
   {{ if .current_user.Admin }}
     <a href="/stories/{{.story.Id}}/update" class="button small grey flag">edit</a>
   {{end }}
     <div class="voting">
       {{ if .current_user.Anon }}
       <a href="/users/create" class="vote disabled">▲</a>
-      <a href="/stories/{{.story.Id}}" class="points">{{.story.Points}}</a>
+      <a href="{{.story.CanonicalURL}}" class="points">{{.story.Points}}</a>
       <a href="/users/create" class="vote disabled">▼</a>
       {{ else }}
       <a href="/stories/{{.story.Id}}/upvote" method="post" class="vote {{if not .current_user.CanUpvote }}disabled{{ end }}">▲</a>
-      <a href="/stories/{{.story.Id}}" class="points">{{.story.Points}}</a>
+      <a href="{{.story.CanonicalURL}}" class="points">{{.story.Points}}</a>
       <a href="/stories/{{.story.Id}}/downvote" method="post" class="vote {{if not .current_user.CanDownvote }}disabled{{ end }}">▼</a>
       {{ end }}
     </div>
@@ -30,6 +30,6 @@
         {{ end }}
         
         <a href="/users/{{.story.UserId}}" class="user">{{.story.UserName}}</a>
-        <a href="{{.story.URLShow}}" class="date">{{timeago .story.CreatedAt}}</a>
+        <a href="{{.story.CanonicalURL}}" class="date">{{timeago .story.CreatedAt}}</a>
     </div>
 </li>
