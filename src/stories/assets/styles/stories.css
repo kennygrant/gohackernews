@@ -291,7 +291,7 @@ li.story .button {
     display:inline-block;
   }
   
-  .story .actions {
+  .story .story_actions {
     float:right;
     margin:-4rem 0 0 0;
   }

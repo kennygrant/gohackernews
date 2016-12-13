@@ -22,7 +22,7 @@
              <a href="/users/{{.story.UserId}}">posted by {{.story.UserName}}</a> {{timeago .story.CreatedAt }} &nbsp; 
          </div>
          
-         <div class="actions">
+         <div class="actions story_actions">
         {{ if .current_user.Admin }}
           <a href="/stories/{{.story.Id}}/update" rel="nofollow" class="button grey">edit</a>
           <a href="/stories/{{.story.Id}}/flag" rel="nofollow" class="button grey flag" method="post">Flag</a>
