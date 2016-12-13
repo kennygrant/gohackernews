@@ -32,10 +32,13 @@ func HandleCode(context router.Context) error {
 
 	// Render the template
 	view := view.New(context)
-	setStoriesMetadata(view, context.Request())
 	view.AddKey("page", page)
 	view.AddKey("stories", results)
-
+	view.AddKey("pubdate", storiesModTime(results))
+	view.AddKey("meta_title", "Go Code")
+	view.AddKey("meta_desc", context.Config("meta_desc"))
+	view.AddKey("meta_keywords", context.Config("meta_keywords"))
+	view.AddKey("meta_rss", storiesXMLPath(context))
 	view.Template("stories/views/index.html.got")
 
 	if context.Param("format") == ".xml" {

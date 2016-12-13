@@ -1,6 +1,8 @@
 package storyactions
 
 import (
+	"fmt"
+
 	"github.com/fragmenta/router"
 	"github.com/fragmenta/view"
 
@@ -32,10 +34,14 @@ func HandleHome(context router.Context) error {
 
 	// Render the template
 	view := view.New(context)
-	setStoriesMetadata(view, context.Request())
 	view.AddKey("page", page)
 	view.AddKey("stories", results)
 	view.Template("stories/views/index.html.got")
+	view.AddKey("pubdate", storiesModTime(results))
+	view.AddKey("meta_title", fmt.Sprintf("%s, %s", context.Config("meta_title"), context.Config("meta_desc")))
+	view.AddKey("meta_desc", context.Config("meta_desc"))
+	view.AddKey("meta_keywords", context.Config("meta_keywords"))
+	view.AddKey("meta_rss", storiesXMLPath(context))
 
 	if context.Param("format") == ".xml" {
 		view.Layout("")
