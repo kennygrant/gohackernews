@@ -1,6 +1,6 @@
 bin/*
 db/backup/*
-db/migrate/2015-09-26-001524-Create-Database.sql
+db/migrate/*
 secrets/*
 log/*
 src/app/assets/scripts/analytics.js
