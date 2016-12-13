@@ -37,38 +37,48 @@ func TweetTopStory(context schedule.Context) {
 	if len(results) > 0 {
 		story := results[0]
 
-		// Link to the primary url for this type of story
-		url := story.PrimaryURL()
-
-		if strings.HasPrefix(url, "/") {
-			// FIXME use url from config
-			url = "https://golangnews.com" + url
-		}
-
-		tweet := fmt.Sprintf("%s #golang %s", story.Name, url)
-
-		// If the tweet will be too long for twitter, use GN url
-		if len(tweet) > 140 {
-			tweet = fmt.Sprintf("%s #golang %s", story.Name, story.URLShow())
-		}
-
-		context.Logf("#info sending tweet:%s", tweet)
-
-		_, err := twitter.Tweet(tweet)
-		if err != nil {
-			context.Logf("#error tweeting top story %s", err)
-			return
-		}
-
-		// Record that this story has been tweeted in db
-		params := map[string]string{"tweeted_at": query.TimeString(time.Now().UTC())}
-		err = story.Update(params)
-		if err != nil {
-			context.Logf("#error updating top story tweet %s", err)
-			return
-		}
+		TweetStory(context, story)
 	} else {
 		context.Logf("#warn no top story found for tweet")
+	}
+
+}
+
+// TweetStory tweets the given story
+func TweetStory(context schedule.Context, story *stories.Story) {
+
+	// Base url from config
+	baseURL := context.Config("root_url")
+
+	// Link to the primary url for this type of story
+	url := story.PrimaryURL()
+
+	// Check for relative urls
+	if strings.HasPrefix(url, "/") {
+		url = baseURL + url
+	}
+
+	tweet := fmt.Sprintf("%s #golang %s", story.Name, url)
+
+	// If the tweet will be too long for twitter, use GN url
+	if len(tweet) > 140 {
+		tweet = fmt.Sprintf("%s #golang %s", story.Name, baseURL+story.URLShow())
+	}
+
+	context.Logf("#info sending tweet:%s", tweet)
+
+	_, err := twitter.Tweet(tweet)
+	if err != nil {
+		context.Logf("#error tweeting top story %s", err)
+		return
+	}
+
+	// Record that this story has been tweeted in db
+	params := map[string]string{"tweeted_at": query.TimeString(time.Now().UTC())}
+	err = story.Update(params)
+	if err != nil {
+		context.Logf("#error updating top story tweet %s", err)
+		return
 	}
 
 }
