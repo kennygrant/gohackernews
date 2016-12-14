@@ -7,11 +7,13 @@ import (
 	"github.com/fragmenta/view"
 
 	"github.com/kennygrant/gohackernews/src/comments"
+	"github.com/kennygrant/gohackernews/src/lib/stats"
 	"github.com/kennygrant/gohackernews/src/stories"
 )
 
 // HandleShow displays a single story
 func HandleShow(context router.Context) error {
+	stats.RegisterHit(context)
 
 	// Find the story
 	story, err := stories.Find(context.ParamInt("id"))

@@ -6,6 +6,7 @@ import (
 	"github.com/fragmenta/router"
 	"github.com/fragmenta/view"
 
+	"github.com/kennygrant/gohackernews/src/lib/stats"
 	"github.com/kennygrant/gohackernews/src/stories"
 )
 
@@ -13,6 +14,7 @@ import (
 // used for the home page for gravity rank see votes.go
 // responds to GET /
 func HandleHome(context router.Context) error {
+	stats.RegisterHit(context)
 
 	// Build a query
 	q := stories.Query().Limit(listLimit)
