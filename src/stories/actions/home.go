@@ -44,7 +44,9 @@ func HandleHome(context router.Context) error {
 	view.AddKey("meta_desc", context.Config("meta_desc"))
 	view.AddKey("meta_keywords", context.Config("meta_keywords"))
 	view.AddKey("meta_rss", storiesXMLPath(context))
+	view.AddKey("userCount", stats.UserCount())
 
+	// For rss feeds use xml templates
 	if context.Param("format") == ".xml" {
 		view.Layout("")
 		view.Template("stories/views/index.xml.got")

@@ -65,6 +65,7 @@ func init() {
 
 // purgeUsers clears the users list of users who last acted PurgeInterval ago
 func purgeUsers() {
+
 	for k, v := range identifiers {
 		purgeTime := time.Now().Add(-PurgeInterval)
 		if v.Before(purgeTime) {
@@ -72,6 +73,7 @@ func purgeUsers() {
 		}
 	}
 
-	//	fmt.Printf("Cleaning users:%d", len(identifiers))
-	time.AfterFunc(time.Minute*1, purgeUsers)
+	time.AfterFunc(time.Second*60, purgeUsers)
+
+	//	fmt.Printf("Purged users:%d", UserCount())
 }
