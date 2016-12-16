@@ -30,6 +30,7 @@ func setupRoutes(r *router.Router) {
 	r.Add("/stories/{id:[0-9]+}/flag", storyactions.HandleFlag).Post()
 	r.Add("/stories/{id:[0-9]+}", storyactions.HandleShow)
 	r.Add("/stories{format:(.xml)?}", storyactions.HandleIndex)
+	r.Add("/sitemap.xml", storyactions.HandleSiteMap)
 
 	r.Add("/comments", commentactions.HandleIndex)
 	r.Add("/comments/create", commentactions.HandleCreateShow)

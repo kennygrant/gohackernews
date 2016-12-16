@@ -1,0 +1,35 @@
+{{ xmlpreamble }}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url>
+   <loc>{{root_url}}</loc>
+   <lastmod>{{ date .pubdate.UTC "2006-01-02" }}</lastmod>
+   <changefreq>monthly</changefreq>
+   <priority>1.0</priority>
+</url>
+<url>
+   <loc>{{root_url}}/stories/code</loc>
+   <lastmod>{{ date .pubdate.UTC "2006-01-02" }}</lastmod>
+   <changefreq>monthly</changefreq>
+   <priority>1.0</priority>
+</url>
+<url>
+   <loc>{{root_url}}/stories/stories?q=Video:</loc>
+   <lastmod>{{ date .pubdate.UTC "2006-01-02" }}</lastmod>
+   <changefreq>monthly</changefreq>
+   <priority>1.0</priority>
+</url>
+<url>
+   <loc>{{root_url}}/stories?q=Hiring:</loc>
+   <lastmod>{{ date .pubdate.UTC "2006-01-02" }}</lastmod>
+   <changefreq>monthly</changefreq>
+   <priority>1.0</priority>
+</url>
+{{ range .stories }}
+ <url>
+    <loc>{{root_url}}{{.CanonicalURL}}</loc>
+    <lastmod>{{ date .CreatedAt.UTC "2006-01-02" }}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+ </url>
+{{ end }}
+</urlset>

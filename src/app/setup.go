@@ -143,6 +143,9 @@ func setupView(server *server.Server) {
 	// instead and offer proper editing TODO: move to editable.js instead
 	view.Helpers["markup"] = markup
 	view.Helpers["timeago"] = timeago
+	view.Helpers["root_url"] = func() string {
+		return server.Config("root_url")
+	}
 
 	view.Production = server.Production()
 	err := view.LoadTemplates()
