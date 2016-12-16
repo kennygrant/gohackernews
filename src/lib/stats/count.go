@@ -4,6 +4,7 @@ import (
 	"crypto/sha1"
 	"encoding/base64"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/fragmenta/router"
@@ -22,17 +23,23 @@ var identifiers = make(map[string]time.Time)
 // RegisterHit registers a hit and ups user count if required
 func RegisterHit(context router.Context) {
 
+	// Use UA as well as ip for unique values per browser session
+	ua := context.Request().Header.Get("User-Agent")
+	// Ignore obvious bots (Googlebot etc)
+	if strings.Contains(ua, "bot") {
+		return
+	}
+	// Ignore requests for xml (assumed to be feeds or sitemap)
+	if strings.Contains(context.Path(), ".xml") {
+		return
+	}
+
 	// Extract the IP from the address
 	ip := context.Request().RemoteAddr
 	forward := context.Request().Header.Get("X-Forwarded-For")
 	if len(forward) > 0 {
 		ip = forward
 	}
-
-	// Use UA as well as ip for unique values per browser session
-	ua := context.Request().Header.Get("User-Agent")
-
-	context.Logf("IP recd:%s ua:%s", ip, ua)
 
 	// Hash for anonymity in our store
 	hasher := sha1.New()
