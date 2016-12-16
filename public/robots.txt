@@ -3,3 +3,4 @@
 # User-Agent: *
 # Disallow: /
 
+Sitemap: https://golangnews.com/sitemap.xml
