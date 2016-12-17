@@ -1,6 +1,3 @@
-{{ if .userCount}}
-<p>{{.userCount}} users online just now</p>
-{{ end }}
 <p>
   {{if .meta_rss }}
   <a href="{{ .meta_rss }}">RSS</a> |
@@ -9,6 +6,9 @@
   <a href="https://github.com/kennygrant/gohackernews">Source on Github</a> | 
   <a href="http://fragmenta.eu">Made with Fragmenta</a>
 </p>
+{{ if .userCount}}
+<p>{{.userCount}} users online just now</p>
+{{ end }}
 <p>
   This site uses <a href="https://golang.org">Go</a>, hosted on a $5 instance on <a href="https://m.do.co/c/45dc49ca8623">Digital Ocean</a>. The golangnews.com domain was kindly donated by <a href="https://github.com/Unknwon">@Unknwon</a>.
 </p>

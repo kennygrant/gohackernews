@@ -1,19 +1,18 @@
-<nav alt="Golang News - Curated links about the Go programming language">
+<nav alt="Golang News, curated links about the Go programming language">
   <ul class="title">
-    
-    <li class="user_badge">
+  
+    <li class="user_badge" alt="Google Go Links">
       {{ if not .current_user.Anon }}
         <a href="/users/{{.current_user.Id}}">{{.current_user.Name}} ({{.current_user.Points}})</a>
       {{ else }}
-        <span class="short">Golang News</span>
-        <span class="long">Curated links and news about the Go Programming language</span>
+        <span class="short">Golang News {{ if .userCount}}({{.userCount}} online){{end}}</span>
+        <span class="long">Curated links and news about the Go Programming language {{ if .userCount}}({{.userCount}} users online){{end}}</span>
       {{ end }}
     </li>
         
-      <!-- change to http://golangnews.com -->
     <li class="site">
-      <a href="http://golangnews.com" title="Golang News - Curated links about the Go programming language">
-        <span class=" logo">GN</span>
+      <a href="{{root_url}}" title="Golang News - Curated links about the Go programming language">
+        <span class=" logo" alt="golang newsletter and news articles about the go programming language from google">GN</span>
       </a>
     </li>
 
