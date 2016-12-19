@@ -30,12 +30,7 @@
           <a href="/stories/{{.story.Id}}/update" rel="nofollow" class="button grey">edit</a>
         {{end }}
         </div>
-        {{ if not .current_user.CanComment }}
-          <div class="register">
-            <a href="/users/create" class="button">Register</a> To comment or vote on this story
-          </div>
-       {{ end }}
-         
+      
          <div class="summary">
            {{ markup .story.Summary }}
          </div>
@@ -45,9 +40,14 @@
           <iframe width="100%" height="auto" src="{{ .story.YouTubeURL }}" frameborder="0" allowfullscreen></iframe>
         </div>
          {{ end }}
+        
          
          {{ if .current_user.CanComment }}
           {{ template "comments/views/form_embed.html.got" . }}
+         {{ else }}
+           <div class="register">
+             <a href="/users/create" class="button">Register</a> To comment or vote on this story
+           </div>
          {{ end }}
      
          <ul class="comments">
