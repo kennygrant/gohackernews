@@ -3,11 +3,11 @@
   
     <li class="user_badge" alt="Google Go Links">
       {{ if not .current_user.Anon }}
-        <a href="/users/{{.current_user.Id}}">{{.current_user.Name}} ({{.current_user.Points}})</a>
+        <a href="/users/{{.current_user.Id}}">{{.current_user.Name}} ({{.current_user.Points}}) {{ if .userCount}} - {{.userCount}} users online{{end}}</a>
       {{ else }}
         <h3 class="hidden">Golang News, Curated links about the Go programming language</h3>
-        <span class="short">Golang News {{ if .userCount}}({{.userCount}} online){{end}}</span>
-        <span class="long">Curated links about Go programming {{ if .userCount}}({{.userCount}} users online){{end}}</span>
+        <span class="short">Golang News {{ if .userCount}}- {{.userCount}} users online{{end}}</span>
+        <span class="long">Curated links about Go programming {{ if .userCount}} - {{.userCount}} users online{{end}}</span>
       {{ end }}
     </li>
         
@@ -15,6 +15,7 @@
       <a href="{{root_url}}" title="Golang News, Curated links about the Go programming language">
         <span class=" logo" alt="golang newsletter and news articles about the go programming language from google">GN</span>
       </a>
+      
     </li>
 
     <li class="search">
@@ -51,6 +52,9 @@
     <li class="submit"><a class="register" href="/users/create">Sign up</a></li>
     <li class="submit"><a class="register" href="/users/login">Log in</a></li>
     {{ end }}
+    
+    
+    
   </ul>
   
   {{ if .tags }}
