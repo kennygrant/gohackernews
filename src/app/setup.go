@@ -3,7 +3,6 @@ package app
 import (
 	"fmt"
 	"html/template"
-	"strings"
 	"time"
 
 	"github.com/fragmenta/assets"
@@ -17,6 +16,7 @@ import (
 
 	"github.com/kennygrant/gohackernews/src/lib/authorise"
 	"github.com/kennygrant/gohackernews/src/lib/mail"
+	"github.com/kennygrant/gohackernews/src/lib/text"
 	"github.com/kennygrant/gohackernews/src/lib/twitter"
 	"github.com/kennygrant/gohackernews/src/stories/actions"
 	"github.com/kennygrant/gohackernews/src/users/actions"
@@ -156,8 +156,12 @@ func setupView(server *server.Server) {
 }
 
 func markup(s string) template.HTML {
-	// Nasty find/replace
-	s = strings.Replace(s, "\n", "</p><p>", -1)
+
+	// Convert newlimnes to paragraph tags
+	s = text.ConvertNewlines(s)
+
+	// Convert bare links and usernames to anchors
+	s = text.ConvertLinks(s)
 
 	return helpers.Sanitize(s)
 }
