@@ -157,11 +157,11 @@ func setupView(server *server.Server) {
 
 func markup(s string) template.HTML {
 
-	// Convert newlimnes to paragraph tags
-	s = text.ConvertNewlines(s)
-
 	// Convert bare links and usernames to anchors
 	s = text.ConvertLinks(s)
+
+	// Convert newlimnes to paragraph tags
+	s = text.ConvertNewlines(s)
 
 	return helpers.Sanitize(s)
 }

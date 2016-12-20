@@ -23,7 +23,7 @@ func TestConvertNewlines(t *testing.T) {
 	for _, v := range newlineTests {
 		r := ConvertNewlines(v.in)
 		if r != v.out {
-			t.Fatalf("Failed to transform newlines\n\twanted:%s\n\tgot:%s\n", v.out, r)
+			t.Fatalf("🔥 Failed to transform newlines\n\twanted:%s\n\tgot:%s\n", v.out, r)
 		}
 	}
 }
@@ -36,6 +36,14 @@ var activateLinksTests = []t{
 	{
 		in:  `https://google.com`,
 		out: `<a href="https://google.com">https://google.com</a>`,
+	},
+	{
+		in: `🗑🔥
+		
+		https://google.com`,
+		out: `🗑🔥
+		
+		<a href="https://google.com">https://google.com</a>`,
 	},
 	{
 		in:  ` https://google.com      `,
@@ -58,7 +66,7 @@ func TestConvertLinks(t *testing.T) {
 	for _, v := range activateLinksTests {
 		r := ConvertLinks(v.in)
 		if r != v.out {
-			t.Fatalf("Failed to transform links\n\twanted:%s\n\tgot:%s\n", v.out, r)
+			t.Fatalf("🔥 Failed to transform links\n\twanted:%s\n\tgot:%s\n", v.out, r)
 		}
 	}
 }
