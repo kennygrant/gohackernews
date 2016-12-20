@@ -5,13 +5,13 @@
   {{end }}
     <div class="voting">
       {{ if .current_user.Anon }}
-      <a href="/users/create" class="vote disabled">▲</a>
+      <a href="/users/create" class="vote disabled" rel=nofollow>▲</a>
       <a href="{{.story.CanonicalURL}}" class="points">{{.story.Points}}</a>
-      <a href="/users/create" class="vote disabled">▼</a>
+      <a href="/users/create" class="vote disabled" rel=nofollow>▲</a>
       {{ else }}
-      <a href="/stories/{{.story.Id}}/upvote" method="post" class="vote {{if not .current_user.CanUpvote }}disabled{{ end }}">▲</a>
+      <a href="/stories/{{.story.Id}}/upvote" method="post" class="vote {{if not .current_user.CanUpvote }}disabled{{ end }}" rel=nofollow>▲</a>
       <a href="{{.story.CanonicalURL}}" class="points">{{.story.Points}}</a>
-      <a href="/stories/{{.story.Id}}/downvote" method="post" class="vote {{if not .current_user.CanDownvote }}disabled{{ end }}">▼</a>
+      <a href="/stories/{{.story.Id}}/downvote" method="post" class="vote {{if not .current_user.CanDownvote }}disabled{{ end }}" rel=nofollow>▲</a>
       {{ end }}
     </div>
     <h3><a href="{{.story.PrimaryURL}}" class="name">{{.story.NameDisplay}}</a></h3>

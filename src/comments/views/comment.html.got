@@ -2,7 +2,7 @@
 <li id="comment{{.comment.Id}}" class="comment level{{ .comment.Level }} minus{{ .comment.NegativePoints }}">
     <div class="metadata">
     {{ if not $owner }}
-    <a href="/comments/{{.comment.Id}}/upvote" method="post" class="vote {{if not .current_user.CanUpvote }}disabled{{ end }}">▲</a>
+    <a href="/comments/{{.comment.Id}}/upvote" method="post" class="vote {{if not .current_user.CanUpvote }}disabled{{ end }}" rel=nofollow>▲</a>
     {{ end }}
     
     {{ if or .current_user.Admin $owner }}
@@ -17,7 +17,7 @@
     <a href="/comments/{{.comment.Id}}">{{timeago .comment.CreatedAt}}</a>
   
     {{ if not $owner }}
-    <a href="/comments/{{.comment.Id}}/downvote" method="post" class="vote {{if not .current_user.CanDownvote }}disabled{{ end }}">▼</a>
+    <a href="/comments/{{.comment.Id}}/downvote" method="post" class="vote {{if not .current_user.CanDownvote }}disabled{{ end }}" rel=nofollow>▲</a>
     {{ end }}
     </div>
     
