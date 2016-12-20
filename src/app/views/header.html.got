@@ -5,13 +5,14 @@
       {{ if not .current_user.Anon }}
         <a href="/users/{{.current_user.Id}}">{{.current_user.Name}} ({{.current_user.Points}})</a>
       {{ else }}
+        <h3 class="hidden">Golang News, Curated links about the Go programming language</h3>
         <span class="short">Golang News {{ if .userCount}}({{.userCount}} online){{end}}</span>
-        <span class="long">Curated links and news about the Go Programming language {{ if .userCount}}({{.userCount}} users online){{end}}</span>
+        <span class="long">Curated links about Go programming {{ if .userCount}}({{.userCount}} users online){{end}}</span>
       {{ end }}
     </li>
         
     <li class="site">
-      <a href="{{root_url}}" title="Golang News - Curated links about the Go programming language">
+      <a href="{{root_url}}" title="Golang News, Curated links about the Go programming language">
         <span class=" logo" alt="golang newsletter and news articles about the go programming language from google">GN</span>
       </a>
     </li>
