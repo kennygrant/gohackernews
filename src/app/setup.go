@@ -200,6 +200,17 @@ func setupDatabase(server *server.Server) {
 		"db":       config["db"],
 	}
 
+	// Optionally Support remote databases
+	if len(config["db_host"]) > 0 {
+		options["host"] = config["db_host"]
+	}
+	if len(config["db_port"]) > 0 {
+		options["port"] = config["db_port"]
+	}
+	if len(config["db_params"]) > 0 {
+		options["params"] = config["db_params"]
+	}
+
 	// Ask query to open the database
 	err := query.OpenDatabase(options)
 
