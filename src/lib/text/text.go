@@ -16,7 +16,8 @@ var (
 	// Search for links prefaced by word separators (\s\n\.)
 	// i.e. not already in anchors, and replace with auto-link
 	//	`\s(https?://.*)[\s.!?]`
-	urlRx = regexp.MustCompile(`([\s]?)(https?://[^\s]*)` + trailing)
+	// match urls at start of text or with space before only
+	urlRx = regexp.MustCompile(`(\A|[\s]+)(https?://[^\s]*)` + trailing)
 
 	// Search for \s@name in text and replace with links to username search
 	// requires an endpoint that redirects /u/kenny to /users/1 etc.

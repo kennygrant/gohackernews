@@ -30,6 +30,10 @@ func TestConvertNewlines(t *testing.T) {
 
 var activateLinksTests = []t{
 	{
+		in:  `<a href="https://google.com?foo=bar#123">https://google.com</a>`,
+		out: `<a href="https://google.com?foo=bar#123">https://google.com</a>`,
+	},
+	{
 		in:  `https://google.com`,
 		out: `<a href="https://google.com">https://google.com</a>`,
 	},
