@@ -17,7 +17,7 @@
     <a href="/comments/{{.comment.Id}}">{{timeago .comment.CreatedAt}}</a>
   
     {{ if not $owner }}
-    <a href="/comments/{{.comment.Id}}/downvote" method="post" class="vote {{if not .current_user.CanDownvote }}disabled{{ end }}" rel=nofollow>▲</a>
+    <a href="/comments/{{.comment.Id}}/downvote" method="post" class="vote {{if not .current_user.CanDownvote }}disabled{{ end }}" rel=nofollow>▼</a>
     {{ end }}
     </div>
     
