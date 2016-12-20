@@ -50,6 +50,7 @@ func setupRoutes(r *router.Router) {
 	r.Add("/users/{id:[0-9]+}/update", useractions.HandleUpdate).Post()
 	r.Add("/users/{id:[0-9]+}/destroy", useractions.HandleDestroy).Post()
 	r.Add("/users/{id:[0-9]+}", useractions.HandleShow)
+	r.Add("/u/{name:.*}", useractions.HandleShowName)
 	r.Add("/users/login", useractions.HandleLoginShow)
 	r.Add("/users/login", useractions.HandleLogin).Post()
 	r.Add("/users/logout", useractions.HandleLogout).Post()

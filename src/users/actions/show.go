@@ -46,3 +46,22 @@ func HandleShow(context router.Context) error {
 	return view.Render()
 
 }
+
+// HandleShowName redirects a GET request of /u/username to the user show page
+func HandleShowName(context router.Context) error {
+
+	// Find the user by name
+	q := users.Where("name=?", context.Param("name"))
+	results, err := users.FindAll(q)
+	if err != nil {
+		return router.NotFoundError(err, "Error finding user")
+	}
+
+	// If valid query but no results
+	if len(results) == 0 {
+		return router.NotFoundError(err, "User not found")
+	}
+
+	// Redirect to user show page
+	return router.Redirect(context, results[0].URLShow())
+}
