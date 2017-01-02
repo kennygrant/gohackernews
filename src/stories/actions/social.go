@@ -19,10 +19,8 @@ func TweetTopStory(context schedule.Context) {
 	// Get the top story which has not been tweeted yet, newer than 1 day (we don't look at older stories)
 	q := stories.Popular().Limit(1).Order("rank desc, points desc, id desc")
 
-	// Don't fetch old stories - at some point soon this can come down to 1 day
-	// as all older stories will have been tweeted
-	// For now omit this as we have a backlog of old unposted stories
-	// q.Where("created_at > current_timestamp - interval '60 days'")
+	// Don't fetch old stories
+	q.Where("created_at > current_timestamp - interval '3 days'")
 
 	// Don't fetch stories that have already been tweeted
 	q.Where("tweeted_at IS NULL")
