@@ -13,21 +13,23 @@ import (
 // Default static file handler, handles assets too
 func fileHandler(context router.Context) error {
 
+	// First try to serve asset
 	err := serveAsset(context)
 	if err == nil {
-		return nil // return on success only for assets
+		return nil
 	}
 
-	// Finally try serving a file from public
+	// Then try to serve file
 	return serveFile(context)
 }
 
-// Default file handler, used in development - in production serve with nginx
+// Default file handler
 func serveFile(context router.Context) error {
 	// Assuming we're running from the root of the website
 	localPath := "./public" + path.Clean(context.Path())
 
-	if _, err := os.Stat(localPath); err != nil {
+	s, err := os.Stat(localPath)
+	if err != nil {
 		// If file not found return error
 		if os.IsNotExist(err) {
 			return router.NotFoundError(err)
@@ -37,12 +39,18 @@ func serveFile(context router.Context) error {
 		return router.NotAuthorizedError(err)
 	}
 
-	// If the file exists and we can access it, serve it
+	// If not a file return immediately
+	if s.IsDir() {
+		return nil
+	}
+
+	// If the file exists and we can access it, serve it with cache control header
+	context.Writer().Header().Set("Cache-Control", "max-age:3456000, public")
 	http.ServeFile(context, context.Request(), localPath)
 	return nil
 }
 
-// Handle serving assets in dev (if we can) - return true on success
+// Handle serving assets
 func serveAsset(context router.Context) error {
 	p := path.Clean(context.Path())
 
@@ -58,6 +66,7 @@ func serveAsset(context router.Context) error {
 	}
 
 	localPath := "./" + f.LocalPath()
+	context.Writer().Header().Set("Cache-Control", "max-age:3456000, public")
 	http.ServeFile(context, context.Request(), localPath)
 	return nil
 }
