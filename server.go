@@ -40,7 +40,9 @@ func main() {
 
 		// Start the server using cert and key locally held
 		// later change to autocert
-		err = server.StartTLS()
+		cert := server.Config("tls_cert")
+		key := server.Config("tls_key")
+		err = server.StartTLS(cert, key)
 		if err != nil {
 			server.Fatalf("Error starting server %s", err)
 		}
