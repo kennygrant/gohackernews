@@ -35,25 +35,14 @@ func main() {
 	// In production, server
 	if server.Production() {
 
-		// Redirect all port 80 traffic to our canonical url
-		server.StartRedirectAll(80, "https://golangnews.com")
+		// Redirect all :80 traffic to our canonical url on :443
+		server.StartRedirectAll(80, server.Config("root_url"))
 
-		// Start the server using cert and key locally held
-		// later change to autocert
-		cert := server.Config("tls_cert")
-		key := server.Config("tls_key")
-		err = server.StartTLS(cert, key)
+		// If in production, serve over tls with autocerts from let's encrypt
+		err = server.StartTLSAutocert(server.Config("autocert_email"), server.Config("autocert_domains"))
 		if err != nil {
 			server.Fatalf("Error starting server %s", err)
 		}
-
-		/*
-			// If in production, serve over tls with autocerts from let's encrypt
-			err = server.StartTLSAutocert(server.Config("mail_from"), server.Config("autocert_domains"))
-			if err != nil {
-				server.Fatalf("Error starting server %s", err)
-			}
-		*/
 
 	} else {
 		// In development just serve with http on local port
