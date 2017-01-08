@@ -116,11 +116,16 @@ func setupAssets(server *server.Server) {
 	assetsCompiled := server.ConfigBool("assets_compiled")
 	appAssets = assets.New(assetsCompiled)
 
-	// Load asset details from json file on each run
-	err := appAssets.Load()
-	if err != nil {
-		// Compile assets for the first time
-		server.Logf("#info Compiling assets")
+	var err error
+	// In production load assets
+	if server.Production() {
+		err = appAssets.Load()
+		if err != nil {
+			server.Fatalf("#error compiling assets %s", err)
+		}
+	} else {
+		// In dev compile them first and load
+		server.Logf("#info Compiling assets for dev")
 		err := appAssets.Compile("src", "public")
 		if err != nil {
 			server.Fatalf("#error compiling assets %s", err)
