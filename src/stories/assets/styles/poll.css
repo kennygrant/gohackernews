@@ -1,0 +1,68 @@
+.poll {
+  list-style:none;
+}
+
+.poll li {
+  color:#fff;
+  background-color: #05afe7;
+  padding:0.5rem 1rem ;
+  border-radius:0.4rem;
+  position:relative;
+  min-width:3rem;
+}
+
+.poll li.width_100 {
+  width:100%;
+}
+.poll li.width_90 {
+  width:90%;
+}
+.poll li.width_80 {
+  width:80%;
+}
+.poll li.width_70 {
+  width:70%;
+}
+.poll li.width_60 {
+  width:60%;
+}
+.poll li.width_50 {
+  width:50%;
+}
+.poll li.width_40 {
+  width:40%;
+}
+.poll li.width_30 {
+  width:30%;
+}
+.poll li.width_25 {
+  width:25%;
+}
+.poll li.width_20 {
+  width:20%;
+}
+.poll li.width_15 {
+  width:15%;
+}
+.poll li.width_10 {
+  width:10%;
+}
+.poll li.width_5 {
+  width:5%;
+}
+.poll li.width_2 {
+  width:2%;
+}
+
+
+@media (min-width: 770px) {
+  .poll li .small {
+    position:absolute;
+    top:0.5rem;
+    left:120%;
+    color:#444;
+  }
+}
+
+
+
