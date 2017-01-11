@@ -8,13 +8,12 @@
     <p>Please read the <a href="/stories/1">contributor guidelines</a> before submitting stories.</p>
     <div class="wide-fields">
     {{ field "Url" "url" .story.Url "class=active_url_field"}}
-    {{ field "Name - add tags with hashtags, e.g. #web, add sections with a prefix e.g. Video:" "name" .story.Name "class=active_name_field" }}
-    {{ textarea "Summary - add a short description of the link here" "summary" .story.Summary }}
+    {{ field "Name - add tags with hashtags, e.g. #web, add sections with a prefix e.g. Video:" "name" .story.Name "class='active_name_field name_field'" }}
+    {{ textarea "Summary - add a short description of the link here" "summary" .story.Summary "class='summary_field'" }}
     </div>
     <input name="authenticity_token" type="hidden" value="{{.authenticity_token}}">
 </form>
 </section>
 </article>
-<!-- quick hack to hide submit -->
-<script>DOM.First("nav .button").style.display = "none"</script>
+
 
