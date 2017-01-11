@@ -168,6 +168,8 @@ func markup(s string) template.HTML {
 	// Convert newlimnes to paragraph tags
 	s = text.ConvertNewlines(s)
 
+	// Run sanitize on the resulting string
+	// (parses html and removes unwated tags and attributes)
 	return helpers.Sanitize(s)
 }
 

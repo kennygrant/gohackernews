@@ -59,6 +59,14 @@ var activateLinksTests = []t{
 		in:  ` @tester!`,
 		out: ` <a href="/u/tester">@tester</a>!`,
 	},
+	{ // Test medium-style urls with @ usernames
+		in:  `https://medium.com/@taylorotwell/measuring-code-complexity-64356da605f9#.wayfi5mch`,
+		out: `<a href="https://medium.com/@taylorotwell/measuring-code-complexity-64356da605f9#.wayfi5mch">https://medium.com/@taylorotwell/measuring-code-complexity-64356da605f9#.wayfi5mch</a>`,
+	},
+	{ // Note this will be escaped when put into the template
+		in:  `https://d>medium.com/#.wayfi5mch`,
+		out: `<a href="https://d">https://d</a>>medium.com/#.wayfi5mch`,
+	},
 }
 
 // TestConvertLinks tests links and usernames are converted
