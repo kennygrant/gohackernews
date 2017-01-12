@@ -5,6 +5,9 @@ import (
 	"html/template"
 	"time"
 
+	// psql driver - we only use a psql db at the moment
+	_ "github.com/lib/pq"
+
 	"github.com/fragmenta/assets"
 	"github.com/fragmenta/query"
 	"github.com/fragmenta/router"
