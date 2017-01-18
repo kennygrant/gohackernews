@@ -1,23 +1,23 @@
-{{ $owner := (.comment.OwnedBy .current_user.Id) }}
-<li id="comment{{.comment.Id}}" class="comment level{{ .comment.Level }} minus{{ .comment.NegativePoints }}">
+{{ $owner := (.comment.OwnedBy .currentUser.ID) }}
+<li id="comment{{.comment.ID}}" class="comment level{{ .comment.Level }} minus{{ .comment.NegativePoints }}">
     <div class="metadata">
     {{ if not $owner }}
-    <a href="/comments/{{.comment.Id}}/upvote" method="post" class="vote {{if not .current_user.CanUpvote }}disabled{{ end }}" rel=nofollow>▲</a>
+    <a href="/comments/{{.comment.ID}}/upvote" method="post" class="vote {{if not .currentUser.CanUpvote }}disabled{{ end }}" rel=nofollow>▲</a>
     {{ end }}
     
-    {{ if or .current_user.Admin $owner }}
+    {{ if or .currentUser.Admin $owner }}
       {{ .comment.Points }} points
     {{ end }}
     
     {{ if not .story }}
-    comment posted on <a href="/stories/{{.comment.StoryId}}">{{.comment.StoryName}}</a> by 
+    comment posted on <a href="/stories/{{.comment.StoryID}}">{{.comment.StoryName}}</a> by 
     {{ end}}
     
-    <a href="/users/{{.comment.UserId}}">{{.comment.UserName}}</a> 
-    <a href="/comments/{{.comment.Id}}">{{timeago .comment.CreatedAt}}</a>
+    <a href="/users/{{.comment.UserID}}">{{.comment.UserName}}</a> 
+    <a href="/comments/{{.comment.ID}}">{{timeago .comment.CreatedAt}}</a>
   
     {{ if not $owner }}
-    <a href="/comments/{{.comment.Id}}/downvote" method="post" class="vote {{if not .current_user.CanDownvote }}disabled{{ end }}" rel=nofollow>▼</a>
+    <a href="/comments/{{.comment.ID}}/downvote" method="post" class="vote {{if not .currentUser.CanDownvote }}disabled{{ end }}" rel=nofollow>▼</a>
     {{ end }}
     </div>
     
@@ -27,18 +27,18 @@
     </div>
     
     
-    {{ if .current_user.CanComment }}
+    {{ if .currentUser.CanComment }}
     <div class="actions">
     {{ if and .story (not $owner) }}
-      <a href="#" class="show button small grey reply" data-show="#comment{{.comment.Id}} .reply-form">reply</a>
+      <a href="#" class="show button small grey reply" data-show="#comment{{.comment.ID}} .reply-form">reply</a>
     {{ end }}
     
-    {{ if (.current_user.Admin) }}
-        <a href="/comments/{{.comment.Id}}/flag" method="post" class="button small grey reply">flag</a>
+    {{ if (.currentUser.Admin) }}
+        <a href="/comments/{{.comment.ID}}/flag" method="post" class="button small grey reply">flag</a>
     {{ end }}
     
     {{ if and .comment.Editable $owner }}
-        <a href="/comments/{{.comment.Id}}/update"  class="button small grey reply">edit</a>
+        <a href="/comments/{{.comment.ID}}/update"  class="button small grey reply">edit</a>
     {{ end }}
     </div>
     {{ end }}

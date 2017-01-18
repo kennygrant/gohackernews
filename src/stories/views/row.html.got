@@ -1,17 +1,17 @@
 <li class="story {{ if gt .story.NegativePoints 0 }}minus{{.story.NegativePoints}}{{end}}">
   <a href="{{.story.CanonicalURL}}" class="bubble"><b class="bubble-tick"></b>{{.story.CommentCountDisplay}}</a> 
-  {{ if .current_user.Admin }}
-    <a href="/stories/{{.story.Id}}/update" class="button small grey flag">edit</a>
+  {{ if .currentUser.Admin }}
+    <a href="/stories/{{.story.ID}}/update" class="button small grey flag">edit</a>
   {{end }}
     <div class="voting">
-      {{ if .current_user.Anon }}
+      {{ if .currentUser.Anon }}
       <a href="/users/create" class="vote disabled" rel=nofollow>▲</a>
       <a href="{{.story.CanonicalURL}}" class="points">{{.story.Points}}</a>
       <a href="/users/create" class="vote disabled" rel=nofollow>▼</a>
       {{ else }}
-      <a href="/stories/{{.story.Id}}/upvote" method="post" class="vote {{if not .current_user.CanUpvote }}disabled{{ end }}" rel=nofollow>▲</a>
+      <a href="/stories/{{.story.ID}}/upvote" method="post" class="vote {{if not .currentUser.CanUpvote }}disabled{{ end }}" rel=nofollow>▲</a>
       <a href="{{.story.CanonicalURL}}" class="points">{{.story.Points}}</a>
-      <a href="/stories/{{.story.Id}}/downvote" method="post" class="vote {{if not .current_user.CanDownvote }}disabled{{ end }}" rel=nofollow>▼</a>
+      <a href="/stories/{{.story.ID}}/downvote" method="post" class="vote {{if not .currentUser.CanDownvote }}disabled{{ end }}" rel=nofollow>▼</a>
       {{ end }}
     </div>
     <h3><a href="{{.story.PrimaryURL}}" class="name">{{.story.NameDisplay}}</a></h3>
@@ -21,7 +21,7 @@
             <li><a href="/stories?q=%23{{.}}">{{.}}</a></li>
           {{ end }}
       </ul>
-        <a href="{{.story.DestinationURL}}" class="domain">{{ .story.Domain }}</a>
+        <a href="/stories?q={{ .story.Domain }}" class="domain">{{ .story.Domain }}</a>
         {{ if exists .story.GodocURL }}
           <a href="{{.story.GodocURL}}" class="domain docs">godoc.org</a>
         {{ end }}
@@ -29,7 +29,7 @@
           <a href="{{.story.VetURL}}" class="domain docs">govet</a>
         {{ end }}
         
-        <a href="/users/{{.story.UserId}}" class="user">{{.story.UserName}}</a>
+        <a href="/users/{{.story.UserID}}" class="user">{{.story.UserName}}</a>
         <a href="{{.story.CanonicalURL}}" class="date">{{timeago .story.CreatedAt}}</a>
     </div>
 </li>

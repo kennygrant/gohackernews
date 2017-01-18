@@ -3,13 +3,13 @@
 
 <div class="row">
 <form accept-charset="UTF-8" action="/[[ .fragmenta_resources ]]" method="get" class="filter-form">
-      <a class="button" href="/[[ .fragmenta_resources ]]/create">Add [[ .Fragmenta_Resource ]]</a>
+      <a class="button" href="/[[ .fragmenta_resources ]]/create">Add [[ .Fragmenta_Resources ]]</a>
       <input type="search" name="filter" class="right" placeholder="Search..." value="{{ .filter }}">
 </form>
 </div>
 
 <div class="row">
-<ul class="comments">
+<table class="data-table">
     {{ $0 := . }}
     {{ template "[[ .fragmenta_resources ]]/views/row.html.got" empty }}
     {{ range $i,$m := .[[ .fragmenta_resources ]] }}
@@ -17,6 +17,6 @@
        {{ set $0 "[[ .fragmenta_resource ]]" $m }}
        {{ template "[[ .fragmenta_resources ]]/views/row.html.got" $0 }}
     {{ end }}
-</ul>
+</table>
 </div>
 </article>

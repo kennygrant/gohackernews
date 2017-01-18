@@ -1,5 +1,4 @@
 <article class="comments narrow">
-<div class="row">
 <ul class="comments">
   {{ $0 := . }}
   {{ range $i,$m := .comments }}
@@ -8,5 +7,4 @@
      {{ template "comments/views/comment.html.got" $0 }}
   {{ end }}
 </ul>
-</div>
 </article>

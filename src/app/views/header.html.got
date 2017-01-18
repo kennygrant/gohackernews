@@ -2,8 +2,8 @@
   <ul class="title">
   
     <li class="user_badge" alt="Google Go Links">
-      {{ if not .current_user.Anon }}
-        <a href="/users/{{.current_user.Id}}">{{.current_user.Name}} ({{.current_user.Points}}) {{ if .userCount}} - {{.userCount}} users online{{end}}</a>
+      {{ if not .currentUser.Anon }}
+        <a href="/users/{{.currentUser.ID}}">{{.currentUser.Name}} ({{.currentUser.Points}}) {{ if .userCount}} - {{.userCount}} users online{{end}}</a>
       {{ else }}
         <h3 class="hidden">Golang News, Curated links about the Go programming language</h3>
         <span class="short">Golang News {{ if .userCount}}- {{.userCount}} users online{{end}}</span>
@@ -12,7 +12,7 @@
     </li>
         
     <li class="site">
-      <a href="{{root_url}}" title="Golang News, Curated links about the Go programming language">
+      <a href="/" title="Golang News, Curated links about the Go programming language">
         <span class=" logo" alt="golang newsletter and news articles about the go programming language from google">GN</span>
       </a>
       
@@ -33,7 +33,7 @@
   </ul>
   
   <ul class="sections">
-    <li class="long"><a href="http://golangnews.com">Golang News</a></li>
+    <li class="long"><a href="/">Golang News</a></li>
     <li><a title="Golang Code Packages" href="/stories/code">Code</a></li>
     <li><a title="Videos about the Go programming language" href="/stories?q=Video:">Videos</a></li>
     <li><a title="Jobs for Go programmers" href="/stories?q=Hiring:">Jobs</a></li>
@@ -46,7 +46,7 @@
     <li><a title="Stories you have upvoted in the past" href="/stories/upvoted">Upvoted</a></li>
     
     <li><a href="/comments">Talk</a></li>
-    {{ if not .current_user.Anon }}
+    {{ if not .currentUser.Anon }}
     <li class="submit"><a href="/stories/create" title="Submit links about the Go programming language">Submit</a></li>
     {{ else }}
     <li class="submit"><a class="register" href="/users/create">Sign up</a></li>

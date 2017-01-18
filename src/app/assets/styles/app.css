@@ -1,6 +1,9 @@
+html {
+    font-size:13px;
+}
 
 body {
-  font: 1.6em/1.6em "Open Sans", "Helvetica Neue", "Helvetica", Arial, sans-serif;
+  font: 1.2rem/1.6em "Open Sans", "Helvetica Neue", "Helvetica", Arial, sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -9,6 +12,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 500;
   font-style: normal;
   margin: 0.8rem 0 0.5rem 0;
+  line-height: 1.5em;
 }
 
 h1, h2, h3 {
@@ -20,7 +24,6 @@ h1, h2, h3 {
   font-family: "Open Sans", "Helvetica Neue","Helvetica", sans-serif;
   text-transform: none;
 }
-
 
 h1 {
   color: #05afe7;
@@ -91,18 +94,22 @@ code {
   text-align: center;
 }
 
-.button, button, input[type="submit"], input[type="reset"], input[type="button"] {
+.button, button {
   color: #fff;
   background-color: #05afe7;
   border: none;
+  border-radius:0.25rem;
   font-size: 1em;
   font-weight: 300;
-  height: 3rem;
-  line-height: 3rem;
-  padding: 0rem 1rem;
+  text-transform: uppercase;
+  line-height: 1.7rem;
+  padding: 0.3rem 0.6rem;
+  display:inline-block;
+  cursor:pointer;
+  letter-spacing:0.1rem;
 }
 
-.button:hover, button:hover, input[type="submit"]:hover, input[type="reset"]:hover, input[type="button"]:hover {
+.button:hover, button:hover {
   color: #fff;
   text-shadow: 0 0 0.4rem rgba(0, 0, 0, 0.2)
 }
@@ -225,7 +232,6 @@ header nav ul {
   margin:0;
   padding:0;
   list-style: none;
-  line-height:2.6rem;
   clear:both;
 }
 
@@ -318,10 +324,9 @@ header a:hover {
   color: #fff;
 }
 
-
 article {
   clear: both;
-  padding: 0;
+  padding:1rem 5%;
   min-height: 50rem;
   max-width: 110em;
   margin: 0 auto;
@@ -340,58 +345,13 @@ section {
 }
 
 section.padded {
-  padding: 0 2rem;
+  padding: 1rem 2rem;
   max-width: 80em;
 }
 
 section.narrow {
   padding: 0 2rem;
   max-width: 50em;
-}
-
-
-/*  FORMS */
-
-article form {
-  padding: 1rem 0;
-}
-
-article form.nopadding {
-  padding: 0;
-}
-
-label {
-  color: #555;
-  font-weight: normal;
-}
-
-.inline-fields .field {
-  float: left;
-  margin-right: 3rem;
-}
-
-.wide-fields .field {
-  clear: both;
-}
-
-.wide-fields input {
-  width: 100%;
-}
-
-section.actions {
-  clear: both;
-  padding: 0;
-  text-align: center;
-}
-
-section.actions .button {
-  margin-left: 2rem;
-}
-
-
-textarea {
-  width: 100%;
-  min-height: 10em;
 }
 
 @media(min-width:750px) {

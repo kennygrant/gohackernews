@@ -2,14 +2,18 @@
 <form method="post" class="resource-update-form">
   
     <p>
-      Comment by <a href="{{ .comment.UserId }}">{{ .comment.UserName }}</a>
-      on <a href="/stories/{{ .comment.StoryId }}">{{ .comment.StoryName }}</a>
+      Comment by <a href="{{ .comment.UserID }}">{{ .comment.UserName }}</a>
+      on <a href="/stories/{{ .comment.StoryID }}">{{ .comment.StoryName }}</a>
     </p>
     
     <div class="wide-fields">
-    {{ textarea "" "text" .comment.Text }}
+    <div class="field">
+      <label></label>
+      {{ template "lib/editable/views/editable-toolbar-basic.html.got"}}
+      <textarea name="summary" class="content-textarea" id="story-content-textarea">{{.comment.Text}}</textarea>
+      <div contenteditable class="content-editable" id="story-content-editable">{{html .comment.Text}}</div>
     </div>
-    
+    </div>
     
     <div class="actions clear">
         <input type="submit" class="button" value="Save">

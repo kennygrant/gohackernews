@@ -1,9 +1,9 @@
 <article class="narrow story">
          <h1>
-             <a href="/stories/{{.story.Id}}/upvote" rel="nofollow" method="post" class="vote {{if not .current_user.CanUpvote }}disabled{{ end }}" rel=nofollow>▲</a>
+             <a href="/stories/{{.story.ID}}/upvote" rel="nofollow" method="post" class="vote {{if not .currentUser.CanUpvote }}disabled{{ end }}" rel=nofollow>▲</a>
              <a href="{{.story.CanonicalURL}}" class="points">{{.story.Points}}</a>
-             <a href="/stories/{{.story.Id}}/downvote" rel="nofollow" method="post" class="vote {{if not .current_user.CanDownvote }}disabled{{ end }}" rel=nofollow>▼</a>
-             <a href="{{.story.Url}}" class="name">{{.story.NameDisplay}}</a>
+             <a href="/stories/{{.story.ID}}/downvote" rel="nofollow" method="post" class="vote {{if not .currentUser.CanDownvote }}disabled{{ end }}" rel=nofollow>▼</a>
+             <a href="{{.story.URL}}" class="name">{{.story.NameDisplay}}</a>
          </h1>
     
          <div class="metadata">
@@ -12,22 +12,22 @@
                  <li><a href="/stories?q=%23{{.}}">{{.}}</a></li>
                {{ end }}
            </ul>
-             <a href="{{.story.Url}}" class="domain">{{ .story.Domain }}</a>
+             <a href="{{.story.URL}}" class="domain">{{ .story.Domain }}</a>
              {{ if exists .story.GodocURL }}
                <a href="{{.story.GodocURL}}" class="domain docs">godoc.org</a>
              {{ end }}
              {{ if exists .story.VetURL }}
                <a href="{{.story.VetURL}}" class="domain docs">goreportcard.com</a>
              {{ end }}
-             <a href="/users/{{.story.UserId}}">posted by {{.story.UserName}}</a> {{timeago .story.CreatedAt }} &nbsp; 
+             <a href="/users/{{.story.UserID}}">posted by {{.story.UserName}}</a> {{timeago .story.CreatedAt }} &nbsp; 
          </div>
          
          <div class="actions story_actions">
-        {{ if .current_user.Admin }}
-          <a href="/stories/{{.story.Id}}/update" rel="nofollow" class="button grey">edit</a>
-          <a href="/stories/{{.story.Id}}/flag" rel="nofollow" class="button grey flag" method="post">Flag</a>
-        {{ else if and .story.Editable  (.story.OwnedBy .current_user.Id) }}
-          <a href="/stories/{{.story.Id}}/update" rel="nofollow" class="button grey">edit</a>
+        {{ if .currentUser.Admin }}
+          <a href="/stories/{{.story.ID}}/update" rel="nofollow" class="button grey">edit</a>
+          <a href="/stories/{{.story.ID}}/flag" rel="nofollow" class="button grey flag" method="post">Flag</a>
+        {{ else if and .story.Editable  (.story.OwnedBy .currentUser.ID) }}
+          <a href="/stories/{{.story.ID}}/update" rel="nofollow" class="button grey">edit</a>
         {{end }}
         </div>
       
@@ -42,7 +42,7 @@
          {{ end }}
         
          
-         {{ if .current_user.CanComment }}
+         {{ if .currentUser.CanComment }}
           {{ template "comments/views/form_embed.html.got" . }}
          {{ else }}
            <div class="register">

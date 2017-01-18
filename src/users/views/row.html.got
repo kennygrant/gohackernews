@@ -1,6 +1,6 @@
 <li class="user">
-    <a href="/users/{{.user.Id}}">
+    <a href="/users/{{.user.ID}}">
     {{ .user.Name }} ({{ .user.Points}}) created {{timeago .user.CreatedAt}}
     </a>
-    <a href="/users/{{.user.Id}}/update" class="button small grey flag">edit</a>
+    <a href="/users/{{.user.ID}}/update" class="button small grey flag">edit</a>
 </li>

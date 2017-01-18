@@ -2,21 +2,65 @@ package storyactions
 
 import (
 	"fmt"
+	"net/http"
 	"strings"
 	"time"
 
-	"github.com/fragmenta/router"
+	"github.com/fragmenta/auth/can"
+	"github.com/fragmenta/mux"
+	"github.com/fragmenta/server"
+	"github.com/fragmenta/server/config"
 	"github.com/fragmenta/view"
 
+	"github.com/kennygrant/gohackernews/src/lib/session"
 	"github.com/kennygrant/gohackernews/src/lib/stats"
 	"github.com/kennygrant/gohackernews/src/stories"
 )
 
-const listLimit = 100
+const listLimit = 50
 
-// HandleIndex displays a list of stories at /stories
-func HandleIndex(context router.Context) error {
-	stats.RegisterHit(context)
+// storiesModTime returns the mod time of the first story, or current time if no stories
+func storiesModTime(availableStories []*stories.Story) time.Time {
+	if len(availableStories) == 0 {
+		return time.Now()
+	}
+	story := availableStories[0]
+
+	return story.UpdatedAt
+}
+
+// storiesXMLPath returns the xml path for a given request to a stories link
+func storiesXMLPath(w http.ResponseWriter, r *http.Request) string {
+
+	p := strings.Replace(r.URL.Path, ".xml", "", 1)
+	if p == "/" {
+		p = "/index"
+	}
+
+	q := r.URL.RawQuery
+	if len(q) > 0 {
+		q = "?" + q
+	}
+
+	return fmt.Sprintf("%s.xml%s", p, q)
+}
+
+// HandleIndex displays a list of stories.
+func HandleIndex(w http.ResponseWriter, r *http.Request) error {
+
+	// Authorise list story
+	err := can.List(stories.New(), session.CurrentUser(w, r))
+	if err != nil {
+		return server.NotAuthorizedError(err)
+	}
+
+	// Get the params
+	params, err := mux.Params(r)
+	if err != nil {
+		return server.InternalError(err)
+	}
+
+	stats.RegisterHit(r)
 
 	// Build a query
 	q := stories.Query().Limit(listLimit)
@@ -25,7 +69,7 @@ func HandleIndex(context router.Context) error {
 	q.Where("points > -6").Order("created_at desc")
 
 	// Filter if necessary - this assumes name and summary cols
-	filter := context.Param("q")
+	filter := params.Get("q")
 	if len(filter) > 0 {
 
 		// Replace special characters with escaped sequence
@@ -42,66 +86,39 @@ func HandleIndex(context router.Context) error {
 	}
 
 	// Set the offset in pages if we have one
-	page := int(context.ParamInt("page"))
+	page := params.GetInt("page")
 	if page > 0 {
-		q.Offset(listLimit * page)
+		q.Offset(listLimit * int(page))
 	}
 
 	// Fetch the stories
 	results, err := stories.FindAll(q)
 	if err != nil {
-		return router.InternalError(err)
+		return server.InternalError(err)
 	}
 
-	windowTitle := context.Config("meta_title")
+	windowTitle := config.Get("meta_title")
 	switch filter {
 	case "Video:":
 		windowTitle = "Golang Videos"
 	}
 
 	// Render the template
-	view := view.New(context)
+	view := view.NewRenderer(w, r)
 	view.AddKey("page", page)
 	view.AddKey("stories", results)
 	view.AddKey("pubdate", storiesModTime(results))
 	view.AddKey("meta_title", windowTitle)
-	view.AddKey("meta_desc", context.Config("meta_desc"))
-	view.AddKey("meta_keywords", context.Config("meta_keywords"))
-	view.AddKey("meta_rss", storiesXMLPath(context))
+	view.AddKey("meta_desc", config.Get("meta_desc"))
+	view.AddKey("meta_keywords", config.Get("meta_keywords"))
+	view.AddKey("meta_rss", storiesXMLPath(w, r))
+	view.AddKey("currentUser", session.CurrentUser(w, r))
 
-	if context.Param("format") == ".xml" {
+	if strings.HasSuffix(r.URL.Path, ".xml") {
 		view.Layout("")
 		view.Template("stories/views/index.xml.got")
 	}
 
 	return view.Render()
 
-}
-
-// storiesModTime returns the mod time of the first story, or current time if no stories
-func storiesModTime(availableStories []*stories.Story) time.Time {
-	if len(availableStories) == 0 {
-		return time.Now()
-	}
-	story := availableStories[0]
-
-	return story.UpdatedAt
-}
-
-// storiesXMLPath returns the xml path for a given request to a stories link
-func storiesXMLPath(context router.Context) string {
-
-	request := context.Request()
-
-	p := strings.Replace(request.URL.Path, ".xml", "", 1)
-	if p == "/" {
-		p = "/index"
-	}
-
-	q := request.URL.RawQuery
-	if len(q) > 0 {
-		q = "?" + q
-	}
-
-	return fmt.Sprintf("%s.xml%s", p, q)
 }

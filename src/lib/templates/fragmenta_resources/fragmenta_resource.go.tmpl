@@ -1,0 +1,18 @@
+// Package [[ .fragmenta_resources ]] represents the [[ .fragmenta_resource ]] resource
+package [[ .fragmenta_resources ]]
+
+import (
+	"github.com/kennygrant/gohackernews/src/lib/resource"
+	"github.com/kennygrant/gohackernews/src/lib/status"
+)
+
+// [[ .Fragmenta_Resource ]] handles saving and retreiving [[ .fragmenta_resources ]] from the database
+type [[ .Fragmenta_Resource ]] struct {
+	// resource.Base defines behaviour and fields shared between all resources
+	resource.Base
+
+	// status.ResourceStatus defines a status field and associated behaviour
+	status.ResourceStatus
+
+[[ .fragmenta_fields ]]
+}

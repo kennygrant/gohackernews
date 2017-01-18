@@ -91,7 +91,7 @@ return {
                sel.removeAttribute('style');
             } 
             
-
+            e.preventDefault();
             return false;
           });
         });

@@ -1,50 +1,65 @@
 package commentactions
 
 import (
-	"strings"
+	"net/http"
 
-	"github.com/fragmenta/router"
+	"github.com/fragmenta/auth/can"
+	"github.com/fragmenta/mux"
+	"github.com/fragmenta/server"
 	"github.com/fragmenta/view"
 
 	"github.com/kennygrant/gohackernews/src/comments"
+	"github.com/kennygrant/gohackernews/src/lib/session"
 )
 
-// HandleIndex displays a list of comments
-func HandleIndex(context router.Context) error {
+// HandleIndex displays a list of comments.
+func HandleIndex(w http.ResponseWriter, r *http.Request) error {
 
-	// No auth this is public
-
-	// Build a query to fetch latest 100 comments
-	q := comments.Query().Limit(100).Order("created_at desc")
-
-	// Filter on user id - we only show the actual user's comments
-	// so not a nested view as in HN
-	userID := context.ParamInt("u")
-	if userID > 0 {
-		q.Where("user_id=?", userID)
+	// Authorise list comment
+	currentUser := session.CurrentUser(w, r)
+	err := can.List(comments.New(), currentUser)
+	if err != nil {
+		return server.NotAuthorizedError(err)
 	}
 
-	// Filter if necessary - this assumes name and summary cols
-	filter := context.Param("filter")
+	// Get the params
+	params, err := mux.Params(r)
+	if err != nil {
+		return server.InternalError(err)
+	}
+
+	// Build a query
+	q := comments.Query()
+
+	// Order by required order, or default to id asc
+	switch params.Get("order") {
+
+	case "1":
+		q.Order("created desc")
+
+	case "2":
+		q.Order("updated desc")
+
+	default:
+		q.Order("id asc")
+	}
+
+	// Filter if requested
+	filter := params.Get("filter")
 	if len(filter) > 0 {
-		filter = strings.Replace(filter, "&", "", -1)
-		filter = strings.Replace(filter, " ", "", -1)
-		filter = strings.Replace(filter, " ", " & ", -1)
-		q.Where("(to_tsvector(text) @@ to_tsquery(?) )", filter)
+		q.Where("name ILIKE ?", filter)
 	}
 
 	// Fetch the comments
 	results, err := comments.FindAll(q)
 	if err != nil {
-		return router.InternalError(err)
+		return server.InternalError(err)
 	}
 
 	// Render the template
-	view := view.New(context)
+	view := view.NewRenderer(w, r)
 	view.AddKey("filter", filter)
 	view.AddKey("comments", results)
-	view.AddKey("meta_title", "Comments")
-
+	view.AddKey("currentUser", currentUser)
 	return view.Render()
-
 }

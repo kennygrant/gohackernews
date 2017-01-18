@@ -1,10 +1,21 @@
-<form class="add-comment {{if not .comment.Id}}add-comment-root{{end}}" action="/comments/create" method="post">
-    <textarea name="text" placeholder="Add your comment here" ></textarea>
-    <input type="hidden" name="story_id" value="{{.story.Id}}">
-    {{ if .comment.Id }}
-    <input type="hidden" name="parent_id" value="{{.comment.Id}}">
+<form class="add-comment {{if not .comment.ID}}add-comment-root{{end}}" action="/comments/create" method="post">
+  <input name="authenticity_token" type="hidden" value="{{.authenticity_token}}">
+  <input type="hidden" name="story_id" value="{{.story.ID}}">
+  {{ if .comment.ID }}
+    <input type="hidden" name="parent_id" value="{{.comment.ID}}">
+  {{ end }}
+  
+  <div>
+    {{ if .currentUser.CanStyle }}
+    {{ template "lib/editable/views/editable-toolbar-basic.html.got"}}
+    <textarea name="text" class="content-textarea" id="comment-content-textarea"></textarea>
+    <div contenteditable class="content-editable" id="comment-content-editable">{{html ""}}</div>
+    {{ else }}
+      <textarea name="text" placeholder="Add your comment here"></textarea>
     {{ end }}
-    <input type=submit value="Add Comment" class="button right">
-    <a href="/stories/1#comments" class="comment_guidelines_link right" target="_blank">Contributing</a>
-    <input name="authenticity_token" type="hidden" value="{{.authenticity_token}}">
+  </div>
+  
+  <input type=submit value="Add Comment" class="button right clear">
+  <a href="/stories/1#comments" class="comment_guidelines_link right" target="_blank">Contributing</a>
+
 </form>

@@ -1,5 +1,5 @@
 <section class="narrow">
-<form method="post">
+<form method="post" class="resource-update-form">
     <h1>Register to vote and submit</h1>
     <p>Already have a username? You can login <a href="/users/login">here</a>.</p>
     {{ field "Name" "name" .user.Name }}

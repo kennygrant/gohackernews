@@ -11,28 +11,32 @@ package users
 	karma is sacrificed in negative actions - flagging and downvoting
 */
 
-// CanUpvote returns true if this user can upvote
-// TODO: change later - just let all users upvote for now
-func (u *User) CanUpvote() bool {
-	return u.Points > 0
-}
-
-// CanDownvote returns true if this user can downvote
-func (u *User) CanDownvote() bool {
-	return u.Points > 20
-}
-
-// CanFlag returns true if this user can flag
-func (u *User) CanFlag() bool {
-	return u.Points > 10
-}
-
-// CanSubmit returns true if this user can submit
+// CanSubmit returns true if this user can submit.
 func (u *User) CanSubmit() bool {
 	return u.Points > 0
 }
 
-// CanComment returns true if this user can comment
+// CanComment returns true if this user can comment.
 func (u *User) CanComment() bool {
 	return u.Points > 0
+}
+
+// CanUpvote returns true if this user can upvote.
+func (u *User) CanUpvote() bool {
+	return u.Points > 2
+}
+
+// CanDownvote returns true if this user can downvote.
+func (u *User) CanDownvote() bool {
+	return u.Points > 20
+}
+
+// CanStyle returns true if this user can style text in comments/stories.
+func (u *User) CanStyle() bool {
+	return u.Points > 30
+}
+
+// CanFlag returns true if this user can flag.
+func (u *User) CanFlag() bool {
+	return u.Points > 50
 }

@@ -10,12 +10,10 @@
     {{ template "app/views/header.html.got" . }}
     </header>
   
-    <article>
     {{ if .warning }}
         <div class="warning">{{.warning}}</div>
     {{ end }}
     {{ .content }}
-    </article>
 
     <footer>
     {{ template "app/views/footer.html.got" . }}

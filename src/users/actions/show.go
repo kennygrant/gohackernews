@@ -1,67 +1,66 @@
 package useractions
 
 import (
-	"github.com/fragmenta/router"
+	"net/http"
+
+	"github.com/fragmenta/auth/can"
+	"github.com/fragmenta/mux"
+	"github.com/fragmenta/server"
 	"github.com/fragmenta/view"
 
-	"github.com/kennygrant/gohackernews/src/comments"
-	"github.com/kennygrant/gohackernews/src/stories"
+	"github.com/kennygrant/gohackernews/src/lib/session"
 	"github.com/kennygrant/gohackernews/src/users"
 )
 
-// HandleShow serve a get request at /users/1
-func HandleShow(context router.Context) error {
+// HandleShow displays a single user.
+func HandleShow(w http.ResponseWriter, r *http.Request) error {
 
-	// No auth - this is public
+	// Fetch the  params
+	params, err := mux.Params(r)
+	if err != nil {
+		return server.InternalError(err)
+	}
 
 	// Find the user
-	user, err := users.Find(context.ParamInt("id"))
+	user, err := users.Find(params.GetInt(users.KeyName))
 	if err != nil {
-		context.Logf("#error parsing user id: %s", err)
-		return router.NotFoundError(err)
+		return server.NotFoundError(err)
 	}
 
-	// Get the user comments
-	q := comments.Where("user_id=?", user.Id).Limit(10).Order("created_at desc")
-	userComments, err := comments.FindAll(q)
+	// Authorise access
+	err = can.Show(user, session.CurrentUser(w, r))
 	if err != nil {
-		return router.InternalError(err)
+		return server.NotAuthorizedError(err)
 	}
 
-	// Get the user stories
-	q = stories.Where("user_id=?", user.Id).Limit(50).Order("created_at desc")
-	userStories, err := stories.FindAll(q)
-	if err != nil {
-		return router.InternalError(err)
-	}
-
-	// Render the Template
-	view := view.New(context)
+	// Render the template
+	view := view.NewRenderer(w, r)
+	view.CacheKey(user.CacheKey())
 	view.AddKey("user", user)
-	view.AddKey("comments", userComments)
-	view.AddKey("stories", userStories)
-	view.AddKey("meta_title", user.Name)
-	view.AddKey("meta_desc", user.Name)
-
 	return view.Render()
-
 }
 
 // HandleShowName redirects a GET request of /u/username to the user show page
-func HandleShowName(context router.Context) error {
+func HandleShowName(w http.ResponseWriter, r *http.Request) error {
+
+	// Fetch the  params
+	params, err := mux.Params(r)
+	if err != nil {
+		return server.InternalError(err)
+	}
 
 	// Find the user by name
-	q := users.Where("name=?", context.Param("name"))
+	q := users.Where("name=?", params.Get("name"))
 	results, err := users.FindAll(q)
 	if err != nil {
-		return router.NotFoundError(err, "Error finding user")
+		return server.NotFoundError(err, "Error finding user")
 	}
 
 	// If valid query but no results
 	if len(results) == 0 {
-		return router.NotFoundError(err, "User not found")
+		return server.NotFoundError(err, "User not found")
 	}
 
 	// Redirect to user show page
-	return router.Redirect(context, results[0].URLShow())
+	return server.Redirect(w, r, results[0].ShowURL())
 }

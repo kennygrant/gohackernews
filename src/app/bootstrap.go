@@ -23,7 +23,7 @@ import (
 //	"github.com/fragmenta/fragmenta/config"
 
 const (
-	fragmentaVersion            = "1.3.1"
+	fragmentaVersion            = "1.5"
 	permissions                 = 0744
 	createDatabaseMigrationName = "Create-Database"
 	createTablesMigrationName   = "Create-Tables"
@@ -41,7 +41,7 @@ var (
 )
 
 // Bootstrap generates missing config files, sql migrations, and runs the first migrations
-// For this we need to know what to call the app, but we default to fragmenta-app for now
+// For this we need to know what to call the app, but we default to kennygrant/gohackernews for now
 // we could use our current folder name?
 func Bootstrap() error {
 	// We assume we're being run from root of project path

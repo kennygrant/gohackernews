@@ -2,89 +2,101 @@ package useractions
 
 import (
 	"fmt"
+	"net/http"
 
 	"github.com/fragmenta/auth"
-	"github.com/fragmenta/router"
+	"github.com/fragmenta/mux"
+	"github.com/fragmenta/server"
+	"github.com/fragmenta/server/log"
 	"github.com/fragmenta/view"
 
-	"github.com/kennygrant/gohackernews/src/lib/authorise"
+	"github.com/kennygrant/gohackernews/src/lib/session"
 	"github.com/kennygrant/gohackernews/src/users"
 )
 
 // HandleLoginShow shows the page at /users/login
-func HandleLoginShow(context router.Context) error {
-	// Setup context for template
-	view := view.New(context)
+func HandleLoginShow(w http.ResponseWriter, r *http.Request) error {
 
-	// Check we're not already logged in, if so redirect with a message
-	// we could alternatively display an error here?
-	if !authorise.CurrentUser(context).Anon() {
-		return router.Redirect(context, "/?warn=already_logged_in")
+	// Check they're not logged in already.
+	if !session.CurrentUser(w, r).Anon() {
+		return server.Redirect(w, r, "/?warn=already_logged_in")
 	}
 
-	switch context.Param("error") {
+	params, err := mux.Params(r)
+	if err != nil {
+		return server.NotFoundError(err)
+	}
+
+	// Show the login page, with login failure warnings.
+	view := view.NewRenderer(w, r)
+	switch params.Get("error") {
 	case "failed_email":
 		view.AddKey("warning", "Sorry, we couldn't find a user with that email.")
 	case "failed_password":
 		view.AddKey("warning", "Sorry, the password was incorrect, please try again.")
 	}
-
-	// Serve
 	return view.Render()
 }
 
-// HandleLogin handles a post to /users/login
-func HandleLogin(context router.Context) error {
+// HandleLogin responds to POST /users/login
+// by setting a cookie on the request with encrypted user data.
+func HandleLogin(w http.ResponseWriter, r *http.Request) error {
 
-	// Check we're not already logged in, if so redirect
-
-	// Get the user details from the database
-	params, err := context.Params()
-	if err != nil {
-		return router.NotFoundError(err)
-	}
-
-	// Find the user with this email
-	q := users.Where("email=?", params.Get("email"))
-	user, err := users.First(q)
-	if err != nil {
-		q = users.Where("name=?", params.Get("email")) // NB use of email field
-		user, err = users.First(q)
-	}
-
-	if err != nil {
-		context.Logf("#error Login failed for user no such user : %s %s", params.Get("email"), err)
-		return router.Redirect(context, "/users/login?error=failed_email")
-	}
-
-	err = auth.CheckPassword(params.Get("password"), user.EncryptedPassword)
-
-	if err != nil {
-		context.Logf("#error Login failed for user : %s %s", params.Get("email"), err)
-		return router.Redirect(context, "/users/login?error=failed_password")
-	}
-
-	// Save the fact user is logged in to session cookie
-	err = loginUser(context, user)
-	if err != nil {
-		return router.InternalError(err)
-	}
-
-	// Redirect to whatever page the user tried to visit before (if any)
-	// For now send them to root
-	return router.Redirect(context, "/")
-
-}
-
-func loginUser(context router.Context, user *users.User) error {
-	// Now save the user details in a secure cookie, so that we remember the next request
-	session, err := auth.Session(context, context.Request())
+	// Check the authenticity token
+	err := session.CheckAuthenticity(w, r)
 	if err != nil {
 		return err
 	}
 
-	context.Logf("#info Login success for user: %d %s", user.Id, user.Email)
-	session.Set(auth.SessionUserKey, fmt.Sprintf("%d", user.Id))
-	session.Save(context)
-	return nil
+	// Check they're not logged in already if so redirect.
+	if !session.CurrentUser(w, r).Anon() {
+		return server.Redirect(w, r, "/?warn=already_logged_in")
+	}
+
+	// Get the user details from the database
+	params, err := mux.Params(r)
+	if err != nil {
+		return server.NotFoundError(err)
+	}
+
+	// Fetch the first user by EMAIL or username
+	email := params.Get("email")
+
+	// Find the user with this email
+	user, err := users.FindFirst("email=?", email)
+	if err != nil {
+		// If not found try by usernmae instead
+		// NB use of email field we allow username or email in this field
+		user, err = users.FindFirst("name=?", email)
+	}
+
+	if err != nil {
+		log.Info(log.V{"msg": "login failed", "email": email, "status": http.StatusNotFound})
+		return server.Redirect(w, r, "/users/login?error=failed_email")
+	}
+
+	// Check password against the stored password
+	password := params.Get("password")
+	err = auth.CheckPassword(password, user.PasswordHash)
+	if err != nil {
+		log.Info(log.V{"msg": "login failed", "email": email, "user_id": user.ID, "status": http.StatusUnauthorized})
+		return server.Redirect(w, r, "/users/login?error=failed_password")
+	}
+
+	// Now save the user details in a secure cookie,
+	// so that we remember the next request
+	session, err := auth.Session(w, r)
+	if err != nil {
+		log.Info(log.V{"msg": "login failed", "email": email, "user_id": user.ID, "status": http.StatusInternalServerError})
+	}
+
+	// Success, log it and set the cookie with user id
+	session.Set(auth.SessionUserKey, fmt.Sprintf("%d", user.ID))
+	session.Save(w)
+
+	// Log action
+	log.Info(log.V{"msg": "login", "user_email": user.Email, "user_id": user.ID})
+
+	// Redirect - ideally here we'd redirect to their original request path
+	return server.Redirect(w, r, "/")
 }

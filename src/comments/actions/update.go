@@ -1,74 +1,79 @@
 package commentactions
 
 import (
-	"fmt"
+	"net/http"
 
-	"github.com/fragmenta/router"
+	"github.com/fragmenta/auth/can"
+	"github.com/fragmenta/mux"
+	"github.com/fragmenta/server"
 	"github.com/fragmenta/view"
 
 	"github.com/kennygrant/gohackernews/src/comments"
-	"github.com/kennygrant/gohackernews/src/lib/authorise"
+	"github.com/kennygrant/gohackernews/src/lib/session"
 )
 
-// HandleUpdateShow responds to GET /comments/update with the form to update a comment
-func HandleUpdateShow(context router.Context) error {
+// HandleUpdateShow renders the form to update a comment.
+func HandleUpdateShow(w http.ResponseWriter, r *http.Request) error {
+
+	// Fetch the  params
+	params, err := mux.Params(r)
+	if err != nil {
+		return server.InternalError(err)
+	}
 
 	// Find the comment
-	comment, err := comments.Find(context.ParamInt("id"))
+	comment, err := comments.Find(params.GetInt(comments.KeyName))
 	if err != nil {
-		return router.NotFoundError(err)
+		return server.NotFoundError(err)
 	}
 
 	// Authorise update comment
-	err = authorise.Resource(context, comment)
+	err = can.Update(comment, session.CurrentUser(w, r))
 	if err != nil {
-		return router.NotAuthorizedError(err)
+		return server.NotAuthorizedError(err)
 	}
 
 	// Render the template
-	view := view.New(context)
+	view := view.NewRenderer(w, r)
 	view.AddKey("comment", comment)
-
 	return view.Render()
 }
 
-// HandleUpdate responds to POST /comments/update
-func HandleUpdate(context router.Context) error {
+// HandleUpdate handles the POST of the form to update a comment
+func HandleUpdate(w http.ResponseWriter, r *http.Request) error {
+
+	// Fetch the  params
+	params, err := mux.Params(r)
+	if err != nil {
+		return server.InternalError(err)
+	}
 
 	// Find the comment
-	comment, err := comments.Find(context.ParamInt("id"))
+	comment, err := comments.Find(params.GetInt(comments.KeyName))
 	if err != nil {
-		return router.NotFoundError(err)
+		return server.NotFoundError(err)
 	}
 
-	// Authorise update comment, check auth token
-	err = authorise.ResourceAndAuthenticity(context, comment)
+	// Check the authenticity token
+	err = session.CheckAuthenticity(w, r)
 	if err != nil {
-		return router.NotAuthorizedError(err)
+		return err
 	}
 
-	// Update the comment from params
-	params, err := context.Params()
+	// Authorise update comment
+	err = can.Update(comment, session.CurrentUser(w, r))
 	if err != nil {
-		return router.InternalError(err)
+		return server.NotAuthorizedError(err)
 	}
 
-	// Clean params according to role
-	accepted := comments.AllowedParams()
-	if authorise.CurrentUser(context).Admin() {
-		accepted = comments.AllowedParamsAdmin()
-	}
-	cleanedParams := params.Clean(accepted)
+	// Validate the params, removing any we don't accept
+	commentParams := comment.ValidateParams(params.Map(), comments.AllowedParams())
 
-	err = comment.Update(cleanedParams)
+	err = comment.Update(commentParams)
 	if err != nil {
-		return router.InternalError(err)
+		return server.InternalError(err)
 	}
 
-	// Redirect to the story concerned, or the comment if no story
-	if comment.StoryId > 0 {
-		return router.Redirect(context, fmt.Sprintf("/stories/%d", comment.StoryId))
-	}
-
-	return router.Redirect(context, fmt.Sprintf("/comments/%d", comment.Id))
+	// Redirect to comment
+	return server.Redirect(w, r, comment.ShowURL())
 }

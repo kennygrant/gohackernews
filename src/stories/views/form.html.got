@@ -6,10 +6,10 @@
         <input type="submit" class="button" value="Save">
     </div>
   
-    {{ if .current_user.Admin }}
+    {{ if .currentUser.Admin }}
     
     <div class="wide-fields">
-      {{ field "Url" "url" .story.Url }}
+      {{ field "Url" "url" .story.URL }}
       {{ field "Name - add tags with hashtags, e.g. #web, add sections with a prefix e.g. Video:" "name" .story.Name }}
       <div class="field">
         <label>Text</label>
@@ -21,14 +21,14 @@
     
     <div class="inline-fields">
       {{ select "Status" "status" .story.Status .story.StatusOptions }}
-      {{ field "UserId" "user_id" .story.UserId }}
+      {{ field "UserId" "user_id" .story.UserID }}
       {{ field "Points" "points" .story.Points }}
     </div>
     
     {{ else }}
     
     <div class="wide-fields">
-    {{ field "Url" "url" .story.Url }}
+    {{ field "Url" "url" .story.URL }}
     {{ field "Name - add tags with hashtags, e.g. #web, add sections with a prefix e.g. Video:" "name" .story.Name }}
     {{ textarea "Add a short description of the link here for display on the story page" "summary" .story.Summary }}
     </div>

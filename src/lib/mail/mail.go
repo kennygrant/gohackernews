@@ -1,80 +1,67 @@
-// Package mail provides a wrapper around sending mail via the fragile sendgrid API
 package mail
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/fragmenta/view"
-	"github.com/sendgrid/sendgrid-go"
-	"github.com/sendgrid/sendgrid-go/helpers/mail"
 )
 
-// The Mail service secret key/password (must be set before first sending)
-var secret string
+// TODO - add more mail services, at present only sendgrid is supported
+// Usage:
+// email := mail.New(recipient)
+// email.Subject = "blah"
+// email.Body = blah
+// mail.Send(email,context)
 
-// The default sender
-var from string
-
-// Setup sets the user and secret for use in sending mail
-func Setup(s string, f string) {
-	secret = s
-	from = f
+// Sender is the interface for our adapters for mail services.
+type Sender interface {
+	Send(email *Email) error
 }
 
-// Send sends mail (using sendgrid API v3)
-func Send(recipients []string, subject string, template string, context map[string]interface{}) error {
+// Context defines a simple list of string:value pairs for mail templates.
+type Context map[string]interface{}
 
-	// For now  ensure that we don't send to more than 1 recipient while we debug emails
-	if len(recipients) > 1 {
-		return fmt.Errorf("mail.send: #error bad recipients for debug %v", recipients)
+// Production should be set to true in production environment.
+var Production = false
+
+// Service is the mail adapter to send with and should be set on startup.
+var Service Sender
+
+// Send the email using our default adapter and optional context.
+func Send(email *Email, context Context) error {
+	// If we have a template, render the email in that template
+	if email.Body == "" && email.Template != "" {
+		var err error
+		email.Body, err = RenderTemplate(email, context)
+		if err != nil {
+			return err
+		}
 	}
 
-	if recipients[0] != "kennygrant@gmail.com" {
-		return fmt.Errorf("mail.send: #error bad recipients for debug %v", recipients)
+	// If dev just log and return, don't send messages
+	if !Production {
+		fmt.Printf("#debug mail sent:%s\n", email)
+		return nil
 	}
 
-	// Send via sendgrid
-	// Apparently this API will probably break again without warning !
-	// consider vendoring
+	return Service.Send(email)
+}
 
-	// Load the template, and substitute using context
-	// We should possibly set layout from caller too?
+// RenderTemplate renders the email into its template with context.
+func RenderTemplate(email *Email, context Context) (string, error) {
+	if email.Template == "" || context == nil {
+		return "", errors.New("mail: missing template or context")
+	}
+
 	view := view.NewWithPath("", nil)
-	view.Template(template)
+	view.Layout(email.Layout)
+	view.Template(email.Template)
 	view.Context(context)
-
-	html, err := view.RenderToString()
+	body, err := view.RenderToStringWithLayout()
 	if err != nil {
-		return err
+		return "", err
 	}
 
-	// Create a sendgrid message with v3
-	sendgridContent := mail.NewContent("text/html", html)
-	var sendgridRecipients []*mail.Email
-	for _, r := range recipients {
-		sendgridRecipients = append(sendgridRecipients, mail.NewEmail("", r))
-	}
-
-	message := mail.NewV3Mail()
-	message.Subject = subject
-	message.From = mail.NewEmail("", from)
-	p := mail.NewPersonalization()
-	p.AddTos(sendgridRecipients...)
-	message.AddPersonalizations(p)
-	message.AddContent(sendgridContent)
-
-	request := sendgrid.GetRequest(secret, "/v3/mail/send", "https://api.sendgrid.com")
-	request.Method = "POST"
-	request.Body = mail.GetRequestBody(message)
-	_, err = sendgrid.API(request)
-
-	// For debug, print message
-	fmt.Printf("#info sending MAIL to:%s", recipients)
-
-	return err
-}
-
-// SendOne sends email to ONE recipient only
-func SendOne(recipient string, subject string, template string, context map[string]interface{}) error {
-	return Send([]string{recipient}, subject, template, context)
+	return body, nil
 }

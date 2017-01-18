@@ -3,10 +3,9 @@
 
 .toolbar {
   list-style: none;
-  min-height: 4rem;
+  min-height: 3rem;
   padding: 0;
   margin: 0;
-  border:1px solid #ccc;
 }
 
 
@@ -20,20 +19,18 @@
 
 .toolbar li a {
   margin: 0;
-  width: 4rem;
-  height: 4rem;
-  line-height: 4rem;
+  width: 3rem;
+  height: 3rem;
+  line-height: 3rem;
   display: block;
   text-align: center;
-  margin-top: -1px;
   overflow: hidden;
+  position:relative;
   top: 0;
+  margin:-1px -1px 0 0;
   background-color: #fff;
   color:#555;
-  
-  border-top: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
-  border-right:1px solid #eee;
+  border:1px solid #ccc;
 }
 
 
@@ -58,29 +55,18 @@
 
 
 .toolbar .button-blockquote {
-  font-size: 2em;
-  min-width: 4rem;
+  font-size: 1.3em;
   position: relative;
   top: 0.28em;
 }
 
-
-.toolbar .button-ol {
+.toolbar .button-ol,.toolbar .button-ul{
   font-size: 0.6em;
-  line-height: 1.3em;
-  top: 0.8rem;
+  line-height: 1rem;
+  top: 0.5rem;
   position: relative;
   display: block;
-}
-
-
-.toolbar .button-ul {
-  font-size: 0.6em;
-  line-height: 1.3em;
-  top: 0.8rem;
-  position: relative;
-  display: block;
-}
+} 
 
 
 .toolbar .button-code {
@@ -88,29 +74,26 @@
   font-family: monospace;
 }
 
-
-.content-editable {
-  border:1px solid #ccc;
-  padding:1rem;
-  margin:-1px 0rem 2rem 0rem;
-  z-index: 2;
-  position: relative;
+.toolbar .button-html {
+  letter-spacing:0.2em;
 }
 
+.content-editable {
+  clear:both;
+  border:1px solid #ccc;
+  padding:1rem;
+  margin:0rem 0rem 2rem 0rem;
+  z-index: 2;
+  top:-1px;
+}
 
 .content-editable:focus {
   outline: 0;
 }
 
-
-.padded-content-editable {
-  padding: 1rem;
-  background-color: #fff;
-}
-
-
-
 .content-textarea {
+  clear:both;
+  top:-1px;
   width: 100%;
   min-height: 50em;
   background-color: #222;

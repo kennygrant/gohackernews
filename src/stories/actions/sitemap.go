@@ -1,14 +1,16 @@
 package storyactions
 
 import (
-	"github.com/fragmenta/router"
+	"net/http"
+
+	"github.com/fragmenta/server"
 	"github.com/fragmenta/view"
 
 	"github.com/kennygrant/gohackernews/src/stories"
 )
 
 // HandleSiteMap renders a site map of top stories
-func HandleSiteMap(context router.Context) error {
+func HandleSiteMap(w http.ResponseWriter, r *http.Request) error {
 
 	// Build a query
 	q := stories.Query().Limit(5000)
@@ -19,11 +21,11 @@ func HandleSiteMap(context router.Context) error {
 	// Fetch the stories
 	results, err := stories.FindAll(q)
 	if err != nil {
-		return router.InternalError(err)
+		return server.InternalError(err)
 	}
 
 	// Render the template
-	view := view.New(context)
+	view := view.NewRenderer(w, r)
 	view.Layout("")
 	view.Template("stories/views/sitemap.xml.got")
 	view.AddKey("stories", results)

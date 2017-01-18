@@ -1,13 +1,15 @@
 /* CSS Styles for comments */
 
 article.comments {
-  background-color: #f6f6ef;
   min-height: 50em;
+
 }
 
-.comments {
+ul.comments {
   clear: both;
   list-style: none;
+  margin-left:0;
+  padding:0;
 }
 
 .comment {
@@ -23,8 +25,7 @@ article.comments {
 }
 
 .comment_guidelines_link {
-  margin-right:1rem;
-  font-size:1.5rem;
+  margin:0.4rem 1rem 0 0 ;
 }
 
 .story .comment .metadata {
@@ -85,7 +86,7 @@ article.comments {
 }
 
 .comment.level0 {
-  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
   padding-top: 1rem;
 }
 
@@ -110,3 +111,6 @@ article.comments {
 }
 
 
+.comment_actions {
+  clear:both;
+}

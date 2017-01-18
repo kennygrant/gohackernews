@@ -1,10 +1,10 @@
 <section class="user padded">
 
   <div class="actions">
-    {{ if .current_user.Admin }}
-     <a href="/users/{{.user.Id}}/update" class="button grey">edit</a>
+    {{ if .currentUser.Admin }}
+     <a href="/users/{{.user.ID}}/update" class="button grey">edit</a>
     {{end }}
-    {{ if eq .current_user.Id .user.Id }}
+    {{ if .currentUser  }}<!-- // eq .currentUser.ID .user.ID -->
       <a class="button grey" href="/users/logout" method="post">Logout</a>
     {{ end }}
   </div>

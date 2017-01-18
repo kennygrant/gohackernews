@@ -22,5 +22,5 @@
  
      <li><a title="Style as Quotation" href="#" id="formatblock" data-format="blockquote"><span class="button-blockquote">“ ”</span></a></li>
 
-     <li class=""><a title="View HTML source" href="#" id="showCode">&lt;&gt;</a></li>
+     <li class=""><a title="View HTML source" href="#" id="showCode" class="button-html">&lt;&gt;</a></li>
 </ul>

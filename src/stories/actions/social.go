@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/fragmenta/query"
+	"github.com/fragmenta/server/config"
 	"github.com/fragmenta/server/schedule"
 
 	"github.com/kennygrant/gohackernews/src/lib/twitter"
@@ -46,7 +47,7 @@ func TweetTopStory(context schedule.Context) {
 func TweetStory(context schedule.Context, story *stories.Story) {
 
 	// Base url from config
-	baseURL := context.Config("root_url")
+	baseURL := config.Get("root_url")
 
 	// Link to the primary url for this type of story
 	url := story.PrimaryURL()
@@ -60,7 +61,7 @@ func TweetStory(context schedule.Context, story *stories.Story) {
 
 	// If the tweet will be too long for twitter, use GN url
 	if len(tweet) > 140 {
-		tweet = fmt.Sprintf("%s #golang %s", story.Name, baseURL+story.URLShow())
+		tweet = fmt.Sprintf("%s #golang %s", story.Name, baseURL+story.ShowURL())
 	}
 
 	context.Logf("#info sending tweet:%s", tweet)

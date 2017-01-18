@@ -11,7 +11,7 @@
       <title>{{  .Name }}</title>
       <description>{{ if exists .Summary }}{{ .Summary }}{{ end }} {{ .Points }} points posted by {{.UserName}} </description>
       <link>{{  .DestinationURL }}</link>
-      <guid>{{ .Id }}</guid>
+      <guid>{{ .ID }}</guid>
       <pubDate>{{ date .CreatedAt.UTC "Mon, 02 Jan 2006 15:04:00 +0000" }}</pubDate>
     </item>
     {{ end }}

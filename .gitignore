@@ -3,10 +3,9 @@ db/backup/*
 db/migrate/*
 secrets/*
 log/*
-src/app/assets/scripts/analytics.js
-
-
 
 # Ignore new assets in public assets dir (generated files)
 public/assets
 
+# ignore analytics file for GN - might remove GA soon anyway
+src/app/assets/scripts/analytics.js

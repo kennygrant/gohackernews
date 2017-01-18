@@ -4,10 +4,9 @@ import (
 	"crypto/sha1"
 	"encoding/base64"
 	"fmt"
+	"net/http"
 	"strings"
 	"time"
-
-	"github.com/fragmenta/router"
 )
 
 // Put this in a separate package called stats
@@ -21,22 +20,22 @@ var PurgeInterval = time.Minute * 5
 var identifiers = make(map[string]time.Time)
 
 // RegisterHit registers a hit and ups user count if required
-func RegisterHit(context router.Context) {
+func RegisterHit(r *http.Request) {
 
 	// Use UA as well as ip for unique values per browser session
-	ua := context.Request().Header.Get("User-Agent")
+	ua := r.Header.Get("User-Agent")
 	// Ignore obvious bots (Googlebot etc)
 	if strings.Contains(ua, "bot") {
 		return
 	}
 	// Ignore requests for xml (assumed to be feeds or sitemap)
-	if strings.Contains(context.Path(), ".xml") {
+	if strings.HasSuffix(r.URL.Path, ".xml") {
 		return
 	}
 
 	// Extract the IP from the address
-	ip := context.Request().RemoteAddr
-	forward := context.Request().Header.Get("X-Forwarded-For")
+	ip := r.RemoteAddr
+	forward := r.Header.Get("X-Forwarded-For")
 	if len(forward) > 0 {
 		ip = forward
 	}
@@ -53,10 +52,10 @@ func RegisterHit(context router.Context) {
 }
 
 // HandleUserCount serves a get request at /stats/users/count
-func HandleUserCount(context router.Context) error {
+func HandleUserCount(w http.ResponseWriter, r *http.Request) error {
 	// Render json of our count for the javascript to display
 	json := fmt.Sprintf("{\"users\":%d}", len(identifiers))
-	_, err := context.Writer().Write([]byte(json))
+	_, err := w.Write([]byte(json))
 	return err
 }
 

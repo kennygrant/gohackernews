@@ -1,58 +1,71 @@
 package storyactions
 
 import (
-	"fmt"
+	"net/http"
 	"strings"
 
-	"github.com/fragmenta/router"
+	"github.com/fragmenta/auth/can"
+	"github.com/fragmenta/mux"
+	"github.com/fragmenta/server"
+	"github.com/fragmenta/server/log"
 	"github.com/fragmenta/view"
 
-	"github.com/kennygrant/gohackernews/src/lib/authorise"
+	"github.com/kennygrant/gohackernews/src/lib/session"
 	"github.com/kennygrant/gohackernews/src/stories"
 )
 
-// HandleCreateShow serves the create form via GET for stories
-func HandleCreateShow(context router.Context) error {
+// HandleCreateShow serves the create form via GET for stories.
+func HandleCreateShow(w http.ResponseWriter, r *http.Request) error {
+
+	story := stories.New()
 
 	// Authorise
-	err := authorise.Path(context)
+	currentUser := session.CurrentUser(w, r)
+	err := can.Create(story, currentUser)
 	if err != nil {
-		// When not allowed to post stories, redirect to register screen
-		router.Redirect(context, "/users/create")
+		return server.NotAuthorizedError(err)
 	}
 
 	// Render the template
-	view := view.New(context)
-	story := stories.New()
+	view := view.NewRenderer(w, r)
 	view.AddKey("story", story)
-	view.AddKey("meta_title", "Go Hacker News Submit")
-
+	view.AddKey("currentUser", currentUser)
 	return view.Render()
 }
 
 // HandleCreate handles the POST of the create form for stories
-func HandleCreate(context router.Context) error {
+func HandleCreate(w http.ResponseWriter, r *http.Request) error {
 
-	// Check csrf token
-	err := authorise.AuthenticityToken(context)
+	story := stories.New()
+
+	// Check the authenticity token
+	err := session.CheckAuthenticity(w, r)
 	if err != nil {
-		return router.NotAuthorizedError(err)
-	}
-
-	// Check permissions - if not logged in and above 1 points, redirect to error
-	if !authorise.CurrentUser(context).CanSubmit() {
-		return router.NotAuthorizedError(nil, "Sorry", "You need to be registered and have more than 1 points to submit stories.")
-	}
-
-	// Get params
-	params, err := context.Params()
-	if err != nil {
-		return router.InternalError(err)
+		return err
 	}
 
 	// Get user details
-	user := authorise.CurrentUser(context)
-	ip := getUserIP(context)
+	user := session.CurrentUser(w, r)
+	ip := getUserIP(r)
+
+	// Authorise
+	err = can.Create(story, user)
+	if err != nil {
+		return server.NotAuthorizedError(err)
+	}
+
+	// Setup context
+	params, err := mux.Params(r)
+	if err != nil {
+		return server.InternalError(err)
+	}
+
+	// Check permissions - if not logged in and above 1 points, redirect to error
+	if !user.CanSubmit() {
+		return server.NotAuthorizedError(nil, "Sorry", "You need to be registered and have more than 1 points to submit stories.")
+	}
+
+	// TODO refactor this and put it in the model instead as a method
 
 	// Process urls
 	url := params.Get("url")
@@ -68,7 +81,8 @@ func HandleCreate(context router.Context) error {
 	}
 
 	// Strip url fragments (For example trailing # on medium urls)
-	if strings.Contains(url, "#") {
+	// for now only strip on medium urls
+	if strings.Contains(url, "#") && strings.Contains(url, "medium.com") {
 		url = strings.Split(url, "#")[0]
 	}
 
@@ -77,52 +91,55 @@ func HandleCreate(context router.Context) error {
 		url = strings.Replace(url, "https://m.youtube.com", "https://www.youtube.com", 1)
 	}
 
-	params.Set("url", url)
+	params.Set("url", []string{url})
 
 	// Check that no story with this url already exists
 	q := stories.Where("url=?", url)
 	duplicates, err := stories.FindAll(q)
 	if err != nil {
-		return router.InternalError(err)
+		return server.InternalError(err)
 	}
 
 	// If we have a duplicate story, with the same non-null url, upvote or reject
 	if len(duplicates) > 0 && url != "" {
-		story := duplicates[0]
+		story = duplicates[0]
 
 		// Check we have no votes already from this user, if we do fail
 		if storyHasUserVote(story, user) {
-			return router.NotAuthorizedError(err, "Vote Failed", "You have already submitted this story.")
+			return server.NotAuthorizedError(err, "Vote Failed", "You have already submitted this story.")
 		}
 
 		// Add a point to dupe and show the story
 		addStoryVote(story, user, ip, 1)
-		return router.Redirect(context, story.URLShow())
+		return server.Redirect(w, r, story.ShowURL())
 	}
-	// Clean params according to role
-	accepted := stories.AllowedParams()
-	if authorise.CurrentUser(context).Admin() {
-		accepted = stories.AllowedParamsAdmin()
-	}
-	cleanedParams := params.Clean(accepted)
 
 	// Set a few params
-	cleanedParams["points"] = "1"
-	cleanedParams["user_id"] = fmt.Sprintf("%d", user.Id)
-	cleanedParams["user_name"] = user.Name
+	params.SetInt("points", 1)
+	params.SetInt("user_id", user.ID)
+	params.SetString("user_name", user.Name)
 
-	id, err := stories.Create(cleanedParams)
+	// Clean params according to role
+	accepted := stories.AllowedParams()
+	if user.Admin() {
+		accepted = stories.AllowedParamsAdmin()
+	}
+
+	// Validate the params, removing any we don't accept
+	storyParams := story.ValidateParams(params.Map(), accepted)
+
+	ID, err := story.Create(storyParams)
 	if err != nil {
 		return err // Create returns a router.Error
 	}
 
 	// Log creation
-	context.Logf("#info Created story id,%d", id)
+	log.Info(log.V{"msg": "Created story", "story_id": ID})
 
 	// Redirect to the new story
-	story, err := stories.Find(id)
+	story, err = stories.Find(ID)
 	if err != nil {
-		return router.InternalError(err)
+		return server.InternalError(err)
 	}
 
 	// We need to add a vote to the story here too by adding a join to the new id
@@ -137,5 +154,5 @@ func HandleCreate(context router.Context) error {
 		return err
 	}
 
-	return router.Redirect(context, story.URLIndex())
+	return server.Redirect(w, r, story.IndexURL())
 }

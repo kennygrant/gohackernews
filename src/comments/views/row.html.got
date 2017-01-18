@@ -1,0 +1,15 @@
+{{ if not .comment.ID }}
+    <tr class="data-table-head">
+        <td>Id</td>
+        <td>Updated</td>
+        <td>Status</td>
+        <td>Actions</td>
+    </tr>
+{{ else }}
+    <tr {{ if odd .i }}class="odd"{{end}}>
+        <td>{{ .comment.ID }}</td>
+        <td>{{ time .comment.UpdatedAt }}</td>
+        <td>{{ .comment.StatusDisplay }}</td>
+        <td><a href="{{ .comment.UpdateURL }}">Edit Comments</a></td>
+    </tr>
+{{ end }}
