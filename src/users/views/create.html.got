@@ -1,15 +1,23 @@
+{{ if .error }}
+<section class="notice">
+  {{ if eq .error "duplicate_name"}}
+  <p>This username is already taken, please choose another</p>
+  {{ end }}
+  {{ if eq .error "duplicate_email"}}
+  <p>This email is already in use, please send a password reminder.</p>
+  {{ end }}
+</section>
+{{ end }}
 <section class="narrow">
-<form method="post" class="resource-update-form">
+<form method="post" class="resource-update-form" action="/users/create">
     <h1>Register to vote and submit</h1>
     <p>Already have a username? You can login <a href="/users/login">here</a>.</p>
     {{ field "Name" "name" .user.Name }}
     {{ field "Email (optional)" "email" .user.Email }}
     {{ field "Password" "password" "" "password" "type=password" }}
   
-    <div class="field">
+    <div class="field actions">
       <input type="submit" class="button " value="Register">
     </div>
-    
-    <input name="authenticity_token" type="hidden" value="{{.authenticity_token}}">
 </form>
 </section>

@@ -2,7 +2,7 @@
   <ul class="title">
   
     <li class="user_badge" alt="Google Go Links">
-      {{ if not .currentUser.Anon }}
+      {{ if and .currentUser (not .currentUser.Anon) }}
         <a href="/users/{{.currentUser.ID}}">{{.currentUser.Name}} ({{.currentUser.Points}}) {{ if .userCount}} - {{.userCount}} users online{{end}}</a>
       {{ else }}
         <h3 class="hidden">Golang News, Curated links about the Go programming language</h3>
@@ -52,7 +52,6 @@
     <li class="submit"><a class="register" href="/users/create">Sign up</a></li>
     <li class="submit"><a class="register" href="/users/login">Log in</a></li>
     {{ end }}
-    
     
     
   </ul>

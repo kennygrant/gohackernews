@@ -17,13 +17,21 @@ DOM.Ready(function(){
 // Perform AJAX post on click on method=post|delete anchors
 function ActivateMethodLinks() {
   DOM.On('a[method="post"], a[method="delete"]', 'click', function(e) {
+  
     // Confirm action before delete
     if (this.getAttribute('method') == 'delete') {
       if (!confirm('Are you sure you want to delete this item, this action cannot be undone?')) {
+        e.preventDefault();
         return false;
       }
     }
 
+    // Ignore disabled links
+    if (DOM.HasClass(this,'disabled')) {
+        e.preventDefault();
+        return false;
+    }
+    
     // Get authenticity token from head of page
     var token = authenticityToken();    
   

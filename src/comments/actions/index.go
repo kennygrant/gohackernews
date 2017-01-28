@@ -3,7 +3,6 @@ package commentactions
 import (
 	"net/http"
 
-	"github.com/fragmenta/auth/can"
 	"github.com/fragmenta/mux"
 	"github.com/fragmenta/server"
 	"github.com/fragmenta/view"
@@ -14,13 +13,6 @@ import (
 
 // HandleIndex displays a list of comments.
 func HandleIndex(w http.ResponseWriter, r *http.Request) error {
-
-	// Authorise list comment
-	currentUser := session.CurrentUser(w, r)
-	err := can.List(comments.New(), currentUser)
-	if err != nil {
-		return server.NotAuthorizedError(err)
-	}
 
 	// Get the params
 	params, err := mux.Params(r)
@@ -55,6 +47,9 @@ func HandleIndex(w http.ResponseWriter, r *http.Request) error {
 	if err != nil {
 		return server.InternalError(err)
 	}
+
+	// Get current user
+	currentUser := session.CurrentUser(w, r)
 
 	// Render the template
 	view := view.NewRenderer(w, r)

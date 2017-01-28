@@ -1,7 +1,6 @@
 package session
 
 import (
-	"context"
 	"net/http"
 	"strconv"
 
@@ -12,21 +11,9 @@ import (
 	"github.com/kennygrant/gohackernews/src/users"
 )
 
-// currentUserCtxKey is used as a key on context
-// for saving the logged in user for the request.
-var currentUserCtxKey = &ctxKey{}
-
-type ctxKey struct{}
-
 // CurrentUser returns the saved user (or an empty anon user)
 // for the current session cookie
 func CurrentUser(w http.ResponseWriter, r *http.Request) *users.User {
-
-	// Extract the current user (if any) from context
-	u := r.Context().Value(currentUserCtxKey)
-	if u != nil {
-		return u.(*users.User)
-	}
 
 	// Start with an anon user by default (role 0, id 0)
 	user := &users.User{}
@@ -34,13 +21,20 @@ func CurrentUser(w http.ResponseWriter, r *http.Request) *users.User {
 	// Build the session from the secure cookie, or create a new one
 	session, err := auth.Session(w, r)
 	if err != nil {
-		log.Info(log.V{"msg": "session error", "error": err, "status": http.StatusInternalServerError})
+		//log.Info(log.V{"msg": "session error", "error": err, "status": http.StatusInternalServerError})
 		return user
 	}
 
 	// Fetch the current user record if we have one recorded in the session
 	var id int64
 	val := session.Get(auth.SessionUserKey)
+
+	// If we have no value, we have no login
+	if len(val) == 0 {
+		//log.Info(log.V{"msg": "session error", "session": session, "status": http.StatusInternalServerError})
+		return user
+	}
+
 	if len(val) > 0 {
 		id, err = strconv.ParseInt(val, 10, 64)
 		if err != nil {
@@ -56,13 +50,6 @@ func CurrentUser(w http.ResponseWriter, r *http.Request) *users.User {
 			return user
 		}
 	}
-
-	// If we have a user, save it to the context as current user
-	// so that if we are called twice it is not expensive,
-	// and so that views can have this key set automatically
-	ctx := r.Context()
-	ctx = context.WithValue(ctx, currentUserCtxKey, user)
-	r.WithContext(ctx)
 
 	return user
 }
@@ -96,6 +83,8 @@ func CheckAuthenticity(w http.ResponseWriter, r *http.Request) error {
 		clearSession(w, r)
 		return err
 	}
+
+	//	log.Info(log.V{"PARAMS": params})
 
 	// Get the token from params (it is inserted there by js)
 	// we do this to allow just one token in the head of every page

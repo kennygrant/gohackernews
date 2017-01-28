@@ -18,9 +18,9 @@ const (
 	Order = "name asc, id desc"
 )
 
-// AllowedParams returns an array of allowed param keys for Update and Create.
+// AllowedParams returns an array of acceptable params in update
 func AllowedParams() []string {
-	return []string{"status", "email", "name", "password_hash", "points", "role", "summary", "text", "title"}
+	return []string{"name", "summary", "email", "text", "title", "password"}
 }
 
 // NewWithColumns creates a new user instance and fills it with data from the database cols provided.

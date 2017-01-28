@@ -40,7 +40,7 @@ func (u *User) RoleDisplay() string {
 
 // Anon returns true if this user is not a logged in user.
 func (u *User) Anon() bool {
-	return u.Role == Anon || u.ID == 0
+	return u == nil || u.Role == Anon || u.ID == 0
 }
 
 // Admin returns true if this user is an Admin.

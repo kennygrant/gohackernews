@@ -6,7 +6,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/fragmenta/auth/can"
 	"github.com/fragmenta/mux"
 	"github.com/fragmenta/server"
 	"github.com/fragmenta/server/config"
@@ -48,11 +47,7 @@ func storiesXMLPath(w http.ResponseWriter, r *http.Request) string {
 // HandleIndex displays a list of stories.
 func HandleIndex(w http.ResponseWriter, r *http.Request) error {
 
-	// Authorise list story
-	err := can.List(stories.New(), session.CurrentUser(w, r))
-	if err != nil {
-		return server.NotAuthorizedError(err)
-	}
+	// Authorise list story - anyone can view stories
 
 	// Get the params
 	params, err := mux.Params(r)

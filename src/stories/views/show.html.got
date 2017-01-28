@@ -41,13 +41,8 @@
         </div>
          {{ end }}
         
-         
          {{ if .currentUser.CanComment }}
           {{ template "comments/views/form_embed.html.got" . }}
-         {{ else }}
-           <div class="register">
-             <a href="/users/create" class="button">Register</a> To comment or vote on this story
-           </div>
          {{ end }}
      
          <ul class="comments">
@@ -57,4 +52,13 @@
               {{ template "comments/views/comment.html.got" $0 }}
            {{ end }}
          </ul>
+         
+         
+         
+         {{ if not .currentUser.CanComment }}
+           <div class="register">
+             <a href="/users/create" class="button">Register</a> To comment or vote on this story
+           </div>
+         {{ end }}
+     
 </article>

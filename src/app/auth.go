@@ -29,4 +29,7 @@ func SetupAuth() {
 	// Readers may edit their user
 	can.AuthoriseOwner(users.Reader, can.UpdateResource, users.TableName)
 
+	// Anon may create users
+	can.AuthoriseOwner(users.Anon, can.CreateResource, users.TableName)
+
 }

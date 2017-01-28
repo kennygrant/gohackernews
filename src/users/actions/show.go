@@ -27,8 +27,10 @@ func HandleShow(w http.ResponseWriter, r *http.Request) error {
 		return server.NotFoundError(err)
 	}
 
+	currentUser := session.CurrentUser(w, r)
+
 	// Authorise access
-	err = can.Show(user, session.CurrentUser(w, r))
+	err = can.Show(user, currentUser)
 	if err != nil {
 		return server.NotAuthorizedError(err)
 	}
@@ -37,6 +39,7 @@ func HandleShow(w http.ResponseWriter, r *http.Request) error {
 	view := view.NewRenderer(w, r)
 	view.CacheKey(user.CacheKey())
 	view.AddKey("user", user)
+	view.AddKey("currentUser", currentUser)
 	return view.Render()
 }
 

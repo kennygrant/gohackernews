@@ -18,12 +18,13 @@ func Middleware(h http.HandlerFunc) http.HandlerFunc {
 
 		// If a get method, we need to set the token for use in views
 		if shouldSetToken(r) {
+
 			// This sets the token on the encrypted session cookie
 			token, err := auth.AuthenticityToken(w, r)
 			if err != nil {
 				log.Error(log.Values{"msg": "session: problem setting token", "error": err})
 			} else {
-				// Save the token to the request context using the view pkg key
+				// Save the token to the request context for use in views
 				ctx := r.Context()
 				ctx = context.WithValue(ctx, view.AuthenticityContext, token)
 				r = r.WithContext(ctx)

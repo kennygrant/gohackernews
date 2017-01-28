@@ -65,8 +65,7 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) error {
 	// Find the user with this email
 	user, err := users.FindFirst("email=?", email)
 	if err != nil {
-		// If not found try by usernmae instead
-		// NB use of email field we allow username or email in this field
+		// If not found try by user.Name instead
 		user, err = users.FindFirst("name=?", email)
 	}
 
