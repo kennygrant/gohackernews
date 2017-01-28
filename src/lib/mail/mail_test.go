@@ -3,16 +3,17 @@ package mail
 import (
 	"testing"
 
-	"github.com/fragmenta/server/config"
 	"github.com/fragmenta/view"
+
+	"github.com/kennygrant/gohackernews/src/lib/helpers"
 )
 
 // TestMail tests that mail formats properly in dev mode
 func TestMail(t *testing.T) {
 
-	view.Helpers["root_url"] = func() string {
-		return config.Get("root_url")
-	}
+	view.Helpers["markup"] = helpers.Markup
+	view.Helpers["timeago"] = helpers.TimeAgo
+	view.Helpers["root_url"] = helpers.RootURL
 
 	// In order to test, we rely on the view pkg being set up
 	err := view.LoadTemplatesAtPaths([]string{"../.."}, view.Helpers)

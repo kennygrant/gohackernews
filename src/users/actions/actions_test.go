@@ -17,7 +17,7 @@ import (
 )
 
 // names is used to test setting and getting the first string field of the user.
-var names = []string{"foo", "bar"}
+var names = []string{"admin", "bar"}
 
 // testSetup performs setup for integration tests
 // using the test database, real views, and mock authorisation
@@ -78,8 +78,8 @@ func TestShowCreateUsers(t *testing.T) {
 	r := httptest.NewRequest("GET", "/users/create", nil)
 	w := httptest.NewRecorder()
 
-	// Set up user session cookie for admin user above
-	err := resource.AddUserSessionCookie(w, r, 1)
+	// Set up user session cookie for ANON user
+	err := resource.AddUserSessionCookie(w, r, 0)
 	if err != nil {
 		t.Fatalf("useractions: error setting session %s", err)
 	}
@@ -89,7 +89,7 @@ func TestShowCreateUsers(t *testing.T) {
 
 	// Test the error response
 	if err != nil || w.Code != http.StatusOK {
-		t.Fatalf("useractions: error handling HandleCreateShow %s", err)
+		t.Fatalf("useractions: error handling HandleCreateShow %s %d", err, w.Code)
 	}
 
 	// Test the body for a known pattern
@@ -111,8 +111,8 @@ func TestCreateUsers(t *testing.T) {
 	r.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	w := httptest.NewRecorder()
 
-	// Set up user session cookie for admin user
-	err := resource.AddUserSessionCookie(w, r, 1)
+	// Set up user session cookie for ANON user
+	err := resource.AddUserSessionCookie(w, r, 0)
 	if err != nil {
 		t.Fatalf("useractions: error setting session %s", err)
 	}

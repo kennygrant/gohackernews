@@ -14,6 +14,7 @@ func TestSetup(t *testing.T) {
 	if err != nil {
 		t.Fatalf("stories: Setup db failed %s", err)
 	}
+
 }
 
 // Test Create method
@@ -97,8 +98,8 @@ func TestQuery(t *testing.T) {
 	if err != nil || len(results) == 0 {
 		t.Fatalf("stories: no story found :%s", err)
 	}
-	if len(results) > 1 {
-		t.Fatalf("stories: more than one story found for where :%s", err)
+	if len(results) > 2 {
+		t.Fatalf("stories: too many stories:%s", err)
 	}
 
 }

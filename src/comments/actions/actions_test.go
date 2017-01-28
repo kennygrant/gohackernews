@@ -61,17 +61,23 @@ func TestSetup(t *testing.T) {
 	}
 	// Insert a test admin user for checking logins - never delete as will
 	// be required for other resources testing
-	_, err = query.ExecSQL("INSERT INTO users (id,email,name,status,role,password_hash) VALUES(1,'example@example.com','admin',100,100,'$2a$10$2IUzpI/yH0Xc.qs9Z5UUL.3f9bqi0ThvbKs6Q91UOlyCEGY8hdBw6');")
+	_, err = query.ExecSQL("INSERT INTO users (id,email,name,points,status,role,password_hash) VALUES(1,'example@example.com','admin',100,100,100,'$2a$10$2IUzpI/yH0Xc.qs9Z5UUL.3f9bqi0ThvbKs6Q91UOlyCEGY8hdBw6');")
 	if err != nil {
 		t.Fatalf("error setting up:%s", err)
 	}
 	// Insert user to delete
-	_, err = query.ExecSQL("INSERT INTO users (id,email,name,status,role,password_hash) VALUES(2,'example@example.com','test',100,0,'$2a$10$2IUzpI/yH0Xc.qs9Z5UUL.3f9bqi0ThvbKs6Q91UOlyCEGY8hdBw6');")
+	_, err = query.ExecSQL("INSERT INTO users (id,email,name,points,status,role,password_hash) VALUES(2,'example@example.com','test',100,100,0,'$2a$10$2IUzpI/yH0Xc.qs9Z5UUL.3f9bqi0ThvbKs6Q91UOlyCEGY8hdBw6');")
 	if err != nil {
 		t.Fatalf("error setting up:%s", err)
 	}
 
 	query.ExecSQL("ALTER SEQUENCE users_id_seq RESTART WITH 1;")
+
+	// Insert story as a parent
+	_, err = query.ExecSQL("INSERT INTO stories (id,name,points) VALUES(1,'Story',100);")
+	if err != nil {
+		t.Fatalf("error setting up story:%s", err)
+	}
 
 }
 
@@ -109,6 +115,8 @@ func TestCreateComments(t *testing.T) {
 
 	form := url.Values{}
 	form.Add("user_name", names[0])
+	form.Add("user_id", "1")
+	form.Add("story_id", "1")
 	body := strings.NewReader(form.Encode())
 
 	r := httptest.NewRequest("POST", "/comments/create", body)
@@ -138,7 +146,7 @@ func TestCreateComments(t *testing.T) {
 		t.Fatalf("commentactions: error finding created comment %s", err)
 	}
 	newComments := allComments[0]
-	if newComments.ID != 1 || newComments.UserName != names[0] {
+	if newComments.ID != 1 || newComments.UserName != "admin" { // user name of admin user used to create
 		t.Fatalf("commentactions: error with created comment values: %v %s", newComments.ID, newComments.UserName)
 	}
 }

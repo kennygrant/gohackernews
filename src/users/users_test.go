@@ -4,6 +4,8 @@ package users
 import (
 	"testing"
 
+	"github.com/fragmenta/query"
+
 	"github.com/kennygrant/gohackernews/src/lib/resource"
 )
 
@@ -14,6 +16,15 @@ func TestSetup(t *testing.T) {
 	if err != nil {
 		t.Fatalf("users: Setup db failed %s", err)
 	}
+
+	// Delete all users first
+	_, err = query.ExecSQL("delete from users;")
+	if err != nil {
+		t.Fatalf("error setting up:%s", err)
+	}
+
+	query.ExecSQL("ALTER SEQUENCE users_id_seq RESTART WITH 1;")
+
 }
 
 // Test Create method
@@ -32,6 +43,8 @@ func TestCreateUsers(t *testing.T) {
 	if err != nil {
 		t.Fatalf("users: Create user find failed")
 	}
+
+	t.Logf("USER FOUND:\n%d-%s-%s", user.ID, user.Name, testName)
 
 	if user.Name != testName {
 		t.Fatalf("users: Create user name failed expected:%s got:%s", testName, user.Name)

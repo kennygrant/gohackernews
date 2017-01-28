@@ -61,12 +61,12 @@ func TestSetup(t *testing.T) {
 	}
 	// Insert a test admin user for checking logins - never delete as will
 	// be required for other resources testing
-	_, err = query.ExecSQL("INSERT INTO users (id,email,name,status,role,password_hash) VALUES(1,'example@example.com','admin',100,100,'$2a$10$2IUzpI/yH0Xc.qs9Z5UUL.3f9bqi0ThvbKs6Q91UOlyCEGY8hdBw6');")
+	_, err = query.ExecSQL("INSERT INTO users (id,email,name,points,status,role,password_hash) VALUES(1,'example@example.com','admin',10,100,100,'$2a$10$2IUzpI/yH0Xc.qs9Z5UUL.3f9bqi0ThvbKs6Q91UOlyCEGY8hdBw6');")
 	if err != nil {
 		t.Fatalf("error setting up:%s", err)
 	}
 	// Insert user to delete
-	_, err = query.ExecSQL("INSERT INTO users (id,email,name,status,role,password_hash) VALUES(2,'example@example.com','test',100,0,'$2a$10$2IUzpI/yH0Xc.qs9Z5UUL.3f9bqi0ThvbKs6Q91UOlyCEGY8hdBw6');")
+	_, err = query.ExecSQL("INSERT INTO users (id,email,name,points,status,role,password_hash) VALUES(2,'example@example.com','test',10,100,0,'$2a$10$2IUzpI/yH0Xc.qs9Z5UUL.3f9bqi0ThvbKs6Q91UOlyCEGY8hdBw6');")
 	if err != nil {
 		t.Fatalf("error setting up:%s", err)
 	}

@@ -31,8 +31,6 @@ func HandleShow(w http.ResponseWriter, r *http.Request) error {
 		return server.NotFoundError(err)
 	}
 
-	fmt.Printf("HERE:%d:\n", story.Status)
-
 	// Authorise access - for now all stories are visible, later might control on draft/published
 	if story.Status < status.None { // status.Published
 		err = can.Show(story, session.CurrentUser(w, r))

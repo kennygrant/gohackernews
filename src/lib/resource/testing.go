@@ -44,6 +44,13 @@ func SetupAuthorisation() {
 	// Set up admin permissions for testing -
 	// hard coded role to avoid cyclic dependency
 	can.Authorise(100, can.ManageResource, can.Anything)
+
+	// Readers may edit their user
+	can.AuthoriseOwner(10, can.UpdateResource, "users")
+
+	// Anon may create users
+	can.AuthoriseOwner(0, can.CreateResource, "users")
+
 }
 
 // AddUserSessionCookie adds a new cookie for the given user
@@ -62,8 +69,8 @@ func AddUserSessionCookie(w *httptest.ResponseRecorder, r *http.Request, id int)
 	// Now from secret, generate a secure token for this request
 	token := auth.BytesToBase64(auth.AuthenticityTokenWithSecret(auth.Base64ToBytes(secret)))
 
-	// Write value of user id 1
-	session.Set(auth.SessionUserKey, "1")
+	// Write value of user id
+	session.Set(auth.SessionUserKey, fmt.Sprintf("%d", id))
 
 	// Set the cookie on the recorder
 	err = session.Save(w)
