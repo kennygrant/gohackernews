@@ -83,9 +83,8 @@ article .story {
   margin:0 0 1rem 0;
 }
 
-
-.story .summary ul li {
-
+.story a:visited {
+  color: #551A8B;
 }
 
 .story .video-player {
@@ -205,7 +204,6 @@ li.story h3 {
   overflow: hidden;
 }
 
-
 li.story .voting {
   float:left;
   padding-right:0.5rem;
@@ -216,8 +214,6 @@ li.story .vote {
   font-size: 0.9em;
   padding:1rem 0.2rem;
 }
-
-
 
 li.story .metadata {
   font-size: 0.7em;
