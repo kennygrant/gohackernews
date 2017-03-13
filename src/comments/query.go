@@ -15,12 +15,17 @@ const (
 	// KeyName is the primary key value for this resource
 	KeyName = "id"
 	// Order defines the default sort order in sql for this resource
-	Order = "points desc, id desc"
+	Order = "rank desc, points desc, id desc"
 )
 
 // AllowedParams returns an array of allowed param keys for Update and Create.
 func AllowedParams() []string {
 	return []string{"status", "dotted_ids", "parent_id", "points", "rank", "story_id", "story_name", "text", "user_id", "user_name"}
+}
+
+// AllowedParamsReader returns an array of allowed param keys for Update and Create.
+func AllowedParamsReader() []string {
+	return []string{"text"}
 }
 
 // NewWithColumns creates a new comment instance and fills it with data from the database cols provided.

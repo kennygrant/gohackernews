@@ -94,8 +94,8 @@ func HandleCreate(w http.ResponseWriter, r *http.Request) error {
 		return server.InternalError(err)
 	}
 
-	// Log creation
-	log.Info(log.Values{"msg": "Created comment", "comment_id": ID})
+	// Log comment creation
+	log.Info(log.Values{"msg": "Created comment", "comment_id": ID, "params": commentParams})
 
 	// Update the story comment count
 	storyParams := map[string]string{"comment_count": fmt.Sprintf("%d", story.CommentCount+1)}

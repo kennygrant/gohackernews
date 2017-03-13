@@ -17,9 +17,10 @@ DOM.Ready(function(){
 // Perform AJAX post on click on method=post|delete anchors
 function ActivateMethodLinks() {
   DOM.On('a[method="post"], a[method="delete"]', 'click', function(e) {
+    var link = this;
   
     // Confirm action before delete
-    if (this.getAttribute('method') == 'delete') {
+    if (link.getAttribute('method') == 'delete') {
       if (!confirm('Are you sure you want to delete this item, this action cannot be undone?')) {
         e.preventDefault();
         return false;
@@ -27,25 +28,34 @@ function ActivateMethodLinks() {
     }
 
     // Ignore disabled links
-    if (DOM.HasClass(this,'disabled')) {
+    if (DOM.HasClass(link,'disabled')) {
         e.preventDefault();
         return false;
     }
-    
+  
     // Get authenticity token from head of page
     var token = authenticityToken();    
   
     // Perform a post to the specified url (href of link)
-    var url = this.getAttribute('href');
+    var url = link.getAttribute('href');
     var data = "authenticity_token="+token
     
     DOM.Post(url, data, function(request) {
-      // Use the response url to redirect 
-      window.location = request.responseURL
+      if (DOM.HasClass(link,'vote')) {
+        // If a vote, up the points on the page 
+        /*
+        var pointsContainer = DOM.Nearest(link,'points')
+        var points = parseInteger(pointsContainer.getAttribute("data-points"))
+        points.innerText = (points + 1) + " points"
+        */
+      } else {
+        // Use the response url to redirect 
+        window.location = request.responseURL
+      }
+      
     }, function(request){
-      console.log("error with request:",request)
-      // Use the response url to redirect even if not found
-      window.location = request.responseURL
+      // Respond to error 
+      console.log("error",request)
     });
 
     e.preventDefault();
