@@ -26,6 +26,17 @@ func HandleCreateShow(w http.ResponseWriter, r *http.Request) error {
 		return server.NotAuthorizedError(err)
 	}
 
+	// Get the params
+	params, err := mux.Params(r)
+	if err != nil {
+		return server.InternalError(err)
+	}
+
+	// If the bookmarklet or user has set params, use them
+	story.URL = params.Get("u")
+	story.Name = params.Get("n")
+	story.Summary = params.Get("s")
+
 	// Render the template
 	view := view.NewRenderer(w, r)
 	view.AddKey("story", story)
@@ -54,7 +65,7 @@ func HandleCreate(w http.ResponseWriter, r *http.Request) error {
 		return server.NotAuthorizedError(err)
 	}
 
-	// Setup context
+	// Get the params
 	params, err := mux.Params(r)
 	if err != nil {
 		return server.InternalError(err)
