@@ -50,15 +50,27 @@ func HandleCreate(w http.ResponseWriter, r *http.Request) error {
 		return server.NotAuthorizedError(err)
 	}
 
-	// Setup context
+	// Check permissions - if not logged in and above 0 points, redirect
+	if !currentUser.CanComment() {
+		return server.NotAuthorizedError(nil, "Sorry", "You need to be registered and have more than 0 points to comment.")
+	}
+
+	// Get Params
 	params, err := mux.Params(r)
 	if err != nil {
 		return server.InternalError(err)
 	}
 
-	// Check permissions - if not logged in and above 0 points, redirect
-	if !currentUser.CanComment() {
-		return server.NotAuthorizedError(nil, "Sorry", "You need to be registered and have more than 0 points to comment.")
+	text := params.Get("text")
+
+	// Disallow empty comments
+	if len(text) < 5 {
+		return server.NotAuthorizedError(nil, "Comment too short", "Your comment is too short. Please try to post substantive comments which others will find useful.")
+	}
+
+	// Disallow comments which are too long
+	if len(text) > 5000 {
+		return server.NotAuthorizedError(nil, "Comment too long", "Your comment is too long.")
 	}
 
 	// Find parent story - this must exist

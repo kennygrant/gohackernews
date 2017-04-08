@@ -65,21 +65,32 @@ func HandleCreate(w http.ResponseWriter, r *http.Request) error {
 		return server.NotAuthorizedError(err)
 	}
 
+	// Check permissions - if not logged in and above 1 points, redirect to error
+	if !user.CanSubmit() {
+		return server.NotAuthorizedError(nil, "Sorry", "You need to be registered and have more than 1 points to submit stories.")
+	}
+
 	// Get the params
 	params, err := mux.Params(r)
 	if err != nil {
 		return server.InternalError(err)
 	}
 
-	// Check permissions - if not logged in and above 1 points, redirect to error
-	if !user.CanSubmit() {
-		return server.NotAuthorizedError(nil, "Sorry", "You need to be registered and have more than 1 points to submit stories.")
+	url := params.Get("url")
+	name := params.Get("name")
+
+	// Disallow invalid urls, except empty, which is allowed
+	if url != "" && (len(url) < 5 || len(name) < 5 || !strings.HasPrefix(url, "http")) {
+		return server.NotAuthorizedError(nil, "Incomplete Name or URL", "The story submitted contained incomplete or short data.")
 	}
 
-	// TODO refactor this and put it in the model instead as a method
+	if len(name) > 100 {
+		return server.NotAuthorizedError(nil, "Name too long", "The name of your story is too long, the maximum length is 100 characters.")
+	}
 
-	// Process urls
-	url := params.Get("url")
+	if len(url) > 666 {
+		return server.NotAuthorizedError(nil, "URL too long", "The URL of your story is too long, the maximum is 666.")
+	}
 
 	// Strip trailing slashes on url before comparisons
 	if strings.HasSuffix(url, "/") {
