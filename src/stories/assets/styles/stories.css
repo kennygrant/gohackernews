@@ -1,332 +1,322 @@
 /* CSS Styles for stories */
 
 .stories {
-  list-style: none;
-  margin:0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 article .story {
-  padding: 2rem;
+    padding: 2rem;
 }
 
-
 .story form .field {
-  clear: both;
-  display: block;
-  height: 3rem;
-  margin: 0;
+    clear: both;
+    display: block;
+    height: 3rem;
+    margin: 0;
 }
 
 .points {
-  color: #ea8c06;
-  text-align: center;
-  display: inline-block;
-  font-size: 0.7em;
+    color: #ea8c06;
+    text-align: center;
+    display: inline-block;
+    font-size: 0.7em;
 }
 
 .points:hover {
-  color: #ff6600;
+    color: #ff6600;
 }
 
 .story .vote {
-  font-size: 0.65em;
+    font-size: 0.65em;
 }
 
 .story .vote.disabled {
-  opacity:0.3;
-  cursor:default;
+    opacity: 0.3;
+    cursor: default;
 }
 
 .story .metadata {
-  color: #ea8c06;
-  margin:1rem 0;
+    color: #ea8c06;
+    margin: 1rem 0;
 }
 
 .story .register {
-  margin:1rem 0;
-  text-align:center;
+    margin: 1rem 0;
+    text-align: center;
 }
 
 .story .register .button {
-  margin-right:1em;
-  display:block;
+    margin-right: 1em;
+    display: block;
 }
 
 .story .actions {
-  float:none;
-  margin:1rem 0;
-  text-align:center;
+    float: none;
+    margin: 1rem 0;
+    text-align: center;
 }
 
 .story .actions .button {
-  margin-right:1rem;
+    margin-right: 1rem;
 }
 
 .story .name {
-  color: #0ab1e8;
+    color: #0ab1e8;
 }
 
 .story .name:hover {
-  color: #656565;
+    color: #656565;
 }
 
 .story .tags {
-    display:inline;
+    display: inline;
 }
-
 
 .story .summary ul {
-  margin:1rem 0 1rem 0;
+    margin: 1rem 0 1rem 0;
 }
 
-.story .summary h5 + ul {
-  margin:0 0 1rem 0;
+.story .summary h5+ul {
+    margin: 0 0 1rem 0;
 }
 
-
-.story .summary ul li {
-
-}
+.story .summary ul li {}
 
 .story .video-player {
     position: relative;
-  	padding-bottom: 56.25%; /* 16:9 */
-  	padding-top: 25px;
-  	height: 0;
+    padding-bottom: 56.25%;
+    /* 16:9 */
+    padding-top: 25px;
+    height: 0;
 }
 
 .story .video-player iframe {
     position: absolute;
-  	top: 0;
-  	left: 0;
-  	width: 100%;
-  	height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 .tags {
-  list-style:none;
-  padding:0;
-  margin:0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .tags li {
-  padding:0;
-  margin:0;
-  display:inline;
+    padding: 0;
+    margin: 0;
+    display: inline;
 }
 
 .tags li a {
-  background-color:#ccc;
-  padding:0 0.5rem 0.1rem 0.5rem;
-  border-radius:0.4rem;
-  margin:0 0.1rem;
-  color:#fff;
+    background-color: #ccc;
+    padding: 0 0.5rem 0.1rem 0.5rem;
+    border-radius: 0.4rem;
+    margin: 0 0.1rem;
+    color: #fff;
 }
 
 .story .domain {
-  color: #aaa;
+    color: #aaa;
 }
 
 .story .domain:hover {
-  color: #656565;
+    color: #656565;
 }
 
-.story .metadata .date, .story .metadata .user {
-  color: #ea8c06;
+.story .metadata .date,
+.story .metadata .user {
+    color: #ea8c06;
 }
 
-.story .metadata .date:hover, .story .metadata .user:hover {
-  color: #ff6600;
+.story .metadata .date:hover,
+.story .metadata .user:hover {
+    color: #ff6600;
 }
 
 .story .add-comment-root {
-  margin-bottom: 4em;
+    margin-bottom: 4em;
 }
 
 .story.minus1 {
-  opacity: 0.9;
+    opacity: 0.9;
 }
 
 .story.minus2 {
-  opacity: 0.7;
+    opacity: 0.7;
 }
 
 .story.minus3 {
-  opacity: 0.5;
+    opacity: 0.5;
 }
 
 .story.minus4 {
-  opacity: 0.3;
+    opacity: 0.3;
 }
 
 .story.minus5 {
-  opacity: 0.1;
+    opacity: 0.1;
 }
 
 .story.minus6 {
-  opacity: 0.1;
+    opacity: 0.1;
 }
 
 .story h1 .name {
-  display:inline;
-  font-size: 0.8em;
+    display: inline;
+    font-size: 0.8em;
 }
 
 .story .comments {
-  margin-top: 2rem;
+    margin-top: 2rem;
 }
 
 li.more_link {
-  text-align:center;
+    text-align: center;
 }
 
 li.story {
-  line-height: 1.5em;
-  padding: 0.5rem 1rem;
-  margin: 0;
-  border-top: 1px solid #f6f6ef;
-  list-style:none;
-  overflow:hidden;
+    line-height: 1.5em;
+    padding: 0.5rem 1rem;
+    margin: 0;
+    border-top: 1px solid #f6f6ef;
+    list-style: none;
+    overflow: hidden;
 }
 
 li.story:hover {
-  background-color: #eee;
+    background-color: #eee;
 }
 
 li.story .points {
-  min-width: 1em;
+    min-width: 1em;
 }
 
 li.story h3 {
-  font-size: 0.9em;
-  margin: 0;
-  height: 1.3em;
-  line-height: 1.3em;
-  overflow: hidden;
+    font-size: 0.9em;
+    margin: 0;
+    height: 1.3em;
+    line-height: 1.3em;
+    overflow: hidden;
 }
 
-
 li.story .voting {
-  float:left;
-  padding-right:0.5rem;
-  margin-top:0.5rem;
+    float: left;
+    padding-right: 0.5rem;
+    margin-top: 0.5rem;
 }
 
 li.story .vote {
-  font-size: 0.9em;
-  padding:1rem 0.2rem;
+    font-size: 0.9em;
+    padding: 1rem 0.2rem;
 }
 
-
-
 li.story .metadata {
-  font-size: 0.7em;
-  margin: 0;
-  overflow: hidden;
-  height: 1.6em;
-  line-height: 1.6em;
+    font-size: 0.7em;
+    margin: 0;
+    overflow: hidden;
+    height: 1.6em;
+    line-height: 1.6em;
 }
 
 li.story .bubble {
-  position: relative;
-  float: right;
-  line-height: 1.8em;
-  padding: 0 0.5em;
-  min-width: 1em;
-  border-radius: 50%;
-  color: #fff;
-  background-color: #ea8c06;
-  text-align: center;
-  font-size: 0.8em;
-  opacity: 0.5;
-  top: 0.3rem;
-  margin-left: 1rem;
+    position: relative;
+    float: right;
+    line-height: 1.8em;
+    padding: 0 0.5em;
+    min-width: 1em;
+    border-radius: 50%;
+    color: #fff;
+    background-color: #ea8c06;
+    text-align: center;
+    font-size: 0.8em;
+    opacity: 0.5;
+    top: 0.3rem;
+    margin-left: 1rem;
 }
 
 li.story .bubble:hover {
-  opacity: 1.0;
+    opacity: 1.0;
 }
 
 li.story .bubble .bubble-tick {
-  display: block;
-  border-style: solid;
-  position: absolute;
-  border-color: #ea8c06 transparent transparent transparent;
-  border-width: 0.6em 0.7em 0 0.1em;
-  bottom: -0.35em;
-  left: 0.4em;
+    display: block;
+    border-style: solid;
+    position: absolute;
+    border-color: #ea8c06 transparent transparent transparent;
+    border-width: 0.6em 0.7em 0 0.1em;
+    bottom: -0.35em;
+    left: 0.4em;
 }
 
 li.story .button {
-  opacity: 0.2;
-  top: 0rem;
-  padding: 0 0.5rem;
-  margin: 0 0 0 0.5rem;
-  height: 2rem;
-  line-height: 2rem;
+    opacity: 0.2;
+    top: 0rem;
+    padding: 0 0.5rem;
+    margin: 0 0 0 0.5rem;
+    height: 2rem;
+    line-height: 2rem;
 }
 
 li.story .button:hover {
-  opacity: 1.0;
+    opacity: 1.0;
 }
 
 li.story .points {
-  font-size: 0.85em;
+    font-size: 0.85em;
 }
 
 li.story .button {
-  display: none;
+    display: none;
 }
 
 @media (min-width: 770px) {
-  .story h1 .name {
-    display: inline;
-    font-size: 1em;
-  }
-  
-  .story .register {
-    text-align:left;
-  }
-  .story .register .button {
-    display:inline-block;
-  }
-  
-  .story .story_actions {
-    float:right;
-    margin:-4rem 0 0 0;
-  }
-
-  .story .actions .button {
-    margin:0 0 0 1rem;
-  }
-  
-  li.story {
-    height: 1.5em;
-    overflow: hidden;
-  }
-  li.story h3 {
-    display: inline;
-    font-size: 1.1em;
-  }
-  li.story .button {
-    display: block;
-  }
-  li.story .voting {
-    margin-top:0;
-  }
-  
-  li.story .vote {
-    padding:0;
-  }
-  
-  li.story .metadata {
-    display: inline;
-    font-size: 1em;
-  }
-  li.story .button {
-    top: 0.2rem;
-  }
-  li.story .bubble {
-    top: -0.1rem;
-  }
+    .story h1 .name {
+        display: inline;
+        font-size: 1em;
+    }
+    .story .register {
+        text-align: left;
+    }
+    .story .register .button {
+        display: inline-block;
+    }
+    .story .story_actions {
+        float: right;
+        margin: -4rem 0 0 0;
+    }
+    .story .actions .button {
+        margin: 0 0 0 1rem;
+    }
+    li.story {
+        height: 1.5em;
+        overflow: hidden;
+    }
+    li.story h3 {
+        display: inline;
+        font-size: 1.1em;
+    }
+    li.story .button {
+        display: block;
+    }
+    li.story .voting {
+        margin-top: 0;
+    }
+    li.story .vote {
+        padding: 0;
+    }
+    li.story .metadata {
+        display: inline;
+        font-size: 1em;
+    }
+    li.story .button {
+        top: 0.2rem;
+    }
+    li.story .bubble {
+        top: -0.1rem;
+    }
 }
