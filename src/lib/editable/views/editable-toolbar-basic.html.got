@@ -3,7 +3,7 @@
             <li><a title="Style as Bold" href="#" id="Bold"><b>B</b></a></li>
             <li><a title="Style as Italic" href="#" id="Italic"><i>I</i></a></li>
             <li><a title="Insert a link" href="#" id="createLink">∞</a></li>
-            <li class=""><a title="View HTML source" href="#" id="showCode" class="button-html">&lt;&gt;</a></li>
           
+     <li><a title="Style as Quotation" href="#" id="formatblock" data-format="blockquote"><span class="button-blockquote">“ ”</span></a></li>
 </ul>
 <div class="clear"></div>

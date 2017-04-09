@@ -20,8 +20,8 @@
      <li><a title="Range Text Right" href="#" id="justifyRight">→</a></li>
      <li><a title="Center Text" href="#" id="justifyCenter">↔</a></li>
  
-     <li><a title="Style as Quotation" href="#" id="formatblock" data-format="blockquote"><span class="button-blockquote">”</span></a></li>
-    <li><a title="Style as Code" href="#" id="formatblock" data-format="pre"><span class="button-code">code</span></a></li>
+     <li><a title="Style as Quotation" href="#" id="formatblock" data-format="blockquote"><span class="button-blockquote">“ ”</span></a></li>
+     <li><a title="Style as Code" href="#" id="formatblock" data-format="pre"><span class="button-code">code</span></a></li>
 
      <li class=""><a title="View HTML source" href="#" id="showCode" class="button-html">&lt;&gt;</a></li>
 </ul>

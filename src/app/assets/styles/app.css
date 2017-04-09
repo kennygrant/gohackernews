@@ -374,6 +374,12 @@ section.narrow {
     width: 31%;
 }
 
+blockquote {
+    margin-left: 1rem;
+    padding-left: 1rem;
+    border-left: 3px solid #aaa;
+}
+
 @media(min-width:750px) {
     section.actions {
         text-align: right;
