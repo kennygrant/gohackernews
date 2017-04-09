@@ -21,20 +21,7 @@ func HandleIndex(w http.ResponseWriter, r *http.Request) error {
 	}
 
 	// Build a query
-	q := comments.Query()
-
-	// Order by required order, or default to id asc
-	switch params.Get("order") {
-
-	case "1":
-		q.Order("created desc")
-
-	case "2":
-		q.Order("updated desc")
-
-	default:
-		q.Order("id asc")
-	}
+	q := comments.Query().Order("created_at desc").Where("parent_id is null")
 
 	// Filter if requested
 	filter := params.Get("filter")
