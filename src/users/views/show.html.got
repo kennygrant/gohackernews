@@ -22,9 +22,9 @@
 
 {{ $0 := . }}
 
-<section class="row user_activity">
+<section class="container  user_activity">
 
-  <div class="six columns">
+  <div class="column">
   <ul class="stories">
     {{ range .stories }}
        {{ set $0 "story" . }}
@@ -33,7 +33,7 @@
   </ul>
   </div>  
   
-  <div class="six columns">
+  <div class="column">
   <ul class="comments">
     {{ range .comments }}
        {{ set $0 "comment" . }}

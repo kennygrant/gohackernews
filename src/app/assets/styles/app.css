@@ -1,192 +1,202 @@
 html {
-    font-size:13px;
+    font-size: 13px;
 }
 
 body {
-  font: 1.2rem/1.6em "Open Sans", "Helvetica Neue", "Helvetica", Arial, sans-serif;
+    font: 1.2rem/1.6em "Open Sans", "Helvetica Neue", "Helvetica", Arial, sans-serif;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  letter-spacing: normal;
-  color: #666;
-  font-weight: 500;
-  font-style: normal;
-  margin: 0.8rem 0 0.5rem 0;
-  line-height: 1.5em;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    letter-spacing: normal;
+    color: #666;
+    font-weight: 500;
+    font-style: normal;
+    margin: 0.8rem 0 0.5rem 0;
+    line-height: 1.5em;
 }
 
-h1, h2, h3 {
-  font-style: normal;
-  font-size: 2em;
-  margin: 0;
-  font-weight: 300;
-  text-align: left;
-  font-family: "Open Sans", "Helvetica Neue","Helvetica", sans-serif;
-  text-transform: none;
+h1,
+h2,
+h3 {
+    font-style: normal;
+    font-size: 2em;
+    margin: 0;
+    font-weight: 300;
+    text-align: left;
+    font-family: "Open Sans", "Helvetica Neue", "Helvetica", sans-serif;
+    text-transform: none;
 }
 
 h1 {
-  color: #05afe7;
+    color: #05afe7;
 }
 
 h2 {
-  color: #05afe7;
-  font-size: 1.6em;
-  margin:2rem 0 0.5rem 0;
+    color: #05afe7;
+    font-size: 1.6em;
+    margin: 2rem 0 0.5rem 0;
 }
 
 h2 b {
-  color: #888;
+    color: #888;
 }
 
 h3 {
-  font-size: 1.1em;
-  margin:0.45rem 0 0 0;
+    font-size: 1.1em;
+    margin: 0.45rem 0 0 0;
 }
 
 h4 {
-  font-size: 1em;
-  margin:0.4rem 0 0 0;
+    font-size: 1em;
+    margin: 0.4rem 0 0 0;
 }
 
 h5 {
-  font-size: 1em;
-  text-transform:uppercase;
-  margin:0.4rem 0 0 0;
+    font-size: 1em;
+    text-transform: uppercase;
+    margin: 0.4rem 0 0 0;
 }
 
 a {
-  text-decoration: none;
-  color: #ff9804;
+    text-decoration: none;
+    color: #ff9804;
 }
 
 a:hover {
-  color: #ff6600;
+    color: #ff6600;
 }
 
 p {
-  margin-bottom: 1rem;
+    margin-bottom: 1rem;
 }
 
 code {
-  white-space: normal;
-  font-size: 0.8em;
+    white-space: normal;
+    font-size: 0.8em;
 }
 
 .hidden {
-  display: none;
+    display: none;
 }
 
 .clear {
-  clear: both;
+    clear: both;
 }
 
 .left {
-  text-align: left;
+    text-align: left;
 }
 
 .right {
-  text-align: right;
-  float: right;
+    text-align: right;
+    float: right;
 }
 
 .center {
-  text-align: center;
+    text-align: center;
 }
 
-.button, button {
-  color: #fff;
-  background-color: #05afe7;
-  border: none;
-  border-radius:0.25rem;
-  font-size: 1em;
-  font-weight: 300;
-  text-transform: uppercase;
-  line-height: 1.7rem;
-  padding: 0.3rem 0.6rem;
-  display:inline-block;
-  cursor:pointer;
-  letter-spacing:0.1rem;
+.button,
+button {
+    color: #fff;
+    background-color: #05afe7;
+    border: none;
+    border-radius: 0.25rem;
+    font-size: 1em;
+    font-weight: 300;
+    text-transform: uppercase;
+    line-height: 1.7rem;
+    padding: 0.3rem 0.6rem;
+    display: inline-block;
+    cursor: pointer;
+    letter-spacing: 0.1rem;
 }
 
-.button:hover, button:hover {
-  color: #fff;
-  text-shadow: 0 0 0.4rem rgba(0, 0, 0, 0.2)
+.button:hover,
+button:hover {
+    color: #fff;
+    text-shadow: 0 0 0.4rem rgba(0, 0, 0, 0.2)
 }
 
 .button.grey {
-  background-color: #aaa;
+    background-color: #aaa;
 }
 
 .button.orange {
-  background-color: #f49a18;
+    background-color: #f49a18;
 }
 
 .button.small {
-  font-size: 0.9em;
-  margin: 0;
-  position: relative;
-  top: 0.3rem;
-  float: right;
-  height: 2.2rem;
-  line-height: 2.4rem;
-  font-weight: 400;
-  padding: 0 0.6rem;
+    font-size: 0.9em;
+    margin: 0;
+    position: relative;
+    top: 0.3rem;
+    float: right;
+    height: 2.2rem;
+    line-height: 2.4rem;
+    font-weight: 400;
+    padding: 0 0.6rem;
 }
 
 nav .button.small {
-  top: 0.4rem;
-  background-color: #fff;
-  color: #0ab1e8;
-  opacity: 0.8;
-  height: 2.6rem;
-  line-height: 2.6rem;
+    top: 0.4rem;
+    background-color: #fff;
+    color: #0ab1e8;
+    opacity: 0.8;
+    height: 2.6rem;
+    line-height: 2.6rem;
 }
 
 nav .button.small:hover {
-  text-shadow: none;
-  opacity: 1.0;
+    text-shadow: none;
+    opacity: 1.0;
 }
 
 .inline-buttons {
-  text-align: center;
+    text-align: center;
 }
 
 .inline-buttons .button {
-  margin: 1rem 1rem 2rem 1rem;
+    margin: 1rem 1rem 2rem 1rem;
 }
 
 ul.list {
-  list-style: disc;
-  padding: 0 0 0 2rem;
-  color: #444;
+    list-style: disc;
+    padding: 0 0 0 2rem;
+    color: #444;
 }
 
 ul.inline {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: inline;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: inline;
 }
 
 ul.inline li {
-  display: inline-block;
-  white-space: nowrap;
-  padding: 0 2rem;
-  margin: 0 0 0.2rem 0;
+    display: inline-block;
+    white-space: nowrap;
+    padding: 0 2rem;
+    margin: 0 0 0.2rem 0;
 }
 
-header, footer {
-  background-color: #ff6600;
-  background-color: #0ab1e8;
-  border: none;
-  margin:0;
-  padding:0;
-  color: #fff;
+header,
+footer {
+    background-color: #ff6600;
+    background-color: #0ab1e8;
+    border: none;
+    margin: 0;
+    padding: 0;
+    color: #fff;
 }
 
 footer a {
-  color: #fff;
+    color: #fff;
 }
 
 footer a:hover {
@@ -194,213 +204,214 @@ footer a:hover {
 }
 
 footer {
-  clear: both;
-  font-size: 0.9em;
-  text-align: center;
-  padding: 2rem 0 1rem 0;
+    clear: both;
+    font-size: 0.9em;
+    text-align: center;
+    padding: 2rem 0 1rem 0;
 }
 
 footer p {
-  color:#eee;
-  font-size:0.8em;
+    color: #eee;
+    font-size: 0.8em;
 }
 
 footer form {
-  margin:0;
+    margin: 0;
 }
 
 header form {
-  margin:0;
-  padding:0;
+    margin: 0;
+    padding: 0;
 }
 
 header {
-  min-height:3.2rem;
+    min-height: 3.2rem;
 }
 
 header .golang_news {
-  text-transform:uppercase;
+    text-transform: uppercase;
 }
 
 header nav {
-  clear: both;
-  font-weight: 300;
-  padding:0.5rem 0 1rem 0;
+    clear: both;
+    font-weight: 300;
+    padding: 0.5rem 0 1rem 0;
 }
 
 header nav ul {
-  margin:0;
-  padding:0;
-  list-style: none;
-  clear:both;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    clear: both;
 }
 
 header nav ul li {
-  list-style: none;
-  float:left;
-  white-space: nowrap;
-  padding:0 0.5rem 0 1rem;
-  margin: 0;
+    list-style: none;
+    float: left;
+    white-space: nowrap;
+    padding: 0 0.5rem 0 1rem;
+    margin: 0;
 }
 
 header .title .logo {
-  font-size:1.3em;
-  text-shadow:-0.25rem 0.25rem 0 rgba(10,134,174,0.5);
-  font-weight:600;
-  margin:0.2rem 0 0 0;
-  position:relative;
-  z-index:2;
-  text-transform:uppercase;
-  display:block;
+    font-size: 1.3em;
+    text-shadow: -0.25rem 0.25rem 0 rgba(10, 134, 174, 0.5);
+    font-weight: 600;
+    margin: 0.2rem 0 0 0;
+    position: relative;
+    z-index: 2;
+    text-transform: uppercase;
+    display: block;
 }
 
 header .long {
-  display:none;
+    display: none;
 }
 
 header .site_strap {
-  display:none;
+    display: none;
 }
 
 header .title .user_badge {
-  text-align:center;
-  width:100%;
-  position:absolute;
-  top:0.5rem;
-  block-shadow:-0.25rem 0.25rem 0 #037aa1;
-  margin:0 auto;
-  padding:0;
-
+    text-align: center;
+    width: 100%;
+    position: absolute;
+    top: 0.5rem;
+    block-shadow: -0.25rem 0.25rem 0 #037aa1;
+    margin: 0 auto;
+    padding: 0;
 }
 
 header .search {
-  float:right;
-  position:relative;
-  z-index:2;
+    float: right;
+    position: relative;
+    z-index: 2;
 }
-
 
 header .search img {
-  width:22px;
-  height:22px;
-  padding:0.3rem 0.5rem 0 0;
+    width: 22px;
+    height: 22px;
+    padding: 0.3rem 0.5rem 0 0;
 }
 
-
 header .search_form {
-  overflow:hidden;
-  height:3rem;
-  padding:0 1.5rem;
-  margin:0.5rem 0 1rem 0;
-  clear:both;
-  width:93%;
+    overflow: hidden;
+    height: 3rem;
+    padding: 0 1.5rem;
+    margin: 0.5rem 0 1rem 0;
+    clear: both;
+    width: 93%;
 }
 
 header .search_form input {
-  color:#666;
-  font-weight: 400;
-  border-radius:0;
-  font-size:1em;
-  padding:0.5rem 0.7rem;
-  line-height:1.8rem;
-  height:auto;
-  border:1px solid transparent;
-  width:100%;
+    color: #666;
+    font-weight: 400;
+    border-radius: 0;
+    font-size: 1em;
+    padding: 0.5rem 0.7rem;
+    line-height: 1.8rem;
+    height: auto;
+    border: 1px solid transparent;
+    width: 100%;
 }
 
 header .search_form input:focus {
-  opacity:1.0;
+    opacity: 1.0;
 }
 
 header .submit .button {
- top:0rem;
+    top: 0rem;
 }
 
 header a {
-  color: #fff;
+    color: #fff;
 }
 
 header a:hover {
-  color: #fff;
+    color: #fff;
 }
 
 article {
-  clear: both;
-  padding:1rem 5%;
-  min-height: 50rem;
-  max-width: 110em;
-  margin: 0 auto;
+    clear: both;
+    padding: 1rem 5%;
+    min-height: 50rem;
+    max-width: 110em;
+    margin: 0 auto;
 }
 
 article.narrow {
-  max-width: 80em;
-  margin: 0 auto;
+    max-width: 80em;
+    margin: 0 auto;
 }
 
 section {
-  clear: both;
-  display: block;
-  padding: 1rem 2rem;
-  margin: 1rem auto;
+    clear: both;
+    display: block;
+    padding: 1rem 2rem;
+    margin: 1rem auto;
 }
 
 section.padded {
-  padding: 1rem 2rem;
-  max-width: 80em;
+    padding: 1rem 2rem;
+    max-width: 80em;
 }
 
 section.narrow {
-  padding: 0 2rem;
-  max-width: 50em;
+    padding: 0 2rem;
+    max-width: 50em;
+}
+
+.container {
+    display: flex;
+}
+
+.column {
+    min-width: 48%;
+    margin-right: 2%;
+}
+
+.column .third {
+    width: 31%;
 }
 
 @media(min-width:750px) {
-
-  section.actions {
-    text-align: right;
-    margin-top: -4.5rem;
-  }
-  section.actions .button {
-    float: right;
-  }
-
-  header .site_strap {
-    display:block;
-    float:left;
-    padding:0.2rem 0 0 0;
-  }
-  
-  header .site {
-    margin-right:0;
-    padding-right:0;
-    position:relative;
-    z-index:2;
-  }
-  
-  header .search_form {
-    text-align:center;
-    width:97%;
-  }
-  
-  header .short, header .short.logo {
-    display:none;
-  }
-  
-  header .title .long {
-    display:block;
-  }
-
-  header .title .site_strap {
-    opacity:0.8;
-  }
-  
-  header .submit {
-    float:right;
-    margin-right:0.5rem;
-  }
-
-  header nav ul li {
-    padding:0 1rem;
-  }
-
+    section.actions {
+        text-align: right;
+        margin-top: -4.5rem;
+    }
+    section.actions .button {
+        float: right;
+    }
+    header .site_strap {
+        display: block;
+        float: left;
+        padding: 0.2rem 0 0 0;
+    }
+    header .site {
+        margin-right: 0;
+        padding-right: 0;
+        position: relative;
+        z-index: 2;
+    }
+    header .search_form {
+        text-align: center;
+        width: 97%;
+    }
+    header .short,
+    header .short.logo {
+        display: none;
+    }
+    header .title .long {
+        display: block;
+    }
+    header .title .site_strap {
+        opacity: 0.8;
+    }
+    header .submit {
+        float: right;
+        margin-right: 0.5rem;
+    }
+    header nav ul li {
+        padding: 0 1rem;
+    }
 }

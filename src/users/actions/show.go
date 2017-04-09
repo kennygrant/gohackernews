@@ -3,17 +3,20 @@ package useractions
 import (
 	"net/http"
 
-	"github.com/fragmenta/auth/can"
 	"github.com/fragmenta/mux"
 	"github.com/fragmenta/server"
 	"github.com/fragmenta/view"
 
+	"github.com/kennygrant/gohackernews/src/comments"
 	"github.com/kennygrant/gohackernews/src/lib/session"
+	"github.com/kennygrant/gohackernews/src/stories"
 	"github.com/kennygrant/gohackernews/src/users"
 )
 
 // HandleShow displays a single user.
 func HandleShow(w http.ResponseWriter, r *http.Request) error {
+
+	// No authorisation on user show
 
 	// Fetch the  params
 	params, err := mux.Params(r)
@@ -27,18 +30,29 @@ func HandleShow(w http.ResponseWriter, r *http.Request) error {
 		return server.NotFoundError(err)
 	}
 
-	currentUser := session.CurrentUser(w, r)
-
-	// Authorise access
-	err = can.Show(user, currentUser)
+	// Get the user comments
+	q := comments.Where("user_id=?", user.ID).Limit(10).Order("created_at desc")
+	userComments, err := comments.FindAll(q)
 	if err != nil {
-		return server.NotAuthorizedError(err)
+		return server.InternalError(err)
 	}
+
+	// Get the user stories
+	q = stories.Where("user_id=?", user.ID).Limit(50).Order("created_at desc")
+	userStories, err := stories.FindAll(q)
+	if err != nil {
+		return server.InternalError(err)
+	}
+
+	// Find logged in user (if any)
+	currentUser := session.CurrentUser(w, r)
 
 	// Render the template
 	view := view.NewRenderer(w, r)
 	view.CacheKey(user.CacheKey())
 	view.AddKey("user", user)
+	view.AddKey("stories", userStories)
+	view.AddKey("comments", userComments)
 	view.AddKey("currentUser", currentUser)
 	return view.Render()
 }

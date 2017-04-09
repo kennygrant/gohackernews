@@ -1,65 +1,66 @@
 /* CSS Styles for users */
 
 section.user {
-  min-height:10rem;
-  margin-bottom:3rem;
+    min-height: 10rem;
+    margin-bottom: 3rem;
 }
 
 .user .name {
-    padding:1rem;
-  float:left;
-  margin-right:2em;
+    padding: 1rem;
+    float: left;
+    margin-right: 2em;
 }
 
 .user .profile {
-  padding:1rem;
-  float:left;
-  margin-right:2em;
+    padding: 1rem;
+    float: left;
+    margin-right: 2em;
 }
 
 .user .actions {
-  text-align:center;
+    text-align: center;
 }
 
 .user .actions .button {
-  margin-left:1rem;
+    margin-left: 1rem;
 }
 
 .users {
-  margin:0;
-  list-style: none;
-  min-height:50em;
+    margin: 0;
+    list-style: none;
+    min-height: 50em;
 }
 
 li.user {
-  border-bottom:1px solid #ccc;
-  line-height: 1.5em;
-  padding: 0.5rem 1rem;
-  margin: 0;
+    border-bottom: 1px solid #ccc;
+    line-height: 1.5em;
+    padding: 0.5rem 1rem;
+    margin: 0;
 }
 
 li.user:hover {
-  background-color: #eeeee6;
+    background-color: #eeeee6;
 }
 
 li.user h3 {
-  font-size: 0.85em;
-  margin: 0;
-  height: 1.3em;
-  line-height:1.3em;
-  overflow: hidden;
+    font-size: 0.85em;
+    margin: 0;
+    height: 1.3em;
+    line-height: 1.3em;
+    overflow: hidden;
 }
 
-.user_activity {
+.user_activity .comments {
+    margin-top: 0;
 }
 
 .user_activity .comment {
-  border-top:1px solid #f6f6ef;
+    padding-top: 0;
 }
 
 @media(min-width:750px) {
-  .user .actions {
-    float:right;
-    text-align:left;
-  }
+    .user .actions {
+        float: right;
+        text-align: left;
+    }
 }
