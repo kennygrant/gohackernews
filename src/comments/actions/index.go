@@ -21,7 +21,14 @@ func HandleIndex(w http.ResponseWriter, r *http.Request) error {
 	}
 
 	// Build a query
-	q := comments.Query().Order("created_at desc").Where("parent_id is null")
+	q := comments.Query().Order("created_at desc").Limit(100)
+
+	// Filter on user id - we only show the actual user's comments
+	// so not a nested view as in HN
+	userID := params.GetInt("u")
+	if userID > 0 {
+		q.Where("user_id=?", userID)
+	}
 
 	// Filter if requested
 	filter := params.Get("filter")
