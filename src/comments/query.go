@@ -18,13 +18,13 @@ const (
 	Order = "rank desc, points desc, id desc"
 )
 
-// AllowedParams returns an array of allowed param keys for Update and Create.
-func AllowedParams() []string {
+// AllowedParamsAdmin returns an array of allowed param keys for Update and Create.
+func AllowedParamsAdmin() []string {
 	return []string{"status", "dotted_ids", "parent_id", "points", "rank", "story_id", "story_name", "text", "user_id", "user_name"}
 }
 
-// AllowedParamsReader returns an array of allowed param keys for Update and Create.
-func AllowedParamsReader() []string {
+// AllowedParams returns an array of allowed param keys for Update and Create.
+func AllowedParams() []string {
 	return []string{"text"}
 }
 

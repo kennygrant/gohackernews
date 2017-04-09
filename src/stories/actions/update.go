@@ -63,13 +63,18 @@ func HandleUpdate(w http.ResponseWriter, r *http.Request) error {
 	}
 
 	// Authorise update story
-	err = can.Update(story, session.CurrentUser(w, r))
+	currentUser := session.CurrentUser(w, r)
+	err = can.Update(story, currentUser)
 	if err != nil {
 		return server.NotAuthorizedError(err)
 	}
 
-	// Validate the params, removing any we don't accept
-	storyParams := story.ValidateParams(params.Map(), stories.AllowedParams())
+	// Clean params according to role
+	accepted := stories.AllowedParams()
+	if currentUser.Admin() {
+		accepted = stories.AllowedParamsAdmin()
+	}
+	storyParams := story.ValidateParams(params.Map(), accepted)
 
 	err = story.Update(storyParams)
 	if err != nil {

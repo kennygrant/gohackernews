@@ -61,13 +61,18 @@ func HandleUpdate(w http.ResponseWriter, r *http.Request) error {
 	}
 
 	// Authorise update comment
-	err = can.Update(comment, session.CurrentUser(w, r))
+	currentUser := session.CurrentUser(w, r)
+	err = can.Update(comment, currentUser)
 	if err != nil {
 		return server.NotAuthorizedError(err)
 	}
 
-	// Validate the params, removing any we don't accept
-	commentParams := comment.ValidateParams(params.Map(), comments.AllowedParams())
+	// Clean params according to role
+	accepted := comments.AllowedParams()
+	if currentUser.Admin() {
+		accepted = comments.AllowedParamsAdmin()
+	}
+	commentParams := comment.ValidateParams(params.Map(), accepted)
 
 	err = comment.Update(commentParams)
 	if err != nil {

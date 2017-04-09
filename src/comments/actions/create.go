@@ -98,8 +98,12 @@ func HandleCreate(w http.ResponseWriter, r *http.Request) error {
 		params.SetString("dotted_ids", fmt.Sprintf(parent.DottedIDs+"."))
 	}
 
-	// Clean params allowing all through (since we have manually reset them above)
-	commentParams := comment.ValidateParams(params.Map(), comments.AllowedParams())
+	// Clean params according to role
+	accepted := comments.AllowedParams()
+	if currentUser.Admin() {
+		accepted = comments.AllowedParamsAdmin()
+	}
+	commentParams := comment.ValidateParams(params.Map(), accepted)
 
 	ID, err := comment.Create(commentParams)
 	if err != nil {

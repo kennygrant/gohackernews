@@ -10,8 +10,8 @@
     <div class="field">
       <label></label>
       {{ template "lib/editable/views/editable-toolbar-basic.html.got"}}
-      <textarea name="summary" class="content-textarea" id="story-content-textarea">{{.comment.Text}}</textarea>
-      <div contenteditable class="content-editable" id="story-content-editable">{{html .comment.Text}}</div>
+      <textarea name="text" class="content-textarea" id="comment-content-textarea">{{.comment.Text}}</textarea>
+      <div contenteditable class="content-editable" id="comment-content-editable">{{html .comment.Text}}</div>
     </div>
     </div>
     
