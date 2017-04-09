@@ -105,12 +105,17 @@ function ActivateFilterFields() {
 // Show/Hide elements with selector in attribute href - do this with a hidden class name
 function ActivateShowlinks() {
     DOM.On('.show', 'click', function(e) {
-        var selector = this.getAttribute('href');
+        console.log("SHOW HERE")
+        var selector = this.getAttribute('data-show');
+        if (selector == "") {
+            selector = this.getAttribute('href')
+        }
+
         DOM.Each(selector, function(el, i) {
-            if (el.className != 'hidden') {
-                el.className = 'hidden';
+            if (DOM.HasClass(el, 'hidden')) {
+                DOM.RemoveClass(el, 'hidden')
             } else {
-                el.className = el.className.replace(/hidden/gi, '');
+                DOM.AddClass(el, 'hidden')
             }
         });
 
