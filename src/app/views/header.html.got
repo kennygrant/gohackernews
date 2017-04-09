@@ -5,9 +5,9 @@
       {{ if and .currentUser (not .currentUser.Anon) }}
         <a href="/users/{{.currentUser.ID}}">{{.currentUser.Name}} ({{.currentUser.Points}}) {{ if .userCount}} - {{.userCount}} users online{{end}}</a>
       {{ else }}
-        <h3 class="hidden">Golang News, Curated links about the Go programming language</h3>
+        <h3 class="hidden">Golang News, the latest news about the Go programming language</h3>
         <span class="short">Golang News {{ if .userCount}}- {{.userCount}} users online{{end}}</span>
-        <span class="long">Curated links about Go programming {{ if .userCount}} - {{.userCount}} users online{{end}}</span>
+        <span class="long">The latest news about Go programming {{ if .userCount}} - {{.userCount}} users online{{end}}</span>
       {{ end }}
     </li>
         

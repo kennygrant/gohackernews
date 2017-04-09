@@ -57,7 +57,7 @@
          
          {{ if not .currentUser.CanComment }}
            <div class="register">
-             <a href="/users/create" class="button">Register</a> To comment or vote on this story
+             <a href="/users/create" class="button">Register</a> to comment or vote on this story
            </div>
          {{ end }}
      
