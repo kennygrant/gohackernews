@@ -17,18 +17,18 @@ article .story {
     margin: 0;
 }
 
-.points {
+.story h1 .points {
     color: #ea8c06;
     text-align: center;
     display: inline-block;
     font-size: 0.7em;
 }
 
-.points:hover {
+.story h1 .points:hover {
     color: #ff6600;
 }
 
-.story .vote {
+.story h1 .vote {
     font-size: 0.65em;
 }
 
@@ -43,7 +43,7 @@ article .story {
 }
 
 .story .register {
-    clear:both;
+    clear: both;
     margin: 5rem 0;
     text-align: center;
 }

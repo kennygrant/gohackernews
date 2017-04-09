@@ -126,13 +126,12 @@ func HandleCreate(w http.ResponseWriter, r *http.Request) error {
 	if len(duplicates) > 0 && url != "" {
 		story = duplicates[0]
 
-		// Check we have no votes already from this user, if we do fail
-		if storyHasUserVote(story, user) {
-			return server.NotAuthorizedError(err, "Vote Failed", "You have already submitted this story.")
+		// Add a point to dupe if not already voted
+		if !storyHasUserVote(story, user) {
+			addStoryVote(story, user, ip, 1)
 		}
 
-		// Add a point to dupe and show the story
-		addStoryVote(story, user, ip, 1)
+		// Redirect to the story
 		return server.Redirect(w, r, story.ShowURL())
 	}
 

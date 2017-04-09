@@ -44,7 +44,7 @@ func HandleFlag(w http.ResponseWriter, r *http.Request) error {
 		return server.NotAuthorizedError(err, "Flag Failed", "Sorry you are not allowed to flag twice, nice try!")
 	}
 
-	// Authorise flaggin
+	// Authorise flagging
 	if !user.CanFlag() {
 		return server.NotAuthorizedError(err, "Flag Failed", "Sorry, you can't flag yet")
 	}
@@ -92,14 +92,9 @@ func HandleDownvote(w http.ResponseWriter, r *http.Request) error {
 		}
 	}
 
-	// Authorise upvote on story for this user - our rules are:
+	// Authorise downvote on story for this user - our rules are:
 	if !user.CanDownvote() {
 		return server.NotAuthorizedError(err, "Vote Failed", "Sorry, you can't downvote yet")
-	}
-
-	// Allow downvotes
-	if !user.CanDownvote() {
-		return server.NotAuthorizedError(err, "Vote Failed", "Sorry you are not allowed to vote")
 	}
 
 	err = adjustUserPoints(user, -1)
@@ -152,11 +147,6 @@ func HandleUpvote(w http.ResponseWriter, r *http.Request) error {
 	// Authorise upvote on story for this user - our rules are:
 	if !user.CanUpvote() {
 		return server.NotAuthorizedError(err, "Vote Failed", "Sorry, you can't upvote yet")
-	}
-
-	// Allow upvotes
-	if !user.CanUpvote() {
-		return server.NotAuthorizedError(err, "Vote Failed", "Sorry you are not allowed to vote")
 	}
 
 	// Adjust points on story and add to the vote table

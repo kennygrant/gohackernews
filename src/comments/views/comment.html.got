@@ -6,7 +6,7 @@
     {{ end }}
     
     {{ if or .currentUser.Admin $owner }}
-      {{ .comment.Points }} points
+      <span class="points">{{ .comment.Points }}</span> points
     {{ end }}
     
     {{ if not .story }}
