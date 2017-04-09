@@ -1,6 +1,7 @@
 package storyactions
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 
@@ -56,17 +57,17 @@ func HandleCreate(w http.ResponseWriter, r *http.Request) error {
 	}
 
 	// Get user details
-	user := session.CurrentUser(w, r)
+	currentUser := session.CurrentUser(w, r)
 	ip := getUserIP(r)
 
 	// Authorise
-	err = can.Create(story, user)
+	err = can.Create(story, currentUser)
 	if err != nil {
 		return server.NotAuthorizedError(err)
 	}
 
 	// Check permissions - if not logged in and above 1 points, redirect to error
-	if !user.CanSubmit() {
+	if !currentUser.CanSubmit() {
 		return server.NotAuthorizedError(nil, "Sorry", "You need to be registered and have more than 1 points to submit stories.")
 	}
 
@@ -127,27 +128,25 @@ func HandleCreate(w http.ResponseWriter, r *http.Request) error {
 		story = duplicates[0]
 
 		// Add a point to dupe if not already voted
-		if !storyHasUserVote(story, user) {
-			addStoryVote(story, user, ip, 1)
+		if !storyHasUserVote(story, currentUser) {
+			addStoryVote(story, currentUser, ip, 1)
 		}
 
 		// Redirect to the story
 		return server.Redirect(w, r, story.ShowURL())
 	}
 
-	// Set a few params
-	params.SetInt("points", 1)
-	params.SetInt("user_id", user.ID)
-	params.SetString("user_name", user.Name)
-
 	// Clean params according to role
 	accepted := stories.AllowedParams()
-	if user.Admin() {
+	if currentUser.Admin() {
 		accepted = stories.AllowedParamsAdmin()
 	}
-
-	// Validate the params, removing any we don't accept
 	storyParams := story.ValidateParams(params.Map(), accepted)
+
+	// Set a few params to known good values
+	storyParams["points"] = "1"
+	storyParams["user_id"] = fmt.Sprintf("%d", currentUser.ID)
+	storyParams["user_name"] = currentUser.Name
 
 	ID, err := story.Create(storyParams)
 	if err != nil {
@@ -164,7 +163,7 @@ func HandleCreate(w http.ResponseWriter, r *http.Request) error {
 	}
 
 	// We need to add a vote to the story here too by adding a join to the new id
-	err = recordStoryVote(story, user, ip, +1)
+	err = recordStoryVote(story, currentUser, ip, +1)
 	if err != nil {
 		return err
 	}
