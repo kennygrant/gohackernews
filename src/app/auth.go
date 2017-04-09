@@ -5,6 +5,8 @@ import (
 	"github.com/fragmenta/auth/can"
 	"github.com/fragmenta/server/config"
 
+	"github.com/kennygrant/gohackernews/src/comments"
+	"github.com/kennygrant/gohackernews/src/stories"
 	"github.com/kennygrant/gohackernews/src/users"
 )
 
@@ -28,6 +30,14 @@ func SetupAuth() {
 
 	// Readers may edit their user
 	can.AuthoriseOwner(users.Reader, can.UpdateResource, users.TableName)
+
+	// Readers may add comments and edit their own comments
+	can.Authorise(users.Reader, can.CreateResource, comments.TableName)
+	can.AuthoriseOwner(users.Reader, can.UpdateResource, comments.TableName)
+
+	// Readers may add stories and edit their own stories (up to time limit)
+	can.Authorise(users.Reader, can.CreateResource, stories.TableName)
+	can.AuthoriseOwner(users.Reader, can.UpdateResource, stories.TableName)
 
 	// Anon may create users
 	can.AuthoriseOwner(users.Anon, can.CreateResource, users.TableName)
