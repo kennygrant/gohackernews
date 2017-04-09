@@ -42,7 +42,6 @@
     <li><a title="Podcasts and Screencasts about Go" href="/stories?q=Cast:">Casts</a></li>
     <li><a title="Newest articles about the Go programming language" href="/stories">New</a></li>
     <li><a title="A place to show GN your stuff" href="/stories?q=Show:">Show</a></li>
-    <li><a title="Ask golang news" href="/stories?q=Ask:">Ask</a></li>
     <li><a title="Stories you have upvoted in the past" href="/stories/upvoted">Upvoted</a></li>
     
     <li><a href="/comments">Talk</a></li>
