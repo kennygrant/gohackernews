@@ -132,13 +132,13 @@ button:hover {
 }
 
 .button.small {
-    font-size: 0.9em;
+    font-size: 0.95em;
     margin: 0;
     position: relative;
-    top: 0.3rem;
+    top: 0.2rem;
     float: right;
     height: 2.2rem;
-    line-height: 2.4rem;
+    line-height: 2.25rem;
     font-weight: 400;
     padding: 0 0.6rem;
 }
