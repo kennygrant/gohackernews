@@ -20,7 +20,7 @@ const (
 
 // AllowedParams returns an array of acceptable params in update
 func AllowedParams() []string {
-	return []string{"name", "summary", "email", "text", "title", "password"}
+	return []string{"name", "summary", "email", "text", "title", "password_hash"}
 }
 
 // NewWithColumns creates a new user instance and fills it with data from the database cols provided.

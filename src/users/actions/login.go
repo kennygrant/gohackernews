@@ -75,10 +75,9 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) error {
 	}
 
 	// Check password against the stored password
-	password := params.Get("password")
-	err = auth.CheckPassword(password, user.PasswordHash)
+	err = auth.CheckPassword(params.Get("password"), user.PasswordHash)
 	if err != nil {
-		log.Info(log.V{"msg": "login failed", "email": email, "user_id": user.ID, "status": http.StatusUnauthorized})
+		log.Info(log.V{"msg": "login failed", "error": err, "email": email, "user_id": user.ID, "status": http.StatusUnauthorized})
 		return server.Redirect(w, r, "/users/login?error=failed_password")
 	}
 
