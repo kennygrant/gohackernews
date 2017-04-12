@@ -79,13 +79,14 @@ func HandleCreate(w http.ResponseWriter, r *http.Request) error {
 		return server.NotFoundError(err)
 	}
 
-	params.SetInt("story_id", story.ID)
-	params.SetString("story_name", story.Name)
-	params.SetInt("user_id", currentUser.ID)
-	params.SetString("user_name", currentUser.Name)
-	params.SetInt("points", 1)
+	// Clean params according to role
+	accepted := comments.AllowedParams()
+	if currentUser.Admin() {
+		accepted = comments.AllowedParamsAdmin()
+	}
+	commentParams := comment.ValidateParams(params.Map(), accepted)
 
-	// Find the parent and set dotted id
+	// Find the parent to set dotted id
 	// these are of the form xx.xx. with a trailing dot
 	// this saves us from saving twice on create
 	parentID := params.GetInt("parent_id")
@@ -95,15 +96,15 @@ func HandleCreate(w http.ResponseWriter, r *http.Request) error {
 		if e != nil {
 			return server.NotFoundError(err)
 		}
-		params.SetString("dotted_ids", fmt.Sprintf(parent.DottedIDs+"."))
+		commentParams["dotted_ids"] = fmt.Sprintf(parent.DottedIDs + ".")
 	}
 
-	// Clean params according to role
-	accepted := comments.AllowedParams()
-	if currentUser.Admin() {
-		accepted = comments.AllowedParamsAdmin()
-	}
-	commentParams := comment.ValidateParams(params.Map(), accepted)
+	// Set other params from story/user details
+	commentParams["story_id"] = fmt.Sprintf("%d", story.ID)
+	commentParams["story_name"] = story.Name
+	commentParams["user_id"] = fmt.Sprintf("%d", currentUser.ID)
+	commentParams["user_name"] = currentUser.Name
+	commentParams["points"] = "1"
 
 	ID, err := comment.Create(commentParams)
 	if err != nil {
