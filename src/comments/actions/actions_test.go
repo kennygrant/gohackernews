@@ -66,7 +66,7 @@ func TestSetup(t *testing.T) {
 		t.Fatalf("error setting up:%s", err)
 	}
 	// Insert user to delete
-	_, err = query.ExecSQL("INSERT INTO users (id,email,name,points,status,role,password_hash) VALUES(2,'example@example.com','test',100,100,0,'$2a$10$2IUzpI/yH0Xc.qs9Z5UUL.3f9bqi0ThvbKs6Q91UOlyCEGY8hdBw6');")
+	_, err = query.ExecSQL("INSERT INTO users (id,email,name,points,status,role,password_hash) VALUES(2,'example2@example.com','test',100,100,0,'$2a$10$2IUzpI/yH0Xc.qs9Z5UUL.3f9bqi0ThvbKs6Q91UOlyCEGY8hdBw6');")
 	if err != nil {
 		t.Fatalf("error setting up:%s", err)
 	}
@@ -117,6 +117,7 @@ func TestCreateComments(t *testing.T) {
 	form.Add("user_name", names[0])
 	form.Add("user_id", "1")
 	form.Add("story_id", "1")
+	form.Add("text", "foo bar comment")
 	body := strings.NewReader(form.Encode())
 
 	r := httptest.NewRequest("POST", "/comments/create", body)
