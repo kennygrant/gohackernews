@@ -24,16 +24,33 @@ func main() {
 	}
 
 	// Setup our server
-	s, err := SetupServer()
+	server, err := SetupServer()
 	if err != nil {
 		fmt.Printf("server: error setting up %s\n", err)
 		return
 	}
 
-	// Start the server
-	err = s.Start()
-	if err != nil {
-		s.Fatalf("server: error starting %s\n", err)
+	// Inform user of server setup
+	server.Logf("#info Starting server in %s mode on port %d", server.Mode(), server.Port())
+
+	// In production, server
+	if server.Production() {
+
+		// Redirect all :80 traffic to our canonical url on :443
+		server.StartRedirectAll(80, server.Config("root_url"))
+
+		// If in production, serve over tls with autocerts from let's encrypt
+		err = server.StartTLSAutocert(server.Config("autocert_email"), server.Config("autocert_domains"))
+		if err != nil {
+			server.Fatalf("Error starting server %s", err)
+		}
+
+	} else {
+		// In development just serve with http on local port
+		err = server.Start()
+		if err != nil {
+			server.Fatalf("Error starting server %s", err)
+		}
 	}
 
 }
