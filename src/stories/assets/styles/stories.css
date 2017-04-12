@@ -64,11 +64,7 @@ article .story {
 }
 
 .story .name {
-    color: #0ab1e8;
-}
-
-.story .name:hover {
-    color: #656565;
+    color: #000;
 }
 
 .story .tags {
@@ -301,9 +297,6 @@ li.story .button {
         display: inline;
         font-size: 1.1em;
     }
-    li.story .button {
-        display: block;
-    }
     li.story .voting {
         margin-top: 0;
     }
@@ -315,7 +308,8 @@ li.story .button {
         font-size: 1em;
     }
     li.story .button {
-        top: 0.2rem;
+        display: block;
+        top: -0.1rem;
     }
     li.story .bubble {
         top: -0.1rem;
