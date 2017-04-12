@@ -28,13 +28,15 @@ func HandleUpdateShow(w http.ResponseWriter, r *http.Request) error {
 	}
 
 	// Authorise update comment
-	err = can.Update(comment, session.CurrentUser(w, r))
+	currentUser := session.CurrentUser(w, r)
+	err = can.Update(comment, currentUser)
 	if err != nil {
 		return server.NotAuthorizedError(err)
 	}
 
 	// Render the template
 	view := view.NewRenderer(w, r)
+	view.AddKey("currentUser", currentUser)
 	view.AddKey("comment", comment)
 	return view.Render()
 }

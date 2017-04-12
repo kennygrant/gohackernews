@@ -6,8 +6,13 @@
   {{ end }}
   
   <div>
-    {{ if .currentUser.CanStyle }}
+
+   {{if .currentUser.CanStyle }}
+    {{ if .currentUser.Admin }}
+    {{ template "lib/editable/views/editable-toolbar-full.html.got"}}
+    {{ else }}
     {{ template "lib/editable/views/editable-toolbar-basic.html.got"}}
+    {{ end }}
     <textarea name="text" class="content-textarea" id="comment-content-textarea"></textarea>
     <div contenteditable class="content-editable" id="comment-content-editable">{{html ""}}</div>
     {{ else }}

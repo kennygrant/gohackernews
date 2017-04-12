@@ -1,116 +1,129 @@
 /* CSS Styles for comments */
 
 article.comments {
-  min-height: 50em;
-
+    min-height: 50em;
 }
 
 ul.comments {
-  clear: both;
-  list-style: none;
-  margin-left:0;
-  padding:0;
+    clear: both;
+    list-style: none;
+    margin-left: 0;
+    padding: 0;
 }
 
 .comment {
-  list-style: none;
-  max-width: 100%;
-  overflow: hidden;
-  margin-bottom: 2rem;
-  padding: 1rem;
+    list-style: none;
+    max-width: 100%;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    padding: 1rem;
 }
 
 .comment .button {
-  margin-left: 1rem;
+    margin-left: 1rem;
 }
 
 .comment_guidelines_link {
-  margin:0.4rem 1rem 0 0 ;
+    margin: 0.4rem 1rem 0 0;
 }
 
 .story .comment .metadata {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .comment .metadata .vote {
-  font-size: 0.8em;
+    font-size: 0.8em;
 }
 
 .comment .reply-form {
-  clear:both;
-  margin-top:4rem;
+    clear: both;
+    margin-top: 4rem;
 }
 
 .comment .button {
-  opacity: 0.6;
+    opacity: 0.6;
 }
 
 .comment .button:hover {
-  opacity: 1.0;
+    opacity: 1.0;
 }
 
 .comment p {
-  line-height: 1.6em;
-  margin: 0 0 0.3em 0;
+    line-height: 1.6em;
+    margin: 0 0 0.3em 0;
 }
 
+.content-editable blockquote,
 .comment blockquote {
-  color: #888;
-  border-left: 3px solid #888;
-  padding: 0 0 0 1em;
-  margin: 0.5em 0.1em;
+    color: #888;
+    border-left: 3px solid #888;
+    padding: 0 0 0 1em;
+    margin: 0.5em 0.1em;
+}
+
+.ccontent-editable pre,
+.comment pre {
+    margin: 0 1rem;
+    padding: 1rem;
+    border-radius: 0.2rem;
+    background-color: #efefef;
 }
 
 .comment.minus1 {
-  opacity: 0.9;
+    opacity: 0.9;
 }
 
 .comment.minus2 {
-  opacity: 0.7;
+    opacity: 0.7;
 }
 
 .comment.minus3 {
-  opacity: 0.5;
+    opacity: 0.5;
 }
 
 .comment.minus4 {
-  opacity: 0.3;
+    opacity: 0.3;
 }
 
 .comment.minus5 {
-  opacity: 0.1;
+    opacity: 0.1;
 }
 
 .comment.minus6 {
-  display:none; /* should have showdead for admins I suppose */
+    display: none;
+    /* should have showdead for admins I suppose */
 }
 
 .comment.level0 {
-  border-bottom: 1px solid #ccc;
-  padding-top: 1rem;
+    border-bottom: 1px solid #ccc;
+    padding-top: 1rem;
 }
 
 .comment.level1 {
-  padding-left: 4%;
+    padding-left: 4%;
 }
 
 .comment.level2 {
-  padding-left: 8%;
+    padding-left: 8%;
 }
 
 .comment.level3 {
-  padding-left: 12%;
+    padding-left: 12%;
 }
 
 .comment.level4 {
-  padding-left: 16%;
+    padding-left: 16%;
 }
 
-.comment.level5,.comment.level6, .comment.level7,.comment.level8,.comment.level9,.comment.level10 {
-  padding-left: 20%;
+.comment.level5,
+.comment.level6,
+.comment.level7,
+.comment.level8,
+.comment.level9,
+.comment.level10 {
+    padding-left: 20%;
 }
-
 
 .comment_actions {
-  clear:both;
+    clear: both;
 }

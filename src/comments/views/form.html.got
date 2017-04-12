@@ -9,7 +9,11 @@
     <div class="wide-fields">
     <div class="field">
       <label></label>
-      {{ template "lib/editable/views/editable-toolbar-basic.html.got"}}
+       {{ if .currentUser.Admin }}
+         {{ template "lib/editable/views/editable-toolbar-full.html.got"}}
+       {{ else }}
+         {{ template "lib/editable/views/editable-toolbar-basic.html.got"}}
+       {{ end }}
       <textarea name="text" class="content-textarea" id="comment-content-textarea">{{.comment.Text}}</textarea>
       <div contenteditable class="content-editable" id="comment-content-editable">{{html .comment.Text}}</div>
     </div>
