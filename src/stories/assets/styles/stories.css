@@ -67,6 +67,10 @@ article .story {
     color: #000;
 }
 
+.story .name:visited {
+    color: #999;
+}
+
 .story .tags {
     display: inline;
 }
