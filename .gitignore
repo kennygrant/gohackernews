@@ -3,8 +3,7 @@ db/backup/*
 db/migrate/*
 secrets/*
 log/*
-
-# Ignore new assets in public assets dir (generated files)
+vendor
 public/assets
 
 # ignore analytics file for GN - might remove GA soon anyway
