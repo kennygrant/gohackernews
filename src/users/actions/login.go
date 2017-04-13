@@ -65,7 +65,7 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) error {
 	// Find the user with this email
 	user, err := users.FindFirst("email=?", email)
 	if err != nil {
-		// If not found try by user.Name instead
+		// If not found try by user.Name instead, error checked below
 		user, err = users.FindFirst("name=?", email)
 	}
 
@@ -93,7 +93,7 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) error {
 	session.Save(w)
 
 	// Log action
-	log.Info(log.V{"msg": "login", "user_email": user.Email, "user_id": user.ID})
+	log.Info(log.V{"msg": "login", "user_email": user.Email, "user_name": user.Name, "user_id": user.ID})
 
 	// Redirect - ideally here we'd redirect to their original request path
 	return server.Redirect(w, r, "/")

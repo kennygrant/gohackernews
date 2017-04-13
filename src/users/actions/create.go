@@ -72,7 +72,22 @@ func HandleCreate(w http.ResponseWriter, r *http.Request) error {
 	}
 
 	// Check a user doesn't exist with this name or email already
-	duplicates, err := users.FindAll(users.Where("name=?", params.Get("name")))
+	name := params.Get("name")
+	email := params.Get("email")
+	pass := params.Get("password")
+
+	// Name must be at least 2 characters
+	if len(name) < 2 {
+		return server.InternalError(err, "Name too short", "Sorry, names must be at least 2 characters long")
+	}
+
+	// Password must be at least 6 characters
+	if len(pass) < 6 {
+		return server.InternalError(err, "Password too short", "Sorry, passwords must be at least 6 characters long")
+	}
+
+	// Name is not optional so always check duplicates
+	duplicates, err := users.FindAll(users.Where("name=?", name))
 	if err != nil {
 		return server.InternalError(err)
 	}
@@ -80,21 +95,19 @@ func HandleCreate(w http.ResponseWriter, r *http.Request) error {
 		return server.Redirect(w, r, "/users/create?error=duplicate_name")
 	}
 
-	duplicates, err = users.FindAll(users.Where("email=?", params.Get("email")))
-	if err != nil {
-		return server.InternalError(err)
+	// Email is optional, so allow blank email and don't check duplicates if so
+	if email != "" {
+		duplicates, err = users.FindAll(users.Where("email=?", email))
+		if err != nil {
+			return server.InternalError(err)
+		}
+		if len(duplicates) > 0 {
+			return server.Redirect(w, r, "/users/create?error=duplicate_email")
+		}
 	}
-	if len(duplicates) > 0 {
-		return server.Redirect(w, r, "/users/create?error=duplicate_email")
-	}
-
-	// Set some defaults for the new user
-	params.SetInt("status", status.Published)
-	params.SetInt("role", users.Reader)
-	params.SetInt("points", 1)
 
 	// Set the password hash from the password
-	hash, err := auth.HashPassword(params.Get("password"))
+	hash, err := auth.HashPassword(pass)
 	if err != nil {
 		return server.InternalError(err)
 	}
@@ -102,6 +115,11 @@ func HandleCreate(w http.ResponseWriter, r *http.Request) error {
 
 	// Validate the params, removing any we don't accept
 	userParams := user.ValidateParams(params.Map(), users.AllowedParams())
+
+	// Set some defaults for the new user
+	userParams["status"] = fmt.Sprintf("%d", status.Published)
+	userParams["role"] = fmt.Sprintf("%d", users.Reader)
+	userParams["points"] = "1"
 
 	id, err := user.Create(userParams)
 	if err != nil {
@@ -125,7 +143,7 @@ func HandleCreate(w http.ResponseWriter, r *http.Request) error {
 	session.Save(w)
 
 	// Log action
-	log.Info(log.V{"msg": "login", "user_email": user.Email, "user_id": user.ID})
+	log.Info(log.V{"msg": "login success", "user_email": user.Email, "user_id": user.ID})
 
 	return server.Redirect(w, r, "/")
 }
