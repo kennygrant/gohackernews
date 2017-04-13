@@ -45,11 +45,13 @@
     <li><a title="Stories you have upvoted in the past" href="/stories/upvoted">Upvoted</a></li>
     
     <li><a href="/comments">Talk</a></li>
-    {{ if not .currentUser.Anon }}
-    <li class="submit"><a href="/stories/create" title="Submit links about the Go programming language">Submit</a></li>
-    {{ else }}
-    <li class="submit"><a class="register" href="/users/create">Sign up</a></li>
-    <li class="submit"><a class="register" href="/users/login">Log in</a></li>
+
+   
+    {{ if .currentUser.Anon }}
+     <li class="submit"><a class="register" href="/users/create">Sign up</a></li>
+     <li class="submit"><a class="register" href="/users/login">Log in</a></li>
+    {{ else if not .hideSubmit }}
+     <li class="submit"><a href="/stories/create" title="Submit links about the Go programming language">Submit</a></li>
     {{ end }}
     
     

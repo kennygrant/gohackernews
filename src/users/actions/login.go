@@ -35,6 +35,7 @@ func HandleLoginShow(w http.ResponseWriter, r *http.Request) error {
 	case "failed_password":
 		view.AddKey("warning", "Sorry, the password was incorrect, please try again.")
 	}
+	view.AddKey("hideSubmit", true)
 	return view.Render()
 }
 

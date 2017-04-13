@@ -41,6 +41,7 @@ func HandleCreateShow(w http.ResponseWriter, r *http.Request) error {
 	// Render the template
 	view := view.NewRenderer(w, r)
 	view.AddKey("story", story)
+	view.AddKey("hideSubmit", true)
 	view.AddKey("currentUser", currentUser)
 	return view.Render()
 }
