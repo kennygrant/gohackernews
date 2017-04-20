@@ -25,7 +25,7 @@ func AllowedParamsAdmin() []string {
 
 // AllowedParams returns an array of allowed param keys for Update and Create.
 func AllowedParams() []string {
-	return []string{"text"}
+	return []string{"text", "parent_id"}
 }
 
 // NewWithColumns creates a new comment instance and fills it with data from the database cols provided.

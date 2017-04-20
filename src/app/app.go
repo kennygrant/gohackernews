@@ -34,7 +34,7 @@ func Setup() {
 	log.Info(log.Values{"msg": msg, "port": config.Get("port")})
 	defer log.Time(time.Now(), log.Values{"msg": "Finished loading server"})
 
-	// Set up external service interfaces (twitter, mail etc)
+	// Set up external service interfaces (twitter)
 	SetupServices()
 
 	// Set up our assets
@@ -52,7 +52,9 @@ func Setup() {
 	// Setup our router and handlers
 	SetupRoutes()
 
+	// Setup mail from config
 	SetupMail()
+
 }
 
 // SetupLog sets up logging

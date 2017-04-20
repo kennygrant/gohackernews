@@ -7,15 +7,15 @@ import (
 
 	"github.com/fragmenta/query"
 	"github.com/fragmenta/server/config"
-	"github.com/fragmenta/server/schedule"
+	"github.com/fragmenta/server/log"
 
 	"github.com/kennygrant/gohackernews/src/lib/twitter"
 	"github.com/kennygrant/gohackernews/src/stories"
 )
 
 // TweetTopStory tweets the top story
-func TweetTopStory(context schedule.Context) {
-	context.Log("Sending top story tweet")
+func TweetTopStory() {
+	log.Log(log.Values{"msg": "Sending top story tweet"})
 
 	// Get the top story which has not been tweeted yet, newer than 1 day (we don't look at older stories)
 	q := stories.Popular().Limit(1).Order("rank desc, points desc, id desc")
@@ -29,22 +29,22 @@ func TweetTopStory(context schedule.Context) {
 	// Fetch the stories
 	results, err := stories.FindAll(q)
 	if err != nil {
-		context.Logf("#error getting top story tweet %s", err)
+		log.Log(log.Values{"message": "stories: error getting top story tweet", "error": err})
 		return
 	}
 
 	if len(results) > 0 {
 		story := results[0]
 
-		TweetStory(context, story)
+		TweetStory(story)
 	} else {
-		context.Logf("#warn no top story found for tweet")
+		log.Log(log.Values{"message": "stories: warning no top story found for tweet"})
 	}
 
 }
 
 // TweetStory tweets the given story
-func TweetStory(context schedule.Context, story *stories.Story) {
+func TweetStory(story *stories.Story) {
 
 	// Base url from config
 	baseURL := config.Get("root_url")
@@ -64,11 +64,11 @@ func TweetStory(context schedule.Context, story *stories.Story) {
 		tweet = fmt.Sprintf("%s #golang %s", story.Name, baseURL+story.ShowURL())
 	}
 
-	context.Logf("#info sending tweet:%s", tweet)
+	log.Log(log.Values{"message": "stories: sending tweet", "tweet": tweet})
 
 	_, err := twitter.Tweet(tweet)
 	if err != nil {
-		context.Logf("#error tweeting top story %s", err)
+		log.Log(log.Values{"message": "stories: error tweeting story", "error": err})
 		return
 	}
 
@@ -76,7 +76,7 @@ func TweetStory(context schedule.Context, story *stories.Story) {
 	params := map[string]string{"tweeted_at": query.TimeString(time.Now().UTC())}
 	err = story.Update(params)
 	if err != nil {
-		context.Logf("#error updating top story tweet %s", err)
+		log.Log(log.Values{"message": "stories: error updating tweeted story", "error": err})
 		return
 	}
 
