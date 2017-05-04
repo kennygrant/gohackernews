@@ -39,7 +39,7 @@ textarea {
 }
 
 .actions .button {
-    margin-right: 1rem;
+    margin-left: 1rem;
 }
 
 .field {
@@ -64,4 +64,11 @@ label {
 
 .wide-fields input {
     width: 100%;
+}
+
+@media (max-width: 770px) {
+    .actions {
+        float: none;
+        text-align: center;
+    }
 }

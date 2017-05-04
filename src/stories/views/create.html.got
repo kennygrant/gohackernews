@@ -1,9 +1,7 @@
 <article>
 <section class="padded">
 <form method="post" class="resource-update-form">
-    <div class="actions right">
-      <input type="submit" class="button" value="Submit">
-    </div>
+   
     <h1>Submit Story</h1>
     <p>Please read the <a href="/stories/1">contributor guidelines</a> before submitting stories.</p>
     <div class="wide-fields">
@@ -15,7 +13,9 @@
       <textarea name="summary" class="content-textarea" id="story-content-textarea">{{.story.Summary}}</textarea>
       <div contenteditable class="content-editable" id="story-content-editable">{{html .story.Summary}}</div>
     </div>
-  
+    </div>
+     <div class="actions right">
+      <input type="submit" class="button" value="Submit">
     </div>
     <input name="authenticity_token" type="hidden" value="{{.authenticity_token}}">
 </form>
