@@ -86,6 +86,11 @@ func HandleCreate(w http.ResponseWriter, r *http.Request) error {
 		return server.NotAuthorizedError(nil, "Incomplete Name or URL", "The story submitted contained incomplete or short data.")
 	}
 
+	// Disallow short names
+	if len(name) < 3 {
+		return server.NotAuthorizedError(nil, "Name too short", "The name of your story is too short, the min length is 3 characters.")
+	}
+
 	if len(name) > 100 {
 		return server.NotAuthorizedError(nil, "Name too long", "The name of your story is too long, the maximum length is 100 characters.")
 	}
