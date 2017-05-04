@@ -105,7 +105,7 @@ function ActivateFilterFields() {
 // Show/Hide elements with selector in attribute href - do this with a hidden class name
 function ActivateShowlinks() {
     DOM.On('.show', 'click', function(e) {
-        console.log("SHOW HERE")
+        e.preventDefault();
         var selector = this.getAttribute('data-show');
         if (selector == "") {
             selector = this.getAttribute('href')
