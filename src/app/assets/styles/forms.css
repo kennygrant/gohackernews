@@ -1,59 +1,67 @@
 /*  FORMS */
+
 article form {
-  padding: 1rem 0;
-  
-  display:block;
-  margin-bottom:2rem;
+    padding: 1rem 0;
+    display: block;
+    margin-bottom: 2rem;
 }
 
 article form.nopadding {
-  padding: 0;
+    padding: 0;
 }
 
-input[type="email"], input[type="number"], input[type="search"], input[type="text"], input[type="tel"], input[type="url"], input[type="password"], textarea, select {
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="text"],
+input[type="tel"],
+input[type="url"],
+input[type="password"],
+textarea,
+select {
     background-color: #fff;
     border: 1px solid #d1d1d1;
     border-radius: 0.2rem;
     box-shadow: none;
     box-sizing: border-box;
-    padding:0.3rem 0.5rem;
-    height:2.4rem;
+    padding: 0.5rem 0.6rem;
+    min-height: 2.4rem;
 }
 
 textarea {
-  width: 100%;
-  min-height: 10em;
+    width: 100%;
+    min-height: 10em;
 }
 
 .actions {
-  clear: both;
-  padding: 2rem 0;
+    clear: both;
+    padding: 2rem 0;
 }
 
 .actions .button {
-  margin-right: 1rem;
+    margin-right: 1rem;
 }
 
 .field {
-  margin-top:1rem;
+    margin-top: 1rem;
 }
 
 label {
-  color: #555;
-  font-weight: normal;
-  display: block;
-  margin:0 0.3rem 0.5rem 0;
+    color: #555;
+    font-weight: normal;
+    display: block;
+    margin: 0 0.3rem 0.5rem 0;
 }
 
 .inline-fields .field {
-  float: left;
-  margin-right: 3rem;
+    float: left;
+    margin-right: 3rem;
 }
 
 .wide-fields .field {
-  clear: both;
+    clear: both;
 }
 
 .wide-fields input {
-  width: 100%;
+    width: 100%;
 }
