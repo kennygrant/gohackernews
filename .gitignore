@@ -4,7 +4,8 @@ db/migrate/*
 secrets/*
 log/*
 vendor
-public/assets
+public/assets/scripts
+public/assets/styles
 
 # ignore analytics file for GN - might remove GA soon anyway
 src/app/assets/scripts/analytics.js
