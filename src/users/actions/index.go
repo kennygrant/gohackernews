@@ -40,7 +40,7 @@ func HandleIndex(w http.ResponseWriter, r *http.Request) error {
 		q.Order("updated desc")
 
 	default:
-		q.Order("id asc")
+		q.Order("points desc")
 	}
 
 	// Filter if requested
