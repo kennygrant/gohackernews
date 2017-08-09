@@ -114,9 +114,8 @@ func HandleCreate(w http.ResponseWriter, r *http.Request) error {
 	// Log comment creation
 	log.Info(log.Values{"msg": "Created comment", "comment_id": ID, "params": commentParams})
 
-	// Update the story comment count
-	storyParams := map[string]string{"comment_count": fmt.Sprintf("%d", story.CommentCount+1)}
-	err = story.Update(storyParams)
+	// Update the story comment count with a count of comments above 0 points
+	err = updateStoryCommentCount(story)
 	if err != nil {
 		return server.InternalError(err, "Error", "Could not update story.")
 	}

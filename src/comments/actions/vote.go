@@ -12,6 +12,7 @@ import (
 
 	"github.com/kennygrant/gohackernews/src/comments"
 	"github.com/kennygrant/gohackernews/src/lib/session"
+	"github.com/kennygrant/gohackernews/src/stories"
 	"github.com/kennygrant/gohackernews/src/users"
 )
 
@@ -60,7 +61,13 @@ func HandleFlag(w http.ResponseWriter, r *http.Request) error {
 		return err
 	}
 
-	return updateCommentsRank(comment.StoryID)
+	err = updateCommentsRank(comment.StoryID)
+	if err != nil {
+		return err
+	}
+
+	// Redirect to story
+	return server.Redirect(w, r, fmt.Sprintf("/stories/%d", comment.StoryID))
 }
 
 // HandleDownvote handles POST to /comments/123/downvote
@@ -240,6 +247,17 @@ func updateCommentsRank(storyID int64) error {
 	sql := "update comments set rank = 100 * points / POWER((select max(id) from comments) - id + 1,1.2) where story_id=$1"
 	_, err := query.Exec(sql, storyID)
 	return err
+}
+
+// updateStoryCommentCount updates a story for new comment counts
+// discounting comments under 0 points
+func updateStoryCommentCount(story *stories.Story) error {
+	commentCount, err := comments.Query().Where("story_id=?", story.ID).Where("points > 0").Count()
+	if err != nil {
+		return err
+	}
+	storyParams := map[string]string{"comment_count": fmt.Sprintf("%d", commentCount)}
+	return story.Update(storyParams)
 }
 
 func getUserIP(r *http.Request) string {

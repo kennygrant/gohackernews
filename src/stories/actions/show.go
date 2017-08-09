@@ -39,8 +39,8 @@ func HandleShow(w http.ResponseWriter, r *http.Request) error {
 		}
 	}
 
-	// Find the comments for this story
-	q := comments.Where("story_id=?", story.ID).Order(comments.Order)
+	// Find the comments for this story, excluding those under 0
+	q := comments.Where("story_id=?", story.ID).Where("points > 0").Order(comments.Order)
 	comments, err := comments.FindAll(q)
 	if err != nil {
 		return server.InternalError(err)
