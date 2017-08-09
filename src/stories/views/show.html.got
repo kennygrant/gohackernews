@@ -25,10 +25,12 @@
          <div class="actions story_actions">
         {{ if .currentUser.Admin }}
           <a href="/stories/{{.story.ID}}/update" rel="nofollow" class="button grey">edit</a>
-          <a href="/stories/{{.story.ID}}/flag" rel="nofollow" class="button grey flag" method="post">Flag</a>
         {{ else if and .story.Editable  (.story.OwnedBy .currentUser.ID) }}
           <a href="/stories/{{.story.ID}}/update" rel="nofollow" class="button grey">edit</a>
         {{end }}
+        {{ if .currentUser.CanFlag }}
+          <a href="/stories/{{.story.ID}}/flag" rel="nofollow" class="button grey flag" method="post">Flag</a>
+        {{ end }}
         </div>
       
          <div class="summary">

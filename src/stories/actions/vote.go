@@ -48,17 +48,31 @@ func HandleFlag(w http.ResponseWriter, r *http.Request) error {
 	if !user.CanFlag() {
 		return server.NotAuthorizedError(err, "Flag Failed", "Sorry, you can't flag yet")
 	}
-
-	err = adjustUserPoints(user, -1)
+	// Flags are more expensive than downvotes
+	err = adjustUserPoints(user, -2)
 	if err != nil {
-		return err
+		return server.InternalError(err, "Failed to adjust points")
 	}
 
-	err = addStoryVote(story, user, ip, -5)
+	// Record the flag separately
+	delta := int64(-5)
+	err = recordStoryFlag(story, user, ip, delta)
 	if err != nil {
-		return err
+		return server.InternalError(err, "Failed to add vote")
 	}
-	return updateStoriesRank()
+
+	// Downvote the story massively - note this adds a vote record already
+	err = addStoryVote(story, user, ip, delta)
+	if err != nil {
+		return server.InternalError(err, "Failed to add vote")
+	}
+
+	err = updateStoriesRank()
+	if err != nil {
+		return server.InternalError(err, "Failed to update story rank")
+	}
+
+	return server.Redirect(w, r, story.ShowURL())
 }
 
 // HandleDownvote handles POST to /stories/123/downvote
@@ -221,6 +235,20 @@ func storyHasUserVote(story *stories.Story, user *users.User) bool {
 	}
 
 	return true
+}
+
+// recordStoryFlag adds a flag record for this user
+func recordStoryFlag(story *stories.Story, user *users.User, IP string, delta int64) error {
+
+	// Add an entry in the votes table
+	// FIXME: adjust query to do this for us we should use ?,?,? here...
+	// $1, $2 is surprising, shouldn't we expect query package to deal with this for us?
+	_, err := query.Exec("insert into flags VALUES(now(),NULL,$1,$2,$3,$4)", story.ID, user.ID, IP, delta)
+	if err != nil {
+		return server.InternalError(err, "Flag Failed", "Sorry your flag failed to record")
+	}
+
+	return nil
 }
 
 // storyHasUserFlag returns true if we already have a flag for this story from this user

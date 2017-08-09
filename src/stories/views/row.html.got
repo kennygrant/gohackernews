@@ -2,6 +2,9 @@
   <a href="{{.story.CanonicalURL}}" class="bubble"><b class="bubble-tick"></b>{{.story.CommentCountDisplay}}</a> 
   {{ if .currentUser.Admin }}
     <a href="/stories/{{.story.ID}}/update" class="button small grey flag">edit</a>
+  {{ end }}
+  {{ if .currentUser.CanFlag }}
+    <a href="/stories/{{.story.ID}}/flag" class="button small grey flag" method="post">flag</a>
   {{end }}
     <div class="voting">
       {{ if .currentUser.Anon }}
