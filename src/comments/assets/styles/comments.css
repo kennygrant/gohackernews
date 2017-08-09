@@ -19,6 +19,11 @@ ul.comments {
     padding: 1rem;
 }
 
+.comment img {
+    max-width: 100%;
+    margin: 1rem 0;
+}
+
 .comment .button {
     margin-left: 1rem;
 }

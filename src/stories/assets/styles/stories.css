@@ -10,6 +10,10 @@ article .story {
     padding: 2rem;
 }
 
+.story img {
+    max-width: 100%;
+}
+
 .story form .field {
     clear: both;
     display: block;
