@@ -62,26 +62,28 @@ func (s *Story) ShowAsk() bool {
 // DestinationURL returns the URL of the story
 // if no url is set, it uses the CanonicalURL
 func (s *Story) DestinationURL() string {
+	// If downvoted, don't publish urls
+	if s.Points < 0 {
+		return ""
+	}
+	// If we have an external url, return it
 	if s.URL != "" {
 		return s.URL
 	}
+	// If we have an empty url, return the story url instead
 	return s.CanonicalURL()
 }
 
 // PrimaryURL returns the URL to use for this story in lists
-// Videos and Show Ask stories link to the story, for other links for now it is the destination
+// Videos and Show Ask stories link to the story
+// for other links for now it is the destination
 func (s *Story) PrimaryURL() string {
-	// If video or show or ask, return story url
-	if s.YouTube() || s.ShowAsk() {
+	// If video or show or empty, return story url
+	if s.YouTube() || s.ShowAsk() || s.URL == "" {
 		return s.CanonicalURL()
 	}
 
-	// If no url, return canonical url
-	if s.URL == "" {
-		return s.CanonicalURL()
-	}
-
-	return s.URL
+	return s.DestinationURL()
 }
 
 // CanonicalURL is the canonical URL of the story on this site

@@ -3,7 +3,7 @@
              <a href="/stories/{{.story.ID}}/upvote" rel="nofollow" method="post" class="vote {{if not .currentUser.CanUpvote }}disabled{{ end }}" rel=nofollow>▲</a>
              <a href="{{.story.CanonicalURL}}" class="points">{{.story.Points}}</a>
              <a href="/stories/{{.story.ID}}/downvote" rel="nofollow" method="post" class="vote {{if not .currentUser.CanDownvote }}disabled{{ end }}" rel=nofollow>▼</a>
-             <a href="{{.story.URL}}" class="name">{{.story.NameDisplay}}</a>
+             <a href="{{.story.DestinationURL}}" class="name">{{.story.NameDisplay}}</a>
          </h1>
     
          <div class="metadata">
@@ -12,7 +12,7 @@
                  <li><a href="/stories?q=%23{{.}}">{{.}}</a></li>
                {{ end }}
            </ul>
-             <a href="{{.story.URL}}" class="domain">{{ .story.Domain }}</a>
+             <a href="{{.story.DestinationURL}}" class="domain">{{ .story.Domain }}</a>
              {{ if exists .story.GodocURL }}
                <a href="{{.story.GodocURL}}" class="domain docs">godoc.org</a>
              {{ end }}
