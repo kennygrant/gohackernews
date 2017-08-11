@@ -185,8 +185,7 @@ ul.inline li {
     margin: 0 0 0.2rem 0;
 }
 
-header,
-footer {
+header {
     background-color: #ff6600;
     background-color: #0ab1e8;
     border: none;
@@ -204,10 +203,14 @@ footer a:hover {
 }
 
 footer {
+    background-color: #ff6600;
+    background-color: #0ab1e8;
     clear: both;
+    border: none;
+    margin: 0;
     font-size: 0.9em;
     text-align: center;
-    padding: 2rem 0 1rem 0;
+    padding: 2rem;
 }
 
 footer p {

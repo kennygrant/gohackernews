@@ -6,6 +6,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta content="{{.authenticity_token}}" name="authenticity_token">
+<meta name="google-site-verification" content="u9qkzjyrwazIzBTTUiI6I0f7hwjTiZY01AxsenwdbFQ" />
+
 {{if .meta_rss }}
 <link rel="alternate" type="application/rss+xml" title="{{ .meta_title }}" href="{{ .meta_rss }}">
 {{ end }}

@@ -47,16 +47,20 @@ func HandleShow(w http.ResponseWriter, r *http.Request) error {
 	}
 
 	meta := story.Summary
-	if len(meta) == 0 {
-		meta = fmt.Sprintf("A story on %s, %s", config.Get("meta_title"), config.Get("meta_desc"))
+	if meta == "" {
+		meta = fmt.Sprintf("%s - %s", config.Get("meta_title"), config.Get("meta_desc"))
+	} else if len(meta) < 50 {
+		meta = fmt.Sprintf("%s - %s", meta, config.Get("meta_desc"))
 	}
+	metaTitle := fmt.Sprintf("%s - %s", story.Name, config.Get("meta_title"))
 
 	// Render the template
 	view := view.NewRenderer(w, r)
 	view.CacheKey(story.CacheKey())
 	view.AddKey("story", story)
-	view.AddKey("meta_title", story.Name)
+	view.AddKey("meta_title", metaTitle)
 	view.AddKey("meta_desc", meta)
+	view.AddKey("meta_foot", config.Get("meta_desc"))
 	view.AddKey("meta_keywords", fmt.Sprintf("%s %s", story.Name, config.Get("meta_keywords")))
 	view.AddKey("comments", comments)
 	view.AddKey("currentUser", session.CurrentUser(w, r))
