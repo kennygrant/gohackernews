@@ -28,7 +28,12 @@ var (
 )
 
 // ConvertNewlines converts \n to paragraph tags
+// if the text already contains paragraph tags, return unaltered
 func ConvertNewlines(s string) string {
+	if strings.Contains(s, "<p>") {
+		return s
+	}
+
 	// Start with para
 	s = "<p>" + s
 	// Replace newlines with paras
