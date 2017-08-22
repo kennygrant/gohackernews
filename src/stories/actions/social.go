@@ -33,10 +33,18 @@ func TweetTopStory() {
 		return
 	}
 
-	if len(results) > 0 {
-		story := results[0]
+	// If no results, fall back to older stories which have been tweeted ordered by last tweeted (oldest first)
+	if len(results) == 0 {
+		q = stories.Where("points > 10").Where("name not ilike '%release%'").Where("name not like 'Event:%'").Order("tweeted_at asc").Limit(1)
+		results, err = stories.FindAll(q)
+		if err != nil {
+			log.Log(log.Values{"message": "stories: error getting top story tweet", "error": err})
+			return
+		}
+	}
 
-		TweetStory(story)
+	if len(results) > 0 {
+		TweetStory(results[0])
 	} else {
 		log.Log(log.Values{"message": "stories: warning no top story found for tweet"})
 	}
