@@ -72,6 +72,10 @@ article .story {
 }
 
 .story .name:visited {
+    color: #666;
+}
+
+.story .name:visited:hover {
     color: #999;
 }
 
