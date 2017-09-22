@@ -23,7 +23,7 @@ func SetupServices() {
 		twitter.Setup(config.Get("twitter_key"), config.Get("twitter_secret"), config.Get("twitter_token"), config.Get("twitter_token_secret"))
 
 		tweetTime := time.Date(now.Year(), now.Month(), now.Day(), 6, 0, 0, 0, time.UTC)
-		tweetInterval := 5 * time.Hour
+		tweetInterval := 51 * 3 * time.Minute
 
 		// For testing
 		//tweetTime = now.Add(time.Second * 5)
