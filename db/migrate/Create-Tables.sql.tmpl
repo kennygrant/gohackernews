@@ -64,7 +64,9 @@ role integer,
 email text,
 name text,
 summary text,
-encrypted_password text,
+password_hash text,
+password_reset_at timestamp,
+password_reset_token text, 
 points integer
 );
 
