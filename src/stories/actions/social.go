@@ -17,10 +17,10 @@ import (
 func TweetTopStory() {
 	log.Log(log.Values{"msg": "Sending top story tweet"})
 
-	// Get the top story which has not been tweeted yet, newer than 1 day (we don't look at older stories)
+	// Get the top story which has not been tweeted yet
 	q := stories.Popular().Limit(1).Order("rank desc, points desc, id desc")
 
-	// Don't fetch old stories
+	// Don't fetch old stories -  newer than 3 days (we don't look at older stories)
 	q.Where("created_at > current_timestamp - interval '3 days'")
 
 	// Don't fetch stories that have already been tweeted
@@ -34,14 +34,16 @@ func TweetTopStory() {
 	}
 
 	// If no results, fall back to older stories which have been tweeted ordered by last tweeted (oldest first)
-	if len(results) == 0 {
-		q = stories.Where("points > 10").Where("name not ilike '%release%'").Where("name not like 'Event:%'").Order("tweeted_at asc").Limit(1)
-		results, err = stories.FindAll(q)
-		if err != nil {
-			log.Log(log.Values{"message": "stories: error getting top story tweet", "error": err})
-			return
+	/*
+		if len(results) == 0 {
+			q = stories.Where("points > 10").Where("name not ilike '%release%'").Where("name not like 'Event:%'").Order("tweeted_at asc").Limit(1)
+			results, err = stories.FindAll(q)
+			if err != nil {
+				log.Log(log.Values{"message": "stories: error getting top story tweet", "error": err})
+				return
+			}
 		}
-	}
+	*/
 
 	if len(results) > 0 {
 		TweetStory(results[0])
