@@ -8,6 +8,7 @@ import (
 	"os"
 	"path"
 	"strings"
+	"time"
 
 	"github.com/fragmenta/server"
 	"github.com/fragmenta/server/config"
@@ -50,22 +51,12 @@ func serveFile(w http.ResponseWriter, r *http.Request) error {
 	}
 
 	// If the file exists and we can access it, serve it with cache control
-	// if in production
 	if config.Production() {
-		// Cache for 30 days
-		w.Header().Set("Cache-Control", "max-age:2592000")
-		// For etag Just hash the path - static resources are assumed to have a fingerprint
-		w.Header().Set("ETag", fmt.Sprintf("\"%s\"", hash(r.URL.Path)))
+		addCacheControl(w, r)
 	}
 
 	http.ServeFile(w, r, localPath)
 	return nil
-}
-
-// hash returns the sha hash of a string
-func hash(s string) string {
-	sum := sha1.Sum([]byte(s))
-	return hex.EncodeToString([]byte(sum[:]))
 }
 
 // serveAsset serves a file from ./public/assets usings appAssets
@@ -88,10 +79,7 @@ func serveAsset(w http.ResponseWriter, r *http.Request) error {
 	localPath := "./" + f.LocalPath()
 	// If the file exists and we can access it, serve it with cache control in production
 	if config.Production() {
-		// Cache for 30 days
-		w.Header().Set("Cache-Control", "max-age:2592000")
-		// For etag Just hash the path - static resources are assumed to have a fingerprint
-		w.Header().Set("ETag", fmt.Sprintf("\"%s\"", hash(r.URL.Path)))
+		addCacheControl(w, r)
 	}
 	http.ServeFile(w, r, localPath)
 	return nil
@@ -116,4 +104,21 @@ func errHandler(w http.ResponseWriter, r *http.Request, e error) {
 	view.Template("app/views/error.html.got")
 	w.WriteHeader(err.Status)
 	view.Render()
+}
+
+// hash returns the sha hash of a string
+func hash(s string) string {
+	sum := sha1.Sum([]byte(s))
+	return hex.EncodeToString([]byte(sum[:]))
+}
+
+func addCacheControl(w http.ResponseWriter, r *http.Request) {
+	// Cache for 30 days
+	w.Header().Set("Cache-Control", "max-age:2592000")
+
+	// Set an expires header Mon Jan 2 15:04:05 -0700 MST 2006
+	w.Header().Set("Expires", time.Now().AddDate(0, 0, 30).UTC().Format("Mon, 2 Jan 2006 15:04:05 MST"))
+
+	// For etag Just hash the path - static resources are assumed to have a fingerprint
+	w.Header().Set("ETag", fmt.Sprintf("\"%s\"", hash(r.URL.Path)))
 }
