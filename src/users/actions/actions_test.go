@@ -105,6 +105,7 @@ func TestCreateUsers(t *testing.T) {
 
 	form := url.Values{}
 	form.Add("name", names[0])
+	form.Add("password", "abcdefghijk") // required pass length
 	body := strings.NewReader(form.Encode())
 
 	r := httptest.NewRequest("POST", "/users/create", body)
