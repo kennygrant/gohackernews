@@ -280,7 +280,6 @@ header .title .user_badge {
     width: 100%;
     position: absolute;
     top: 0.5rem;
-    block-shadow: -0.25rem 0.25rem 0 #037aa1;
     margin: 0 auto;
     padding: 0;
 }

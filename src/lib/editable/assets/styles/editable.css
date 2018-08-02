@@ -35,8 +35,6 @@
     border-left: 1px solid #ccc;
 }
 
-.toolbar li:first-child {}
-
 .toolbar li a:hover {
     background-color: #dedede;
 }
