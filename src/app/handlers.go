@@ -3,6 +3,7 @@ package app
 import (
 	"crypto/sha1"
 	"encoding/hex"
+	"fmt"
 	"net/http"
 	"os"
 	"path"
@@ -52,9 +53,9 @@ func serveFile(w http.ResponseWriter, r *http.Request) error {
 	// if in production
 	if config.Production() {
 		// Cache for 30 days
-		w.Header().Set("Cache-Control", "max-age:2592000, public")
+		w.Header().Set("Cache-Control", "max-age:2592000")
 		// For etag Just hash the path - static resources are assumed to have a fingerprint
-		w.Header().Set("ETag", hash(r.URL.Path))
+		w.Header().Set("ETag", fmt.Sprintf("\"%s\"", hash(r.URL.Path)))
 	}
 
 	http.ServeFile(w, r, localPath)
@@ -88,9 +89,9 @@ func serveAsset(w http.ResponseWriter, r *http.Request) error {
 	// If the file exists and we can access it, serve it with cache control in production
 	if config.Production() {
 		// Cache for 30 days
-		w.Header().Set("Cache-Control", "max-age:2592000, public")
+		w.Header().Set("Cache-Control", "max-age:2592000")
 		// For etag Just hash the path - static resources are assumed to have a fingerprint
-		w.Header().Set("ETag", hash(r.URL.Path))
+		w.Header().Set("ETag", fmt.Sprintf("\"%s\"", hash(r.URL.Path)))
 	}
 	http.ServeFile(w, r, localPath)
 	return nil
