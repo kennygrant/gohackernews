@@ -1,6 +1,8 @@
 package app
 
 import (
+	"crypto/sha1"
+	"encoding/hex"
 	"net/http"
 	"os"
 	"path"
@@ -47,9 +49,22 @@ func serveFile(w http.ResponseWriter, r *http.Request) error {
 	}
 
 	// If the file exists and we can access it, serve it with cache control
-	w.Header().Set("Cache-Control", "max-age:3456000, public")
+	// if in production
+	if config.Production() {
+		// Cache for 30 days
+		w.Header().Set("Cache-Control", "max-age:2592000, public")
+		// For etag Just hash the path - static resources are assumed to have a fingerprint
+		w.Header().Set("ETag", hash(r.URL.Path))
+	}
+
 	http.ServeFile(w, r, localPath)
 	return nil
+}
+
+// hash returns the sha hash of a string
+func hash(s string) string {
+	sum := sha1.Sum([]byte(s))
+	return hex.EncodeToString([]byte(sum[:]))
 }
 
 // serveAsset serves a file from ./public/assets usings appAssets
@@ -70,7 +85,13 @@ func serveAsset(w http.ResponseWriter, r *http.Request) error {
 
 	// Serve the local file, with cache control
 	localPath := "./" + f.LocalPath()
-	w.Header().Set("Cache-Control", "max-age:3456000, public")
+	// If the file exists and we can access it, serve it with cache control in production
+	if config.Production() {
+		// Cache for 30 days
+		w.Header().Set("Cache-Control", "max-age:2592000, public")
+		// For etag Just hash the path - static resources are assumed to have a fingerprint
+		w.Header().Set("ETag", hash(r.URL.Path))
+	}
 	http.ServeFile(w, r, localPath)
 	return nil
 }
