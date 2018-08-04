@@ -102,6 +102,7 @@ func errHandler(w http.ResponseWriter, r *http.Request, e error) {
 		view.AddKey("error", err.Err)
 	}
 	view.Template("app/views/error.html.got")
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	w.WriteHeader(err.Status)
 	view.Render()
 }
