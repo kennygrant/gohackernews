@@ -2,7 +2,8 @@ package app
 
 import (
 	"github.com/fragmenta/mux"
-	"github.com/fragmenta/server/gzip"
+	"github.com/fragmenta/mux/middleware/gzip"
+	"github.com/fragmenta/mux/middleware/secure"
 	"github.com/fragmenta/server/log"
 
 	// Resource Actions
@@ -75,6 +76,7 @@ func SetupRoutes() *mux.Mux {
 	router.AddMiddleware(log.Middleware)
 	router.AddMiddleware(session.Middleware)
 	router.AddMiddleware(gzip.Middleware)
+	router.AddMiddleware(secure.Middleware)
 
 	return router
 }
