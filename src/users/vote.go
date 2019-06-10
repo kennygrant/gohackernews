@@ -13,7 +13,7 @@ package users
 
 // CanSubmit returns true if this user can submit.
 func (u *User) CanSubmit() bool {
-	return u.Points > 0
+	return u.Points > 10
 }
 
 // CanComment returns true if this user can comment.

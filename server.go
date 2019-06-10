@@ -2,7 +2,11 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 	"os"
+	"strings"
+
+	"golang.org/x/crypto/acme/autocert"
 
 	"github.com/fragmenta/server"
 	"github.com/fragmenta/server/config"
@@ -36,11 +40,8 @@ func main() {
 	// In production, server
 	if server.Production() {
 
-		// Redirect all :80 traffic to our canonical url on :443
-		server.StartRedirectAll(80, server.Config("root_url"))
-
 		// If in production, serve over tls with autocerts from let's encrypt
-		err = server.StartTLSAutocert(server.Config("autocert_email"), server.Config("autocert_domains"))
+		err = startTLSAutocert(server)
 		if err != nil {
 			server.Fatalf("Error starting server %s", err)
 		}
@@ -81,4 +82,25 @@ func SetupServer() (*server.Server, error) {
 	app.Setup()
 
 	return s, nil
+}
+
+// startTLSAutocert starts an https server on the given port
+// by requesting certs from an ACME provider.
+// The server must be on a public IP which matches the
+// DNS for the domains.
+func startTLSAutocert(server *server.Server) error {
+	autocertDomains := strings.Split(server.Config("autocert_domains"), " ")
+	certManager := &autocert.Manager{
+		Prompt:     autocert.AcceptTOS,
+		Email:      server.Config("autocert_email"),            // Email for problems with certs
+		HostPolicy: autocert.HostWhitelist(autocertDomains...), // Domains to request certs for
+		Cache:      autocert.DirCache("secrets"),               // Cache certs in secrets folder
+	}
+	// Handle all :80 traffic using autocert to allow http-01 challenge responses
+	go func() {
+		http.ListenAndServe(":80", certManager.HTTPHandler(nil))
+	}()
+
+	s := server.ConfiguredTLSServer(certManager)
+	return s.ListenAndServeTLS("", "")
 }
