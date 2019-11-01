@@ -18,29 +18,27 @@ type Comment struct {
 	// status.ResourceStatus defines a status field and associated behaviour
 	status.ResourceStatus
 
+	// A path to the story through parents
 	DottedIDs string
-	ParentID  int64
-	Children  []*Comment
+	// The parent comment id (may be 0)
+	ParentID int64
+	// Any child comments (may be empty)
+	Children []*Comment
 
-	Points    int64
-	Rank      int64
-	StoryID   int64
+	// Score of the comment (raw points and calculated rank with gravity)
+	Points int64
+	Rank   int64
+
+	// The main story text
+	Text string
+
+	// Joined story and user
+	StoryID int64
+	UserID  int64
+
+	// Denormalised attributes from joins
 	StoryName string
-	Text      string
-	UserID    int64
 	UserName  string
-}
-
-// NegativePoints returns a negative point score between 0 and 5 (positive points return 0, below -6 returns 6)
-func (c *Comment) NegativePoints() int64 {
-	if c.Points > 0 {
-		return 0
-	}
-	if c.Points < -6 {
-		return 6
-	}
-
-	return -c.Points
 }
 
 // Level returns the nesting level of this comment, based on dotted_ids
@@ -75,4 +73,16 @@ func (c *Comment) Editable() bool {
 // OwnedBy returns true if this user id owns this comment.
 func (c *Comment) OwnedBy(uid int64) bool {
 	return uid == c.UserID
+}
+
+// NegativePoints returns a negative point score between 0 and 5 (positive points return 0, below -6 returns 6)
+func (c *Comment) NegativePoints() int64 {
+	if c.Points > 0 {
+		return 0
+	}
+	if c.Points < -6 {
+		return 6
+	}
+
+	return -c.Points
 }

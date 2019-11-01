@@ -20,24 +20,16 @@ type Story struct {
 	// status.ResourceStatus defines a status field and associated behaviour
 	status.ResourceStatus
 
-	CommentCount int64
 	Name         string
 	Summary      string
 	URL          string
+	UserID       int64
 	Points       int64
 	Rank         int64
-	UserID       int64
+	CommentCount int64
 
-	// UserName denormalises the user name - use join instead?
+	// UserName denormalises the user name - pull from users join
 	UserName string
-}
-
-// NegativePoints returns a negative point score or 0 if points is above 0
-func (s *Story) NegativePoints() int64 {
-	if s.Points > 0 {
-		return 0
-	}
-	return -s.Points
 }
 
 // Domain returns the domain of the story URL
@@ -172,4 +164,12 @@ func (s *Story) Editable() bool {
 // OwnedBy returns true if this user id owns this story.
 func (s *Story) OwnedBy(uid int64) bool {
 	return uid == s.UserID
+}
+
+// NegativePoints returns a negative point score or 0 if points is above 0
+func (s *Story) NegativePoints() int64 {
+	if s.Points > 0 {
+		return 0
+	}
+	return -s.Points
 }

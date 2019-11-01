@@ -18,36 +18,10 @@ import (
 
 const listLimit = 50
 
-// storiesModTime returns the mod time of the first story, or current time if no stories
-func storiesModTime(availableStories []*stories.Story) time.Time {
-	if len(availableStories) == 0 {
-		return time.Now()
-	}
-	story := availableStories[0]
-
-	return story.UpdatedAt
-}
-
-// storiesXMLPath returns the xml path for a given request to a stories link
-func storiesXMLPath(w http.ResponseWriter, r *http.Request) string {
-
-	p := strings.Replace(r.URL.Path, ".xml", "", 1)
-	if p == "/" {
-		p = "/index"
-	}
-
-	q := r.URL.RawQuery
-	if len(q) > 0 {
-		q = "?" + q
-	}
-
-	return fmt.Sprintf("%s.xml%s", p, q)
-}
-
-// HandleIndex displays a list of stories.
+// HandleIndex repsponds to GET /stories
 func HandleIndex(w http.ResponseWriter, r *http.Request) error {
 
-	// Authorise list story - anyone can view stories
+	// No Authorisation - anyone can view stories
 
 	// Get the params
 	params, err := mux.Params(r)
@@ -116,4 +90,30 @@ func HandleIndex(w http.ResponseWriter, r *http.Request) error {
 
 	return view.Render()
 
+}
+
+// storiesModTime returns the mod time of the first story, or current time if no stories
+func storiesModTime(availableStories []*stories.Story) time.Time {
+	if len(availableStories) == 0 {
+		return time.Now()
+	}
+	story := availableStories[0]
+
+	return story.UpdatedAt
+}
+
+// storiesXMLPath returns the xml path for a given request to a stories link
+func storiesXMLPath(w http.ResponseWriter, r *http.Request) string {
+
+	p := strings.Replace(r.URL.Path, ".xml", "", 1)
+	if p == "/" {
+		p = "/index"
+	}
+
+	q := r.URL.RawQuery
+	if len(q) > 0 {
+		q = "?" + q
+	}
+
+	return fmt.Sprintf("%s.xml%s", p, q)
 }
