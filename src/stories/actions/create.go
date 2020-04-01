@@ -67,9 +67,9 @@ func HandleCreate(w http.ResponseWriter, r *http.Request) error {
 		return server.NotAuthorizedError(err)
 	}
 
-	// Check permissions - if not logged in and above 1 points, redirect to error
+	// Check permissions - if not logged in and above points, redirect to error
 	if !currentUser.CanSubmit() {
-		return server.NotAuthorizedError(nil, "Sorry", "You need to be registered and have more than 5 points to submit stories.")
+		return server.NotAuthorizedError(nil, "Sorry", "You need to be registered and have more than 2 points to submit stories.")
 	}
 
 	// Get the params

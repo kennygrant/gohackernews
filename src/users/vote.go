@@ -2,7 +2,7 @@ package users
 
 /*
   Proposed voting rules - for now these are relaxed
-  1 points - submit, comment
+  2 points - submit, comment
   10 points - upvote (they start with 10 points)
   50 points - downvote
   100 points - flag
@@ -13,7 +13,7 @@ package users
 
 // CanSubmit returns true if this user can submit.
 func (u *User) CanSubmit() bool {
-	return u.Points > 5
+	return u.Points > 2
 }
 
 // CanComment returns true if this user can comment.
