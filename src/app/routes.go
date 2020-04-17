@@ -3,13 +3,14 @@ package app
 import (
 	"github.com/fragmenta/mux"
 	"github.com/fragmenta/mux/middleware/gzip"
-	"github.com/fragmenta/mux/middleware/secure"
+	//	"github.com/fragmenta/mux/middleware/secure"
 	"github.com/fragmenta/server/log"
 
 	// Resource Actions
 	"github.com/kennygrant/gohackernews/src/comments/actions"
 	"github.com/kennygrant/gohackernews/src/lib/session"
 	"github.com/kennygrant/gohackernews/src/stories/actions"
+	"github.com/kennygrant/gohackernews/src/stripe/actions"
 	"github.com/kennygrant/gohackernews/src/users/actions"
 )
 
@@ -28,6 +29,10 @@ func SetupRoutes() *mux.Mux {
 	router.Get("/assets/{path:.*}", fileHandler)
 
 	// Resource Routes
+
+	router.Get("/stripe/pay", stripeactions.HandleShowPay)
+	router.Get("/stripe/thanks", stripeactions.HandleShowPayThanks)
+	router.Get("/stripe/cancel", stripeactions.HandleShowPayCancel)
 
 	// Add story routes
 	router.Get("/index{format:(.xml)?}", storyactions.HandleIndex)
@@ -76,7 +81,7 @@ func SetupRoutes() *mux.Mux {
 	router.AddMiddleware(log.Middleware)
 	router.AddMiddleware(session.Middleware)
 	router.AddMiddleware(gzip.Middleware)
-	router.AddMiddleware(secure.Middleware)
+	//	router.AddMiddleware(secure.Middleware)
 
 	return router
 }
