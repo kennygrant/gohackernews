@@ -23,6 +23,9 @@ func HandleIndex(w http.ResponseWriter, r *http.Request) error {
 	// Build a query
 	q := comments.Query().Order("created_at desc").Limit(100)
 
+	// Require points to be over 0 to avoid spam
+	q.Where("points > 0")
+
 	// Filter on user id - we only show the actual user's comments
 	// so not a nested view as in HN
 	userID := params.GetInt("u")

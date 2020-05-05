@@ -23,7 +23,9 @@
     
     
     <div class="content">
+    {{ if gt .comment.Points 0 }}
     {{ markup .comment.Text }}
+    {{ end }}
     </div>
     
     
