@@ -8,5 +8,5 @@
       {{ end }}
 </p>
 <p>
-  This site uses <a href="https://golang.org">Go</a>, hosted on a $5 CoreOS instance on <a href="https://m.do.co/c/45dc49ca8623">Digital Ocean</a>. The golangnews.com domain was kindly donated by <a href="https://github.com/Unknwon">@Unknwon</a>. {{  .meta_foot }}.
+  This site uses <a href="https://golang.org">Go</a>, hosted on a $5 Ubunutu instance on <a href="https://m.do.co/c/45dc49ca8623">Digital Ocean</a>. The golangnews.com domain was kindly donated by <a href="https://github.com/Unknwon">@Unknwon</a>. {{  .meta_foot }}.
 </p>
