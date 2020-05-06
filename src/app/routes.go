@@ -3,15 +3,16 @@ package app
 import (
 	"github.com/fragmenta/mux"
 	"github.com/fragmenta/mux/middleware/gzip"
+
 	//	"github.com/fragmenta/mux/middleware/secure"
 	"github.com/fragmenta/server/log"
 
 	// Resource Actions
-	"github.com/kennygrant/gohackernews/src/comments/actions"
+	commentactions "github.com/kennygrant/gohackernews/src/comments/actions"
 	"github.com/kennygrant/gohackernews/src/lib/session"
-	"github.com/kennygrant/gohackernews/src/stories/actions"
-	"github.com/kennygrant/gohackernews/src/stripe/actions"
-	"github.com/kennygrant/gohackernews/src/users/actions"
+	storyactions "github.com/kennygrant/gohackernews/src/stories/actions"
+	stripeactions "github.com/kennygrant/gohackernews/src/stripe/actions"
+	useractions "github.com/kennygrant/gohackernews/src/users/actions"
 )
 
 // SetupRoutes creates a new router and adds the routes for this app to it.
@@ -35,6 +36,7 @@ func SetupRoutes() *mux.Mux {
 	router.Get("/stripe/cancel", stripeactions.HandleShowPayCancel)
 
 	// Add story routes
+	router.Get("/go-jobs", storyactions.HandleJobs)
 	router.Get("/index{format:(.xml)?}", storyactions.HandleIndex)
 	router.Get("/stories/create", storyactions.HandleCreateShow)
 	router.Post("/stories/create", storyactions.HandleCreate)
