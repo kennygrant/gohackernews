@@ -66,6 +66,16 @@ func HandleFlag(w http.ResponseWriter, r *http.Request) error {
 		return err
 	}
 
+	// Adjust the story comment count
+	story, err := stories.Find(comment.StoryID)
+	if err != nil {
+		return err
+	}
+	err = updateStoryCommentCount(story)
+	if err != nil {
+		return err
+	}
+
 	// Redirect to story
 	return server.Redirect(w, r, fmt.Sprintf("/stories/%d", comment.StoryID))
 }
@@ -115,6 +125,18 @@ func HandleDownvote(w http.ResponseWriter, r *http.Request) error {
 	err = addCommentVote(comment, user, ip, -1)
 	if err != nil {
 		return err
+	}
+
+	// Adjust the story comment count if points now less than 1
+	if comment.Points <= 1 {
+		story, err := stories.Find(comment.StoryID)
+		if err != nil {
+			return err
+		}
+		err = updateStoryCommentCount(story)
+		if err != nil {
+			return err
+		}
 	}
 
 	return updateCommentsRank(comment.StoryID)
