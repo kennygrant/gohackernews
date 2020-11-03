@@ -319,7 +319,7 @@ func openDatabase(config map[string]string) error {
 // Generate a suitable path for a migration from the current date/time down to nanosecond
 func migrationPath(path string, name string) string {
 	now := time.Now()
-	layout := "2006-01-02-150405"
+	layout := "2006-01-02-150405.999999999"
 	return fmt.Sprintf("%s/db/migrate/%s-%s.sql", path, now.Format(layout), name)
 }
 
