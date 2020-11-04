@@ -2,12 +2,48 @@
 // See http://youmightnotneedjquery.com/ for more if required
 var DOM = (function() {
     return {
+
         // Apply a function on document ready
         Ready: function(f) {
             if (document.readyState != 'loading') {
                 f();
             } else {
                 document.addEventListener('DOMContentLoaded', f);
+            }
+        },
+
+        // Attach event handlers to all matches for a selector 
+        On: function(s, b, f) {
+            DOM.Each(s, function(el, i) {
+                el.addEventListener(b, f);
+            });
+        },
+        
+        // Return true if any elements match selector
+        Exists: function(s) {
+            return (document.querySelector(s) !== null);
+        },
+
+        // Return a NodeList of elements matching selector
+        All: function(s) {
+            return document.querySelectorAll(s);
+        },
+
+        // Return the first in the NodeList of elements matching selector - may return nil
+        First: function(s) {
+            return DOM.All(s)[0];
+        },
+
+        // Apply a function to elements of an array
+        ForEach: function(a, f) {
+            Array.prototype.forEach.call(a, f);
+        },
+
+        // Apply a function to elements matching selector, return true to break
+        Each: function(s, f) {
+            var a = DOM.All(s);
+            for (i = 0; i < a.length; ++i) {
+              f(a[i], i);
             }
         },
 
@@ -28,8 +64,6 @@ var DOM = (function() {
             return []; // return empty array
         },
 
-        // FIXME - perhaps adjust all to operate on either selector or an element?
-
         // Attribute returns either an attribute value or an empty string (if null)
         Attribute: function(el, a) {
             if (el.getAttribute(a) === null) {
@@ -45,6 +79,7 @@ var DOM = (function() {
         },
 
         // AddClass Adds the given className from el.className
+        // s may be a string selector or an element
         AddClass: function(s, c) {
             if (typeof s === "string") {
                 DOM.Each(s, function(el, i) {
@@ -60,6 +95,7 @@ var DOM = (function() {
         },
 
         // RemoveClass removes the given className from el.className
+        // s may be a string selector or an element
         RemoveClass: function(s, c) {
             var regexp = new RegExp("\\b" + c + "\\b", 'gi');
             if (typeof s === "string") {
@@ -81,49 +117,8 @@ var DOM = (function() {
             return f;
         },
 
-
-        // Apply a function to elements of an array
-        ForEach: function(a, f) {
-            Array.prototype.forEach.call(a, f);
-        },
-
-
-        // Return true if any element match selector
-        Exists: function(s) {
-            return (document.querySelector(s) !== null);
-        },
-
-        // Return a NodeList of elements matching selector
-        All: function(s) {
-            return document.querySelectorAll(s);
-        },
-
-
-        // Return the first in the NodeList of elements matching selector - may return nil
-        First: function(s) {
-            return DOM.All(s)[0];
-        },
-
-        // Apply a function to elements matching selector, return true to break
-        Each: function(s, f) {
-            var a = DOM.All(s);
-            for (i = 0; i < a.length; ++i) {
-              f(a[i], i);
-            }
-        },
-
-
-        // Hidden returns true if this element is hidden
-        Hidden: function(s) {
-            if (typeof s === "string") {
-                return (DOM.First(s).style.display == 'none');
-            } else {
-                return s.style.display == 'none';
-            }
-
-        },
-
         // Hide elements matching selector 
+        // s may be a string selector or an element
         Hide: function(s) {
             if (typeof s === "string") {
                 DOM.Each(s, function(el, i) {
@@ -135,6 +130,7 @@ var DOM = (function() {
         },
 
         // Show elements matching selector
+        // s may be a string selector or an element
         Show: function(s) {
             if (typeof s === "string") {
                 DOM.Each(s, function(el, i) {
@@ -145,7 +141,19 @@ var DOM = (function() {
             }
         },
 
+        // Hidden returns true if this element is hidden
+        // s may be a string selector or an element
+        Hidden: function(s) {
+            if (typeof s === "string") {
+                return (DOM.First(s).style.display == 'none');
+            } else {
+                return s.style.display == 'none';
+            }
+
+        },
+
         // Toggle the Shown or Hidden value of elements matching selector
+        // s may be a string selector or an element
         ShowHide: function(s) {
             if (typeof s === "string") {
                 DOM.Each(s, function(el, i) {
@@ -164,15 +172,7 @@ var DOM = (function() {
             }
         },
 
-        // Attach event handlers to all matches for a selector 
-        On: function(s, b, f) {
-            DOM.Each(s, function(el, i) {
-                el.addEventListener(b, f);
-            });
-        },
-
-
-        // Ajax - Send to url u the data d, call fs for success, ff for failures
+        // Ajax - Send to url u the data d, call fs for success, fe for failures
         Post: function(u, d, fs, fe) {
             var request = new XMLHttpRequest();
             request.open('POST', u, true);
@@ -188,7 +188,7 @@ var DOM = (function() {
             request.send(d);
         },
 
-        // Ajax - Get the data from url u, call fs for success, ff for failures
+        // Ajax - Get the data from url u, call fs for success, fe for failures
         Get: function(u, fs, fe) {
             var request = new XMLHttpRequest();
             request.open('GET', u, true);
